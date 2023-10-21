@@ -39,6 +39,7 @@ dependencies:
   sizer: ^2.0.15
   intl: ^0.18.1
   get: ^4.6.6
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:

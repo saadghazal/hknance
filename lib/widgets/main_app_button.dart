@@ -47,13 +47,14 @@ class MainAppButton extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: backgroundColor ?? AppColors.primaryDark,
-              border: borderColor != null
-                  ? Border.all(
-                      color: borderColor!,
-                    )
-                  : null),
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: backgroundColor ?? AppColors.primaryDark,
+            border: borderColor != null
+                ? Border.all(
+                    color: borderColor!,
+                  )
+                : null,
+          ),
           child: isIconed
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,

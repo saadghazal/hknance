@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hknance/screens/main_screens/community_screen.dart';
-import 'package:hknance/screens/main_screens/profile_screen.dart';
+import 'package:hknance/screens/profile_related_screens/profile_screen.dart';
 import 'package:hknance/screens/main_screens/tips_screen.dart';
 import 'package:hknance/widgets/nav_bar_widget.dart';
 

@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/screens/sign_up_screen.dart';
+import 'package:hknance/screens/authentication_related_screens/sign_up_screen.dart';
+import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/theme/app_colors.dart';
 import 'package:hknance/theme/app_texts.dart';
 import 'package:hknance/widgets/main_app_button.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (
@@ -140,7 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: 'Login',
                 height: 40.h,
                 width: double.maxFinite,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => MainScreen(),
+                    ),
+                    (route) => false,
+                  );
+                },
                 borderRadius: 12.r,
               ),
               Visibility(

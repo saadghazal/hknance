@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/screens/profile_related_screens/profile_settings_screen.dart';
 import 'package:hknance/theme/app_colors.dart';
 import 'package:hknance/theme/app_texts.dart';
 import 'package:hknance/widgets/main_app_button.dart';
@@ -38,6 +39,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       });
   }
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (
+          context,
+          primary,
+          secondary,
+          ) {
+        return const ProfileSettingsScreen();
+      },
+      transitionsBuilder: (context, primary, secondary, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        final tween = Tween(begin: begin, end: end);
+        final offsetAnimation = primary.drive(tween);
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 250),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,28 +89,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
+
                       CircleAvatar(
-                        radius: 35.r,
+                        radius: 32.r,
                         backgroundImage: AssetImage(
                           'assets/icons/profile_photo.png',
                         ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: CircleAvatar(
-                          radius: 12.r,
-                          backgroundColor: AppColors.primaryDark,
-                          child: Icon(
-                            Icons.edit,
-                            size: 16.sp,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+
                   SizedBox(
                     width: 10.w,
                   ),
@@ -150,7 +159,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       label: 'Profile Settings',
                       height: 40.h,
                       width: double.maxFinite,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                         _createRoute(),
+                        );
+                      },
                       borderRadius: 10.r,
                       borderColor: AppColors.primaryDark,
                       backgroundColor: Colors.transparent,
@@ -180,7 +193,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 itemCount: 3,
               ),
             ),
-
           ],
         ),
       ),

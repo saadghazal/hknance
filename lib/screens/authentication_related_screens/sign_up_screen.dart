@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/screens/authentication_related_screens/sign_up_successfully_screen.dart';
 
-import '../theme/app_colors.dart';
-import '../theme/app_texts.dart';
-import '../widgets/main_app_button.dart';
-import '../widgets/main_text_field.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_texts.dart';
+import '../../widgets/main_app_button.dart';
+import '../../widgets/main_text_field.dart';
+
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -53,15 +55,14 @@ class SignUpScreen extends StatelessWidget {
                   height: 5.h,
                 ),
                 AppTexts.body(
-                  text:
-                  'Create account to get latest\ntrading tips and news',
+                  text: 'Create account to get latest\ntrading tips and news',
                   fontSize: 14.sp,
                 ),
                 SizedBox(
                   height: 40.h,
                 ),
                 AppTexts.body(
-                  text: 'Upload Profile Picture',
+                  text: 'Profile Picture',
                   fontSize: 15.sp,
                   fontColor: AppColors.primaryDark,
                   fontWeight: FontWeight.w500,
@@ -72,8 +73,11 @@ class SignUpScreen extends StatelessWidget {
                 Center(
                   child: CircleAvatar(
                     backgroundColor: AppColors.primaryDark,
-                    radius: 45.r,
-                    child: Icon(Icons.photo_camera_rounded,size: 32.sp,),
+                    radius: 40.r,
+                    child: Icon(
+                      Icons.photo_camera_rounded,
+                      size: 32.sp,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -109,7 +113,6 @@ class SignUpScreen extends StatelessWidget {
                   controller: TextEditingController(),
                   hintText: 'Enter your email',
                   textInputAction: TextInputAction.next,
-
                   suffix: Padding(
                     padding: EdgeInsets.only(right: 10.w),
                     child: Image.asset(
@@ -150,7 +153,15 @@ class SignUpScreen extends StatelessWidget {
                   label: 'SignUp',
                   height: 40.h,
                   width: double.maxFinite,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUpSuccessfullyScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
                   borderRadius: 12.r,
                 ),
               ],
