@@ -4,7 +4,7 @@ import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/screens/splash_screen.dart';
 import 'package:sizer/sizer.dart';
 
-import 'device_type.dart';
+import 'utils/device_type.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();

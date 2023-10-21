@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/profile_related_screens/profile_settings_screen.dart';
-import 'package:hknance/theme/app_colors.dart';
-import 'package:hknance/theme/app_texts.dart';
+import 'package:hknance/utils/routing_animation.dart';
+
 import 'package:hknance/widgets/main_app_button.dart';
 
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 import '../../widgets/post_related_widgets/post_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -39,32 +41,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       });
   }
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (
-          context,
-          primary,
-          secondary,
-          ) {
-        return const ProfileSettingsScreen();
-      },
-      transitionsBuilder: (context, primary, secondary, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        final tween = Tween(begin: begin, end: end);
-        final offsetAnimation = primary.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 250),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    final topPadding = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -89,14 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Row(
                 children: [
-
-                      CircleAvatar(
-                        radius: 32.r,
-                        backgroundImage: AssetImage(
-                          'assets/icons/profile_photo.png',
-                        ),
-                      ),
-
+                  CircleAvatar(
+                    radius: 32.r,
+                    backgroundImage: const AssetImage(
+                      'assets/icons/profile_photo.png',
+                    ),
+                  ),
                   SizedBox(
                     width: 10.w,
                   ),
@@ -119,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
@@ -161,7 +138,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: double.maxFinite,
                       onTap: () {
                         Navigator.of(context).push(
-                         _createRoute(),
+                          RoutingAnimation.downToUp(
+                            screen: const ProfileSettingsScreen(),
+                          ),
                         );
                       },
                       borderRadius: 10.r,
@@ -179,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(
                   top: 20.h,
                 ),

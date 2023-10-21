@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 
-import '../../theme/app_colors.dart';
-import '../../theme/app_texts.dart';
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
@@ -12,13 +13,9 @@ class ProfileSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        toolbarHeight: 40.h,
-        leading: InkWell(
+      appBar: MainAppBar(
+        title: 'Settings',
+        backIcon: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
@@ -26,11 +23,6 @@ class ProfileSettingsScreen extends StatelessWidget {
             Icons.arrow_back_ios_rounded,
             color: AppColors.primaryDark,
           ),
-        ),
-        title: AppTexts.body(
-          text: 'Settings',
-          isHeadline: true,
-          fontSize: 18.sp,
         ),
       ),
       body: Column(
@@ -56,7 +48,6 @@ class ProfileSettingsScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             fontColor: Colors.blue,
             splashColor: Colors.blueAccent,
-
           ),
           SizedBox(
             height: 20.h,
@@ -89,7 +80,6 @@ class ProfileSettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
       bottomNavigationBar: Padding(
@@ -106,7 +96,7 @@ class ProfileSettingsScreen extends StatelessWidget {
           backgroundColor: Colors.redAccent,
           splashColor: Colors.red,
           isIconed: true,
-          icon: Icon(
+          icon: const Icon(
             Icons.logout,
             color: AppColors.lightGrey,
           ),

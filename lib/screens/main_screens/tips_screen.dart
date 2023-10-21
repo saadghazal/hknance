@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/theme/app_colors.dart';
-import 'package:hknance/theme/app_texts.dart';
+
+
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 
 class TipsScreen extends StatelessWidget {
   const TipsScreen({super.key});

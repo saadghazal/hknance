@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 
-import '../../theme/app_colors.dart';
-import '../../theme/app_texts.dart';
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});

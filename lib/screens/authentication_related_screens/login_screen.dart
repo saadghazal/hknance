@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_screen.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
-import 'package:hknance/theme/app_colors.dart';
-import 'package:hknance/theme/app_texts.dart';
+import 'package:hknance/utils/routing_animation.dart';
+import 'package:hknance/widgets/main_app_bar.dart';
+
 import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/main_text_field.dart';
+
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({required this.isAdmin, super.key});
@@ -17,40 +21,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (
-        context,
-        primary,
-        secondary,
-      ) {
-        return const SignUpScreen();
-      },
-      transitionsBuilder: (context, primary, secondary, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        final tween = Tween(begin: begin, end: end);
-        final offsetAnimation = primary.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 250),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        toolbarHeight: 40.h,
-        leading: InkWell(
+      appBar: MainAppBar(
+        title: 'Login',
+        backIcon: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
@@ -58,11 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Icons.arrow_back_ios_rounded,
             color: AppColors.primaryDark,
           ),
-        ),
-        title: AppTexts.body(
-          text: 'Login',
-          isHeadline: true,
-          fontSize: 18.sp,
         ),
       ),
       body: SingleChildScrollView(
@@ -177,14 +148,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Don\'t have an account? ',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.of(context).push(_createRoute());
+                                  Navigator.of(context).push(
+                                    RoutingAnimation.downToUp(
+                                      screen: SignUpScreen(),
+                                    ),
+                                  );
                                 },
                             ),
                             TextSpan(
                               text: 'Sign Up!',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.of(context).push(_createRoute());
+                                  Navigator.of(context).push(
+                                    RoutingAnimation.downToUp(
+                                      screen: SignUpScreen(),
+                                    ),
+                                  );
                                 },
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,

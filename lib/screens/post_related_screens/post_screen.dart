@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/widgets/post_related_widgets/comment_text_field.dart';
 
-import '../../theme/app_colors.dart';
-import '../../theme/app_texts.dart';
+
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 import '../../widgets/post_related_widgets/comment_widget.dart';
 
 class PostScreen extends StatelessWidget {

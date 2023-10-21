@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/theme/app_colors.dart';
-import 'package:hknance/theme/app_texts.dart';
+import 'package:hknance/utils/routing_animation.dart';
+
 import 'package:hknance/widgets/post_related_widgets/post_widget.dart';
 
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 import '../post_related_screens/add_post_screen.dart';
 
 class CommunityScreen extends StatefulWidget {
@@ -25,28 +27,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
     'assets/icons/avatar-1.png',
     'assets/icons/avatar-2.png',
   ];
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (
-        context,
-        primary,
-        secondary,
-      ) {
-        return const AddPostScreen();
-      },
-      transitionsBuilder: (context, primary, secondary, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        final tween = Tween(begin: begin, end: end);
-        final offsetAnimation = primary.drive(tween);
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 250),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +45,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(_createRoute());
+                  Navigator.of(context).push(
+                    RoutingAnimation.downToUp(
+                      screen: AddPostScreen(),
+                    ),
+                  );
                 },
                 borderRadius: BorderRadius.circular(8.r),
                 child: Ink(

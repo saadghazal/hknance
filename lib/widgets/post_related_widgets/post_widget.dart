@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../screens/post_related_screens/post_screen.dart';
-import '../../theme/app_colors.dart';
-import '../../theme/app_texts.dart';
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 
 class PostWidget extends StatelessWidget {
   const PostWidget({required this.postContent,required this.userImage,super.key,});

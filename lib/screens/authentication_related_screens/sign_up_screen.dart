@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_successfully_screen.dart';
+import 'package:hknance/widgets/main_app_bar.dart';
 
-import '../../theme/app_colors.dart';
-import '../../theme/app_texts.dart';
+
+import '../../utils/theme/app_colors.dart';
+import '../../utils/theme/app_texts.dart';
 import '../../widgets/main_app_button.dart';
 import '../../widgets/main_text_field.dart';
 
@@ -14,27 +16,15 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        toolbarHeight: 40.h,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.close,
-            color: AppColors.primaryDark,
-          ),
+      appBar:MainAppBar(title: 'Sign Up', backIcon:InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: const Icon(
+          Icons.close,
+          color: AppColors.primaryDark,
         ),
-        title: AppTexts.body(
-          text: 'Sign Up',
-          isHeadline: true,
-          fontSize: 18.sp,
-        ),
-      ),
+      ), ) ,
       body: SizedBox(
         height: double.maxFinite,
         width: double.maxFinite,

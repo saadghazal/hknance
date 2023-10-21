@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../theme/app_colors.dart';
+import '../../utils/theme/app_colors.dart';
+
 
 class CommentTextField extends StatefulWidget {
   const CommentTextField({super.key});
@@ -13,6 +14,12 @@ class CommentTextField extends StatefulWidget {
 class _CommentTextFieldState extends State<CommentTextField> {
   bool isTyping = false;
   TextEditingController commentController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    commentController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(

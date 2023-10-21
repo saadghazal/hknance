@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
-import 'package:hknance/theme/app_texts.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../utils/theme/app_texts.dart';
 
 class SignUpSuccessfullyScreen extends StatelessWidget {
   const SignUpSuccessfullyScreen({super.key});
