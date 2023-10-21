@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
                 fontFamily: 'Open Sans',
               ),
-              home: const MainScreen(),
+              home: MainScreen(),
             );
           },
           designSize: isTablet(deviceType) ? Size(600, 844) : Size(390, 844),

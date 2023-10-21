@@ -42,7 +42,9 @@ class OnBoardingScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => LoginScreen(
+                        isAdmin: false,
+                      ),
                     ),
                   );
                 },
@@ -68,7 +70,9 @@ class OnBoardingScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => LoginScreen(
+                        isAdmin: true,
+                      ),
                     ),
                   );
                 },
