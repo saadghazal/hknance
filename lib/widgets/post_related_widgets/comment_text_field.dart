@@ -36,7 +36,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
         ),
         width: double.maxFinite,
         decoration: const BoxDecoration(
-          // color: AppColors.primaryDark,
+          color: AppColors.primaryDark,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

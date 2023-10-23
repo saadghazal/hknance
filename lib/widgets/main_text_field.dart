@@ -7,9 +7,10 @@ class MainTextField extends StatelessWidget {
   const MainTextField({
     required this.controller,
     required this.hintText,
-     this.isPassword = false,
+    this.isPassword = false,
     this.suffix,
     this.textInputAction = TextInputAction.done,
+    this.isMultiline = false,
     super.key,
   });
   final TextEditingController controller;
@@ -17,6 +18,7 @@ class MainTextField extends StatelessWidget {
   final Widget? suffix;
   final bool isPassword;
   final TextInputAction textInputAction;
+  final bool isMultiline;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +27,16 @@ class MainTextField extends StatelessWidget {
       controller: controller,
       obscureText: isPassword,
       textInputAction: textInputAction,
+      maxLines: isMultiline ? null : 1,
       style: const TextStyle(
         color: AppColors.primaryDark,
       ),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(fontSize: 14.sp),
+        hintStyle: TextStyle(
+          fontSize: 14.sp,
+          color: AppColors.primaryDarkGrey.withOpacity(0.5),
+        ),
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 15.w,
@@ -39,7 +45,7 @@ class MainTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
           borderSide: BorderSide(
-            color: AppColors.primaryDarkGrey.withOpacity(0.5),
+            color: AppColors.primaryDarkGrey.withOpacity(0.2),
             width: 1.2,
           ),
         ),
@@ -49,7 +55,7 @@ class MainTextField extends StatelessWidget {
         suffixIcon: suffix,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.primaryDarkGrey.withOpacity(0.5),
+            color: AppColors.primaryDarkGrey.withOpacity(0.2),
             width: 1.2,
           ),
           borderRadius: BorderRadius.circular(12.r),

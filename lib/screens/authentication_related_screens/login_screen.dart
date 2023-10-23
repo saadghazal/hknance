@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/screens/admin_related_screens/admin_main_screen.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_screen.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/utils/routing_animation.dart';
@@ -114,12 +115,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40.h,
                 width: double.maxFinite,
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => MainScreen(),
-                    ),
-                    (route) => false,
-                  );
+                  if(widget.isAdmin){
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => AdminMainScreen(),
+                      ),
+                          (route) => false,
+                    );
+                  }else {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => MainScreen(),
+                      ),
+                          (route) => false,
+                    );
+                  }
+
                 },
                 borderRadius: 12.r,
               ),

@@ -10,10 +10,12 @@ class NavBarWidget extends StatelessWidget {
   const NavBarWidget({
     required this.currentIndex,
     required this.onTap,
+    this.isAdmin =false,
     super.key,
   });
   final Function(int) onTap;
   final int currentIndex;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,6 @@ class NavBarWidget extends StatelessWidget {
     return Container(
       height: 90.h,
       width: double.maxFinite,
-
       padding: EdgeInsets.only(
         left: ScreenUtil().deviceType() == DeviceType.tablet ? 30.w : 30.w,
         right: ScreenUtil().deviceType() == DeviceType.tablet ? 30.w : 30.w,
@@ -41,14 +42,36 @@ class NavBarWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: isAdmin ? Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           navBarItem(
             condition: currentIndex == 0,
             onTap: () => onTap(0),
-            icon: 'assets/icons/home_icon.png',
-            label: 'Home',
+            icon: 'assets/icons/news.png',
+            label: 'News',
+          ),
+          navBarItem(
+            condition: currentIndex == 1,
+            onTap: () => onTap(1),
+            icon: 'assets/icons/light-bulb.png',
+            label: 'Tips',
+          ),
+          navBarItem(
+            condition: currentIndex == 2,
+            onTap: () => onTap(2),
+            icon: 'assets/icons/user.png',
+            label: 'Profile',
+          ),
+        ],
+      ) : Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          navBarItem(
+            condition: currentIndex == 0,
+            onTap: () => onTap(0),
+            icon: 'assets/icons/news.png',
+            label: 'News',
           ),
           navBarItem(
             condition: currentIndex == 1,
