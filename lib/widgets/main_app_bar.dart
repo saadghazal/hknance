@@ -4,18 +4,26 @@ import 'package:sizer/sizer.dart';
 
 import '../utils/theme/app_texts.dart';
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const MainAppBar({required this.title,required this.backIcon,super.key});
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MainAppBar({
+    required this.title,
+    required this.backIcon,
+    this.actions,
+    super.key,
+  });
   final String title;
   final Widget backIcon;
+  final List<Widget>? actions;
+
 
   @override
   Widget build(BuildContext context) {
-    return  AppBar(
+    return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
+      actions: actions,
       // toolbarHeight: 40.h,
       leading: backIcon,
       title: AppTexts.body(
@@ -28,5 +36,5 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size(double.maxFinite,5.h);
+  Size get preferredSize => Size(double.maxFinite, 5.h);
 }

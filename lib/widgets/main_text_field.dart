@@ -11,6 +11,7 @@ class MainTextField extends StatelessWidget {
     this.suffix,
     this.textInputAction = TextInputAction.done,
     this.isMultiline = false,
+    this.isReadOnly = false,
     super.key,
   });
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class MainTextField extends StatelessWidget {
   final bool isPassword;
   final TextInputAction textInputAction;
   final bool isMultiline;
+  final bool isReadOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class MainTextField extends StatelessWidget {
       obscureText: isPassword,
       textInputAction: textInputAction,
       maxLines: isMultiline ? null : 1,
+      readOnly: isReadOnly,
       style: const TextStyle(
         color: AppColors.primaryDark,
       ),
