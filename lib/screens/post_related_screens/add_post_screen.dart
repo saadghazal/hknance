@@ -25,9 +25,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
         appBar: AppBar(
           leadingWidth: double.maxFinite,
           leading: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.only(left: 16.w,right: 16.w,),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () {

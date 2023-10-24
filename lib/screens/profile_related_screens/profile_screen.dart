@@ -65,7 +65,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.only(
+                left: 16.w,
+                right: 16.w,
+                top: 15.h,
+              ),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -161,6 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(
                   top: 20.h,
+                  bottom: 20.h,
                 ),
                 separatorBuilder: (context, index) => SizedBox(
                   height: 10.h,
