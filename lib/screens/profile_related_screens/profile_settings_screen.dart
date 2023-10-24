@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 
+import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
+import '../on_boarding_screen.dart';
 
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
@@ -91,7 +93,9 @@ class ProfileSettingsScreen extends StatelessWidget {
           label: 'Logout',
           height: 40.h,
           width: double.maxFinite,
-          onTap: () {},
+          onTap: () {
+            RoutingAnimation.leftToRight(screen: OnBoardingScreen());
+          },
           borderRadius: 12.r,
           backgroundColor: Colors.redAccent,
           splashColor: Colors.red,

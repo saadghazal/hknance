@@ -49,4 +49,26 @@ class RoutingAnimation {
       },
     );
   }
+  static Route leftToRight({required Widget screen}) {
+    return PageRouteBuilder(
+      pageBuilder: (
+          context,
+          primary,
+          secondary,
+          ) {
+        return screen;
+      },
+      transitionsBuilder: (context, primary, secondary, child) {
+        const begin = Offset(-1.0, 0);
+        const end = Offset.zero;
+        final tween = Tween(begin: begin, end: end);
+        final offsetAnimation = primary.drive(tween);
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 250),
+    );
+  }
 }

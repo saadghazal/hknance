@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/admin_related_screens/admin_news_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_profile_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_tips_screen.dart';
@@ -24,8 +26,28 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
     });
   }
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('Admin Main Screen Disposed');
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Image.asset(
+          'assets/logo/hknance_logo.jpg',
+          height: 70.h,
+        ),
+        centerTitle: true,
+        toolbarHeight:
+        ScreenUtil().deviceType() == DeviceType.tablet ? 70.h : 40.h,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+        ),
+      ),
       body: adminScreens[currentIndex],
       bottomNavigationBar: NavBarWidget(
         currentIndex: currentIndex,
