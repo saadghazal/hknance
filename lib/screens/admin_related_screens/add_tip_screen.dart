@@ -16,14 +16,14 @@ class AddTipScreen extends StatelessWidget {
     this.title = '',
     this.body = '',
     this.tipCover = '',
-    this.isVIP = false,
+    this.isVIP,
     super.key,
   });
   final bool isEditing;
   final String title;
   final String body;
   final String tipCover;
-  final bool isVIP;
+  final bool? isVIP;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class AddTipScreen extends StatelessWidget {
                 icon: 'assets/icons/24-hours.png',
                 label: 'Daily Tip',
                 onTap: () {},
-                isSelected: !isVIP,
+                isSelected: isVIP == null ? null : !isVIP!,
               ),
               SizedBox(
                 height: 10.h,

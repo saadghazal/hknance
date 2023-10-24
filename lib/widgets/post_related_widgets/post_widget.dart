@@ -38,9 +38,10 @@ class PostWidget extends StatelessWidget {
                 isHeadline: true,
               ),
               const Spacer(),
-              const Icon(
+               Icon(
                 Icons.more_horiz_rounded,
                 color: AppColors.primaryDark,
+                 size: ScreenUtil().deviceType() == DeviceType.tablet ? 22.sp : 20.sp,
               ),
             ],
           ),

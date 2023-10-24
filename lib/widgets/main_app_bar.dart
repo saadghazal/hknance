@@ -24,12 +24,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       actions: actions,
-      // toolbarHeight: 40.h,
+      toolbarHeight: 40.h,
       leading: backIcon,
       title: AppTexts.body(
         text: title,
         isHeadline: true,
-        fontSize: 14.sp,
+       fontSize:  12.sp,
       ),
     );
   }

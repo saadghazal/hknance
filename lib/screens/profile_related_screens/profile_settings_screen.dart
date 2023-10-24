@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_app_button.dart';
+import 'package:hknance/widgets/main_logout_button.dart';
 
 import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
@@ -21,9 +22,11 @@ class ProfileSettingsScreen extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(
+          child:  Icon(
             Icons.arrow_back_ios_rounded,
             color: AppColors.primaryDark,
+            size: ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
+
           ),
         ),
       ),
@@ -89,22 +92,7 @@ class ProfileSettingsScreen extends StatelessWidget {
           horizontal: 28.w,
           vertical: bottomPadding == 0 ? 20.h : bottomPadding.h,
         ),
-        child: MainAppButton(
-          label: 'Logout',
-          height: 40.h,
-          width: double.maxFinite,
-          onTap: () {
-            RoutingAnimation.leftToRight(screen: OnBoardingScreen());
-          },
-          borderRadius: 12.r,
-          backgroundColor: Colors.redAccent,
-          splashColor: Colors.red,
-          isIconed: true,
-          icon: const Icon(
-            Icons.logout,
-            color: AppColors.lightGrey,
-          ),
-        ),
+        child:MainLogoutButton(),
       ),
     );
   }

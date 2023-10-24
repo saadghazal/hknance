@@ -4,6 +4,7 @@ import 'package:hknance/screens/on_boarding_screen.dart';
 import 'package:hknance/utils/routing_animation.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
+import 'package:hknance/widgets/main_logout_button.dart';
 
 import '../../widgets/main_app_button.dart';
 
@@ -66,26 +67,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
               SizedBox(
                 height: 10.h,
               ),
-              MainAppButton(
-                label: 'Logout',
-                height: 40.h,
-                width: double.maxFinite,
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    RoutingAnimation.leftToRight(screen: OnBoardingScreen()),
-                    (route) => false,
-                  );
-                },
-                borderRadius: 12.r,
-                backgroundColor: Colors.redAccent,
-                splashColor: Colors.red,
-                isIconed: true,
-                icon: const Icon(
-                  Icons.logout,
-                  color: AppColors.lightGrey,
-                ),
-              ),
+              MainLogoutButton(),
             ],
           ),
         ),

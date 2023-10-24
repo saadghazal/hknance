@@ -18,7 +18,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
@@ -33,9 +33,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Icon(
+                  child:  Icon(
                     Icons.close,
                     color: AppColors.primaryDark,
+                    size: ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
+
                   ),
                 ),
                 const Spacer(
@@ -100,7 +102,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         text: '${postTextController.text.length}/300',
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w700,
-                        fontColor: is280? Colors.redAccent :  AppColors.primaryYellow,
+                        fontColor:
+                            is280 ? Colors.redAccent : AppColors.primaryYellow,
                       ),
                     ],
                   ),
@@ -117,12 +120,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     maxLines: 15,
                     textInputAction: TextInputAction.newline,
                     onChanged: (value) {
-                      if(postTextController.text.length >= 280){
+                      if (postTextController.text.length >= 280) {
                         setState(() {
                           is280 = true;
                         });
-
-                      }else {
+                      } else {
                         setState(() {
                           is280 = false;
                         });
@@ -131,15 +133,22 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     },
                     style: TextStyle(
                       color: AppColors.primaryDark,
+                      fontSize: ScreenUtil().deviceType() == DeviceType.tablet
+                          ? 14.sp
+                          : null,
                     ),
                     maxLength: 300,
                     decoration: InputDecoration(
-                        hintText: 'What\'s on your mind?',
-                        counterText: '',
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(
-                          color: AppColors.primaryDark.withOpacity(0.45),
-                        )),
+                      hintText: 'What\'s on your mind?',
+                      counterText: '',
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        color: AppColors.primaryDark.withOpacity(0.45),
+                        fontSize: ScreenUtil().deviceType() == DeviceType.tablet
+                            ? 14.sp
+                            : null,
+                      ),
+                    ),
                   ),
                 )
               ],

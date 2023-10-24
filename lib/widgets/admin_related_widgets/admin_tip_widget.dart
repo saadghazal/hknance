@@ -85,9 +85,11 @@ class AdminTipWidget extends StatelessWidget {
                 ),
               );
             },
-            child: const Icon(
+            child:  Icon(
               Icons.edit,
               color: AppColors.primaryDark,
+              size: ScreenUtil().deviceType() == DeviceType.tablet ? 24.sp : 22.sp,
+
             ),
           ),
         ],

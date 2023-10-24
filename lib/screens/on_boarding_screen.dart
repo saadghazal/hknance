@@ -34,11 +34,10 @@ class OnBoardingScreen extends StatelessWidget {
               Spacer(),
               MainAppButton(
                 label: 'User',
-                height: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 80.h
-                    : 50.h,
+                height:
+                     50.h,
                 width: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 200.w
+                    ? 300.w
                     : double.maxFinite,
                 onTap: () {
                   Navigator.of(context).push(
@@ -62,11 +61,9 @@ class OnBoardingScreen extends StatelessWidget {
               ),
               MainAppButton(
                 label: 'Admin',
-                height: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 80.h
-                    : 50.h,
+                height:  50.h,
                 width: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 200.w
+                    ? 300.w
                     : double.maxFinite,
                 onTap: () {
                   Navigator.of(context).push(

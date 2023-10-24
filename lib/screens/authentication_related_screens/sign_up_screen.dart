@@ -3,12 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_successfully_screen.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 
-
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 import '../../widgets/main_app_button.dart';
 import '../../widgets/main_text_field.dart';
-
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -16,15 +14,20 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:MainAppBar(title: 'Sign Up', backIcon:InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: const Icon(
-          Icons.close,
-          color: AppColors.primaryDark,
+      appBar: MainAppBar(
+        title: 'Sign Up',
+        backIcon: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.close,
+            color: AppColors.primaryDark,
+            size:
+                ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
+          ),
         ),
-      ), ) ,
+      ),
       body: SizedBox(
         height: double.maxFinite,
         width: double.maxFinite,

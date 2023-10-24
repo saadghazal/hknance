@@ -59,9 +59,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     borderRadius: BorderRadius.circular(8.r),
                     color: AppColors.primaryDark,
                   ),
-                  child: const Icon(
+                  child:  Icon(
                     Icons.add,
                     color: AppColors.primaryYellow,
+                    size: ScreenUtil().deviceType() == DeviceType.tablet ? 22.sp : 20.sp,
                   ),
                 ),
               ),

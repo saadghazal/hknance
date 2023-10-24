@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/theme/app_colors.dart';
 
-
 class CommentTextField extends StatefulWidget {
   const CommentTextField({super.key});
 
@@ -20,6 +19,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
     super.dispose();
     commentController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -27,12 +27,12 @@ class _CommentTextFieldState extends State<CommentTextField> {
       elevation: 0,
       color: Colors.white,
       child: Container(
-        height: 80.h,
+        height: ScreenUtil().deviceType() == DeviceType.tablet ? 60.h: 80.h,
         padding: EdgeInsets.only(
           left: 28.w,
           right: 28.w,
           bottom: 20.h,
-          top: 5.h,
+          top:  5.h,
         ),
         width: double.maxFinite,
         decoration: const BoxDecoration(
@@ -57,33 +57,41 @@ class _CommentTextFieldState extends State<CommentTextField> {
                     }
                     setState(() {});
                   },
-                  style: const TextStyle(
+                  style:  TextStyle(
                     color: AppColors.lightGrey,
                     fontWeight: FontWeight.w500,
+                    fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 12.sp : null,
                   ),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.primaryDarkGrey,
                     hintText: 'Aa',
-                    hintStyle: const TextStyle(
+                    hintStyle:  TextStyle(
                       color: AppColors.lightGrey,
                       fontWeight: FontWeight.w500,
+                      fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 12.sp : null,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.r),
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryDarkGrey)),
+                      borderRadius: BorderRadius.circular(50.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryDarkGrey,
+                      ),
+                    ),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.r),
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryDarkGrey)),
+                      borderRadius: BorderRadius.circular(50.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryDarkGrey,
+                      ),
+                    ),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.r),
-                        borderSide:
-                        const BorderSide(color: AppColors.primaryDarkGrey)),
+                      borderRadius: BorderRadius.circular(50.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryDarkGrey,
+                      ),
+                    ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 15.w,
-                      vertical: 5.h,
+                      vertical: ScreenUtil().deviceType() == DeviceType.tablet ? 10.h : 5.h,
                     ),
                   ),
                 ),
@@ -91,8 +99,8 @@ class _CommentTextFieldState extends State<CommentTextField> {
             ),
             isTyping
                 ? SizedBox(
-              width: 10.w,
-            )
+                    width: 10.w,
+                  )
                 : const SizedBox(),
             Visibility(
               visible: isTyping,
@@ -100,7 +108,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
                 'assets/icons/send.png',
                 height: 40.h,
                 width: 20.w,
-                color: AppColors.primaryDarkGrey,
+                color: AppColors.lightGrey,
               ),
             )
           ],

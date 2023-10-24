@@ -31,9 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(
+          child:  Icon(
             Icons.arrow_back_ios_rounded,
             color: AppColors.primaryDark,
+            size: ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
           ),
         ),
       ),
@@ -150,9 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: RichText(
                         text: TextSpan(
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontFamily: 'Open Sans',
                             color: AppColors.primaryDark,
+                            fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 14.sp : 12.sp
                           ),
                           children: [
                             TextSpan(

@@ -22,9 +22,10 @@ class FloatingAddButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: AppColors.primaryDark,
         ),
-        child: const Icon(
+        child:  Icon(
           Icons.add,
           color: AppColors.primaryYellow,
+          size: ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
         ),
       ),
     );
