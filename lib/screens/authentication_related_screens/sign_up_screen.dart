@@ -54,28 +54,7 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(
                   height: 40.h,
                 ),
-                AppTexts.body(
-                  text: 'Profile Picture',
-                  fontSize: 15.sp,
-                  fontColor: AppColors.primaryDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Center(
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.primaryDark,
-                    radius: 40.r,
-                    child: Icon(
-                      Icons.photo_camera_rounded,
-                      size: 32.sp,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
+
                 AppTexts.body(
                   text: 'Name',
                   fontSize: 15.sp,
