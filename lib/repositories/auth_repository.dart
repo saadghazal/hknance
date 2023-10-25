@@ -83,6 +83,13 @@ class AuthRepository {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
+      if(e.code == 'INVALID_LOGIN_CREDENTIALS'){
+        throw  ErrorHandler(
+          code: e.code,
+          message: 'Either your email or password are wrong',
+          plugin: e.plugin,
+        );
+      }
       throw ErrorHandler(
         code: e.code,
         message: e.message ?? 'Unexpected Error',

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_successfully_screen.dart';
-import 'package:hknance/utils/errors/error_handler.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
-import 'package:hknance/view_controllers/password_config_cubit/password_config_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_loading.dart';
+import 'package:hknance/widgets/password_text_field.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
@@ -170,33 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    BlocBuilder<PasswordConfigCubit, PasswordConfigState>(
-                      builder: (context, password) {
-                        return MainTextField(
-                          controller: passwordController,
-                          hintText: 'Enter your password',
-                          isPassword:
-                              password.passwordStatus == PasswordStatus.hidden,
-                          suffix: Padding(
-                            padding: EdgeInsets.only(right: 10.w),
-                            child: InkWell(
-                              onTap: () {
-                                context
-                                    .read<PasswordConfigCubit>()
-                                    .togglePasswordStatus();
-                              },
-                              child: Image.asset(
-                                password.passwordStatus == PasswordStatus.hidden
-                                    ? 'assets/icons/eye_closed.png'
-                                    : 'assets/icons/eye_opened.png',
-                                height: 25.h,
-                                color: AppColors.primaryDark,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    PasswordTextField(controller: passwordController),
                     SizedBox(
                       height: 40.h,
                     ),
@@ -212,7 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   nameController.text.isEmpty) {
                                 showErrorSnackBar(
                                   context: context,
-                                  errorMessage: 'Please fill the missing value',
+                                  errorMessage:
+                                      'Please fill the missing fields',
                                 );
                                 return;
                               }
