@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 
 import '../screens/on_boarding_screen.dart';
 import '../utils/routing_animation.dart';
@@ -16,12 +18,8 @@ class MainLogoutButton extends StatelessWidget {
       label: 'Logout',
       height: 40.h,
       width: double.maxFinite,
-      onTap: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          RoutingAnimation.leftToRight(screen: OnBoardingScreen()),
-              (route) => false,
-        );
+      onTap: () async{
+      await  context.read<SignOutCubit>().signOut();
       },
       borderRadius: 12.r,
       backgroundColor: Colors.redAccent,

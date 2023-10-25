@@ -103,4 +103,22 @@ class AuthRepository {
       );
     }
   }
+  Future<void> logout()async{
+    try{
+      await _firebaseAuth.signOut();
+    }on FirebaseAuthException catch(e){
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+    on FirebaseException catch(e){
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+  }
 }

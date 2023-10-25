@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../utils/theme/app_colors.dart';
 
 class MainLoading extends StatelessWidget {
-  const MainLoading({super.key});
+  const MainLoading({this.color,super.key});
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,11 @@ class MainLoading extends StatelessWidget {
       width: double.maxFinite,
       child: Center(
         child: Platform.isIOS
-            ? const CupertinoActivityIndicator(
-                color: AppColors.primaryDark,
+            ?  CupertinoActivityIndicator(
+                color: color ?? AppColors.primaryDark,
               )
-            : const CircularProgressIndicator(
-                color: AppColors.primaryDark,
+            :  CircularProgressIndicator(
+                color: color ?? AppColors.primaryDark,
               ),
       ),
     );

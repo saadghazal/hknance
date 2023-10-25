@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/screens/profile_related_screens/profile_settings_screen.dart';
 import 'package:hknance/utils/routing_animation.dart';
+import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 
 import 'package:hknance/widgets/main_app_button.dart';
 
@@ -24,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
   late ScrollController scrollController;
   bool hideAppBar = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -143,7 +147,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           RoutingAnimation.downToUp(
-                            screen: const ProfileSettingsScreen(),
+                            screen: BlocProvider<SignOutCubit>(
+                              create: (context) => SignOutCubit(
+                                  authRepository:
+                                      context.read<AuthRepository>()),
+                              child: const ProfileSettingsScreen(),
+                            ),
                           ),
                         );
                       },
