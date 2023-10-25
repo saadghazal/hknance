@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/screens/authentication_related_screens/login_screen.dart';
-import 'package:hknance/widgets/main_app_button.dart';
 
-import '../utils/theme/app_colors.dart';
+import 'package:hknance/widgets/on_boarding_button.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -31,57 +29,12 @@ class OnBoardingScreen extends StatelessWidget {
                 width: 100.w,
                 fit: BoxFit.cover,
               ),
-              Spacer(),
-              MainAppButton(
-                label: 'User',
-                height:
-                     50.h,
-                width: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 300.w
-                    : double.maxFinite,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(
-                        isAdmin: false,
-                      ),
-                    ),
-                  );
-                },
-                fontSize: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 18.sp
-                    : 16.sp,
-                borderRadius: 12.r,
-                backgroundColor: AppColors.primaryYellow,
-                fontColor: AppColors.primaryDark,
-                splashColor: Colors.white,
-              ),
+              const Spacer(),
+              const OnBoardingButton(isAdmin: false),
               SizedBox(
                 height: 10.h,
               ),
-              MainAppButton(
-                label: 'Admin',
-                height:  50.h,
-                width: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 300.w
-                    : double.maxFinite,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(
-                        isAdmin: true,
-                      ),
-                    ),
-                  );
-                },
-                fontSize: ScreenUtil().deviceType() == DeviceType.tablet
-                    ? 18.sp
-                    : 16.sp,
-                borderRadius: 12.r,
-                borderColor: AppColors.primaryDark,
-                fontColor: AppColors.primaryDark,
-                backgroundColor: Colors.transparent,
-              ),
+              const OnBoardingButton(isAdmin: true)
             ],
           ),
         ),

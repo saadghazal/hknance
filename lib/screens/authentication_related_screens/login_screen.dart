@@ -167,52 +167,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextSpan(
                               text: 'Don\'t have an account? ',
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.of(context).push(
-                                    RoutingAnimation.downToUp(
-                                      screen: MultiBlocProvider(
-                                        providers: [
-                                          BlocProvider(
-                                            create: (context) => SignUpCubit(
-                                              authRepository: context
-                                                  .read<AuthRepository>(),
-                                            ),
-                                          ),
-                                          BlocProvider<PasswordConfigCubit>(
-                                            create: (context) =>
-                                                PasswordConfigCubit(),
-                                          ),
-                                        ],
-                                        child: SignUpScreen(),
-                                      ),
-                                    ),
-                                  );
-                                },
+                                ..onTap = ()=> openSignUpScreen(context)
                             ),
                             TextSpan(
                               text: 'Sign Up!',
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.of(context).push(
-                                    RoutingAnimation.downToUp(
-                                      screen: MultiBlocProvider(
-                                        providers: [
-                                          BlocProvider(
-                                            create: (context) => SignUpCubit(
-                                              authRepository: context
-                                                  .read<AuthRepository>(),
-                                            ),
-                                          ),
-                                          BlocProvider<PasswordConfigCubit>(
-                                            create: (context) =>
-                                                PasswordConfigCubit(),
-                                          ),
-                                        ],
-                                        child: SignUpScreen(),
-                                      ),
-                                    ),
-                                  );
-                                },
+                                ..onTap = ()=> openSignUpScreen(context),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                               ),
@@ -230,4 +190,26 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+void openSignUpScreen(BuildContext context){
+  Navigator.of(context).push(
+    RoutingAnimation.downToUp(
+      screen: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SignUpCubit(
+              authRepository: context
+                  .read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider<PasswordConfigCubit>(
+            create: (context) =>
+                PasswordConfigCubit(),
+          ),
+        ],
+        child: SignUpScreen(),
+      ),
+    ),
+  );
 }
