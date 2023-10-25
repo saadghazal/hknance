@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/screens/admin_related_screens/admin_main_screen.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_screen.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/utils/routing_animation.dart';
+import 'package:hknance/view_controllers/password_config_cubit/password_config_cubit.dart';
+import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 
 import 'package:hknance/widgets/main_app_button.dart';
@@ -15,6 +19,7 @@ import '../../utils/theme/app_texts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({required this.isAdmin, super.key});
+
   final bool isAdmin;
 
   @override
@@ -31,10 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child:  Icon(
+          child: Icon(
             Icons.arrow_back_ios_rounded,
             color: AppColors.primaryDark,
-            size: ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
+            size:
+                ScreenUtil().deviceType() == DeviceType.tablet ? 26.sp : 24.sp,
           ),
         ),
       ),
@@ -116,22 +122,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40.h,
                 width: double.maxFinite,
                 onTap: () {
-                  if(widget.isAdmin){
+                  if (widget.isAdmin) {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (context) => AdminMainScreen(),
                       ),
-                          (route) => false,
+                      (route) => false,
                     );
-                  }else {
+                  } else {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (context) => MainScreen(),
                       ),
-                          (route) => false,
+                      (route) => false,
                     );
                   }
-
                 },
                 borderRadius: 12.r,
               ),
@@ -151,11 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: RichText(
                         text: TextSpan(
-                          style:  TextStyle(
-                            fontFamily: 'Open Sans',
-                            color: AppColors.primaryDark,
-                            fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 14.sp : 12.sp
-                          ),
+                          style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              color: AppColors.primaryDark,
+                              fontSize:
+                                  ScreenUtil().deviceType() == DeviceType.tablet
+                                      ? 14.sp
+                                      : 12.sp),
                           children: [
                             TextSpan(
                               text: 'Don\'t have an account? ',
@@ -163,7 +170,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ..onTap = () {
                                   Navigator.of(context).push(
                                     RoutingAnimation.downToUp(
-                                      screen: SignUpScreen(),
+                                      screen: MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider(
+                                            create: (context) => SignUpCubit(
+                                              authRepository: context
+                                                  .read<AuthRepository>(),
+                                            ),
+                                          ),
+                                          BlocProvider<PasswordConfigCubit>(
+                                            create: (context) =>
+                                                PasswordConfigCubit(),
+                                          ),
+                                        ],
+                                        child: SignUpScreen(),
+                                      ),
                                     ),
                                   );
                                 },
@@ -174,7 +195,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ..onTap = () {
                                   Navigator.of(context).push(
                                     RoutingAnimation.downToUp(
-                                      screen: SignUpScreen(),
+                                      screen: MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider(
+                                            create: (context) => SignUpCubit(
+                                              authRepository: context
+                                                  .read<AuthRepository>(),
+                                            ),
+                                          ),
+                                          BlocProvider<PasswordConfigCubit>(
+                                            create: (context) =>
+                                                PasswordConfigCubit(),
+                                          ),
+                                        ],
+                                        child: SignUpScreen(),
+                                      ),
                                     ),
                                   );
                                 },
