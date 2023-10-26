@@ -11,7 +11,6 @@ import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/profile_related_widgets/profile_header.dart';
 
 import '../../utils/theme/app_colors.dart';
-import '../../utils/theme/app_texts.dart';
 import '../../widgets/post_related_widgets/post_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -54,39 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: Column(
               children: [
                 ProfileHeader(userModel: state.userModel),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: MainAppButton(
-                          label: 'Profile Settings',
-                          height: 40.h,
-                          width: double.maxFinite,
-                          onTap: () {
-                            Navigator.of(context).push(
-                              RoutingAnimation.downToUp(
-                                screen: BlocProvider<SignOutCubit>(
-                                  create: (context) => SignOutCubit(
-                                      authRepository:
-                                          context.read<AuthRepository>()),
-                                  child: const ProfileSettingsScreen(),
-                                ),
-                              ),
-                            );
-                          },
-                          borderRadius: 10.r,
-                          borderColor: AppColors.primaryDark,
-                          backgroundColor: Colors.transparent,
-                          fontColor: AppColors.primaryDark,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+
+
                 SizedBox(
                   height: 10.h,
                 ),

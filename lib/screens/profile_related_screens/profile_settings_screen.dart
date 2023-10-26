@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/main_loading.dart';
@@ -19,6 +20,7 @@ class ProfileSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userModel = context.read<UserBloc>().state.userModel;
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
     return BlocConsumer<SignOutCubit, SignOutState>(
       listener: (context, state) {
@@ -60,9 +62,13 @@ class ProfileSettingsScreen extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 35.r,
-                backgroundImage: const AssetImage(
-                  'assets/icons/profile_photo.png',
-                ),
+                backgroundColor: AppColors.primaryDark,
+                backgroundImage: userModel.profilePicture.isNotEmpty
+                    ? NetworkImage(
+                  userModel.profilePicture,
+                )
+                    : AssetImage('assets/icons/profile-icon-9.png')
+                as ImageProvider,
               ),
               SizedBox(
                 height: 10.h,
@@ -98,7 +104,7 @@ class ProfileSettingsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppTexts.body(
-                            text: 'Sa\'ad Ghazal',
+                            text: userModel.name,
                             fontSize: 15.sp,
                           ),
                           Divider(),
