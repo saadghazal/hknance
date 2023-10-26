@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/post_data_model.dart';
 
 import '../../screens/post_related_screens/post_screen.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({required this.postContent,required this.userImage,super.key,});
-  final String postContent;
-  final String userImage;
+  const PostWidget({
+    required this.postModel,
+    super.key,
+  });
+  final PostModel postModel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +30,29 @@ class PostWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 16.r,
-                backgroundImage: AssetImage(userImage),
+                backgroundColor: AppColors.primaryDark,
+                backgroundImage: postModel.postUserPhoto.isNotEmpty
+                    ? NetworkImage(
+                        postModel.postUserPhoto,
+                      )
+                    : AssetImage('assets/icons/profile-icon-9.png')
+                        as ImageProvider,
               ),
               SizedBox(
                 width: 7.w,
               ),
               AppTexts.body(
-                text: 'Username',
+                text: postModel.postUserName,
                 fontSize: 14.sp,
                 isHeadline: true,
               ),
               const Spacer(),
-               Icon(
+              Icon(
                 Icons.more_horiz_rounded,
                 color: AppColors.primaryDark,
-                 size: ScreenUtil().deviceType() == DeviceType.tablet ? 22.sp : 20.sp,
+                size: ScreenUtil().deviceType() == DeviceType.tablet
+                    ? 22.sp
+                    : 20.sp,
               ),
             ],
           ),
@@ -49,7 +60,7 @@ class PostWidget extends StatelessWidget {
             height: 8.h,
           ),
           AppTexts.body(
-            text: postContent,
+            text: postModel.postContent,
             overflow: TextOverflow.clip,
             fontSize: 13.5.sp,
             fontColor: AppColors.primaryDark,
@@ -63,8 +74,7 @@ class PostWidget extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PostScreen(
-                    userText: postContent,
-                    userPhoto: userImage,
+                    postModel: postModel,
                   ),
                 ),
               );

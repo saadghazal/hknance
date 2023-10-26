@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hknance/repositories/community_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/main_screens/community_screen.dart';
 import 'package:hknance/screens/profile_related_screens/profile_screen.dart';
 import 'package:hknance/screens/main_screens/tips_screen.dart';
+import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
 import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 import 'package:hknance/widgets/nav_bar_widget.dart';
 
@@ -33,11 +35,18 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserBloc>(
-      create: (context) =>
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(
+          create: (context) =>
           UserBloc(userRepository: context.read<UserRepository>())
             ..add(GetUserDataEvent()),
-      lazy: false,
+          lazy: false,
+        ),
+        BlocProvider<CommunityCubit>(
+          create: (context) => CommunityCubit(communityRepository: context.read<CommunityRepository>()),
+        ),
+      ],
       child: Scaffold(
         body: screens[currentIndex],
         bottomNavigationBar: NavBarWidget(

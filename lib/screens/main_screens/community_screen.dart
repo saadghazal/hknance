@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/utils/routing_animation.dart';
+import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 
 import 'package:hknance/widgets/post_related_widgets/post_widget.dart';
 
@@ -47,7 +50,17 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 onTap: () {
                   Navigator.of(context).push(
                     RoutingAnimation.downToUp(
-                      screen: AddPostScreen(),
+                      screen: MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(
+                            value: context.read<CommunityCubit>(),
+                          ),
+                          BlocProvider.value(
+                            value: context.read<UserBloc>(),
+                          ),
+                        ],
+                        child: AddPostScreen(),
+                      ),
                     ),
                   );
                 },
@@ -59,10 +72,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     borderRadius: BorderRadius.circular(8.r),
                     color: AppColors.primaryDark,
                   ),
-                  child:  Icon(
+                  child: Icon(
                     Icons.add,
                     color: AppColors.primaryYellow,
-                    size: ScreenUtil().deviceType() == DeviceType.tablet ? 22.sp : 20.sp,
+                    size: ScreenUtil().deviceType() == DeviceType.tablet
+                        ? 22.sp
+                        : 20.sp,
                   ),
                 ),
               ),
@@ -79,11 +94,13 @@ class _CommunityScreenState extends State<CommunityScreen> {
           separatorBuilder: (context, index) => SizedBox(
             height: 10.h,
           ),
-          itemBuilder: (context, index) => PostWidget(
-            postContent: questions[index],
-            userImage: profilePictures[index],
-          ),
-          itemCount: 3,
+          itemBuilder: (context, index) {
+            final post =
+                context.watch<CommunityCubit>().state.communityPosts[index];
+            return PostWidget(postModel: post);
+          },
+          itemCount:
+              context.watch<CommunityCubit>().state.communityPosts.length,
         ),
       ),
     );

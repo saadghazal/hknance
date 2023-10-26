@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
 
 import '../utils/theme/app_colors.dart';
 import '../utils/theme/app_texts.dart';
-
 
 class NavBarWidget extends StatelessWidget {
   const NavBarWidget({
     required this.currentIndex,
     required this.onTap,
-    this.isAdmin =false,
+    this.isAdmin = false,
     super.key,
   });
   final Function(int) onTap;
@@ -42,57 +43,68 @@ class NavBarWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: isAdmin ? Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          navBarItem(
-            condition: currentIndex == 0,
-            onTap: () => onTap(0),
-            icon: 'assets/icons/news.png',
-            label: 'News',
-          ),
-          navBarItem(
-            condition: currentIndex == 1,
-            onTap: () => onTap(1),
-            icon: 'assets/icons/light-bulb.png',
-            label: 'Tips',
-          ),
-          navBarItem(
-            condition: currentIndex == 2,
-            onTap: () => onTap(2),
-            icon: 'assets/icons/user.png',
-            label: 'Profile',
-          ),
-        ],
-      ) : Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          navBarItem(
-            condition: currentIndex == 0,
-            onTap: () => onTap(0),
-            icon: 'assets/icons/news.png',
-            label: 'News',
-          ),
-          navBarItem(
-            condition: currentIndex == 1,
-            onTap: () => onTap(1),
-            icon: 'assets/icons/light-bulb.png',
-            label: 'Tips',
-          ),
-          navBarItem(
-            condition: currentIndex == 2,
-            onTap: () => onTap(2),
-            icon: 'assets/icons/globe.png',
-            label: 'Community',
-          ),
-          navBarItem(
-            condition: currentIndex == 3,
-            onTap: () => onTap(3),
-            icon: 'assets/icons/user.png',
-            label: 'Profile',
-          ),
-        ],
-      ),
+      child: isAdmin
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                navBarItem(
+                  condition: currentIndex == 0,
+                  onTap: () => onTap(0),
+                  icon: 'assets/icons/news.png',
+                  label: 'News',
+                ),
+                navBarItem(
+                  condition: currentIndex == 1,
+                  onTap: () => onTap(1),
+                  icon: 'assets/icons/light-bulb.png',
+                  label: 'Tips',
+                ),
+                navBarItem(
+                  condition: currentIndex == 2,
+                  onTap: ()  {
+                    onTap(2);
+                  },
+                  icon: 'assets/icons/user.png',
+                  label: 'Profile',
+                ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                navBarItem(
+                  condition: currentIndex == 0,
+                  onTap: () => onTap(0),
+                  icon: 'assets/icons/news.png',
+                  label: 'News',
+                ),
+                navBarItem(
+                  condition: currentIndex == 1,
+                  onTap: () => onTap(1),
+                  icon: 'assets/icons/light-bulb.png',
+                  label: 'Tips',
+                ),
+                navBarItem(
+                  condition: currentIndex == 2,
+                  onTap: () => onTap(2),
+                  icon: 'assets/icons/globe.png',
+                  label: 'Community',
+                ),
+                navBarItem(
+                  condition: currentIndex == 3,
+                  onTap: () async{
+                    if(currentIndex == 3){
+                      return ;
+                    }
+                    onTap(3);
+                    await context.read<CommunityCubit>().getUserPosts();
+
+                  } ,
+                  icon: 'assets/icons/user.png',
+                  label: 'Profile',
+                ),
+              ],
+            ),
     );
   }
 }

@@ -1,17 +1,18 @@
+import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
 import 'comment_data_model.dart';
 
 Uuid uuid = Uuid();
 
-class PostModel {
-  String postId;
+class PostModel extends Equatable {
+  final String postId;
   final String userId;
   final String postUserName;
   final String postUserPhoto;
   final String postContent;
   final List<CommentModel> comments;
-  final DateTime createdAt;
+  final String createdAt;
 
   PostModel({
     String? id,
@@ -36,18 +37,30 @@ class PostModel {
   }
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     return PostModel(
       id: json['post_id'] as String,
       userId: json['user_id'] as String,
       postUserName: json['post_user_name'] as String,
       postUserPhoto: json['post_user_photo'] as String,
       postContent: json['post_content'] as String,
-      comments: List<CommentModel>.of(
+      comments: List<CommentModel>.from(
         json['comments'].map(
           (comment) => CommentModel.fromJson(comment),
         ),
       ),
-      createdAt: json['createdAt'] as DateTime,
+      createdAt: json['createdAt'],
     );
   }
+
+  @override
+  List<Object> get props => [
+        postId,
+        userId,
+        postUserName,
+        postUserPhoto,
+        postContent,
+        comments,
+        createdAt,
+      ];
 }

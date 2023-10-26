@@ -7,14 +7,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../utils/theme/app_colors.dart';
 
 class MainLoading extends StatelessWidget {
-  const MainLoading({this.color,super.key});
+  const MainLoading({this.width,this.color,super.key});
   final Color? color;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40.h,
-      width: double.maxFinite,
+      width: width ?? double.maxFinite,
       child: Center(
         child: Platform.isIOS
             ?  CupertinoActivityIndicator(

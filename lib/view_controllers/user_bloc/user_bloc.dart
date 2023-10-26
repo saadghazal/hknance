@@ -20,7 +20,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(loadingStatus: LoadingStatus.loading));
       try {
         final result = await _userRepository.getUserData();
-        print(result.toString());
         emit(
           state.copyWith(
             userModel: result,

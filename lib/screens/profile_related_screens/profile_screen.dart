@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/repositories/auth_repository.dart';
-import 'package:hknance/screens/profile_related_screens/profile_settings_screen.dart';
-import 'package:hknance/utils/routing_animation.dart';
-import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
-import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
+import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
+import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
 
-import 'package:hknance/widgets/main_app_button.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
+import 'package:hknance/widgets/post_related_widgets/post_place_holder.dart';
+
 import 'package:hknance/widgets/profile_related_widgets/profile_header.dart';
 
-import '../../utils/theme/app_colors.dart';
 import '../../widgets/post_related_widgets/post_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -29,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userPostsState = context.watch<CommunityCubit>().state;
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return Scaffold(
@@ -53,8 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: Column(
               children: [
                 ProfileHeader(userModel: state.userModel),
-
-
                 SizedBox(
                   height: 10.h,
                 ),
@@ -69,11 +66,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     separatorBuilder: (context, index) => SizedBox(
                       height: 10.h,
                     ),
-                    itemBuilder: (context, index) => PostWidget(
-                      postContent: questions[index],
-                      userImage: 'assets/icons/profile_photo.png',
-                    ),
-                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      if (userPostsState.getUserPostsLoading ==
+                          LoadingStatus.loading) {
+                        return PostPlaceHolder();
+                      }
+                      final post = context
+                          .watch<CommunityCubit>()
+                          .state
+                          .userPosts[index];
+                      return PostWidget(
+                        postModel: post,
+                      );
+                    },
+                    itemCount: userPostsState.getUserPostsLoading ==
+                            LoadingStatus.loading
+                        ? 3
+                        : context
+                            .watch<CommunityCubit>()
+                            .state
+                            .userPosts
+                            .length,
                   ),
                 ),
               ],

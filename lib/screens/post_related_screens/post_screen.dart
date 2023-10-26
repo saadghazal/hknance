@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/post_data_model.dart';
 import 'package:hknance/widgets/post_related_widgets/comment_text_field.dart';
 
 import '../../utils/theme/app_colors.dart';
@@ -8,12 +9,10 @@ import '../../widgets/post_related_widgets/comment_widget.dart';
 
 class PostScreen extends StatelessWidget {
   const PostScreen({
-    required this.userText,
-    required this.userPhoto,
+    required this.postModel,
     super.key,
   });
-  final String userText;
-  final String userPhoto;
+  final PostModel postModel;
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +48,19 @@ class PostScreen extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 16.r,
-                  backgroundImage: AssetImage(userPhoto),
+                  backgroundColor: AppColors.primaryDark,
+                  backgroundImage: postModel.postUserPhoto.isNotEmpty
+                      ? NetworkImage(
+                          postModel.postUserPhoto,
+                        )
+                      : AssetImage('assets/icons/profile-icon-9.png')
+                          as ImageProvider,
                 ),
                 SizedBox(
                   width: 7.w,
                 ),
                 AppTexts.body(
-                  text: 'Username',
+                  text: postModel.postUserName,
                   fontSize: 14.sp,
                   isHeadline: true,
                 ),
@@ -81,7 +86,7 @@ class PostScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: AppTexts.body(
-                    text: userText,
+                    text: postModel.postContent,
                     overflow: TextOverflow.clip,
                     fontSize: 13.5.sp,
                     fontColor: AppColors.primaryDark,
@@ -101,12 +106,9 @@ class PostScreen extends StatelessWidget {
                     height: 10.h,
                   ),
                   itemBuilder: (context, index) {
-                    return CommentWidget(
-                      userImage: userPhoto,
-                      commentText: 'How are you',
-                    );
+                    return SizedBox();
                   },
-                  itemCount: 10,
+                  itemCount: postModel.comments.length,
                 ),
                 SizedBox(
                   height: keyboardPadding == 0
