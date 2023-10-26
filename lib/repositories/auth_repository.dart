@@ -18,6 +18,7 @@ class AuthRepository {
         _firebaseFirestore = firebaseFirestore,
         _firebaseStorage = firebaseStorage;
 
+  Stream<User?> get isSignedIn => _firebaseAuth.authStateChanges();
   Future<void> signUp({
     required String name,
     required String email,

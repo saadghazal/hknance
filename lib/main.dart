@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/repositories/auth_repository.dart';
-import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/screens/splash_screen.dart';
+import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'utils/device_type.dart';
@@ -31,30 +31,34 @@ class MyApp extends StatelessWidget {
         firebaseFirestore: FirebaseFirestore.instance,
         firebaseStorage: FirebaseStorage.instance,
       ),
-      child: Sizer(
-        builder: (BuildContext context, Orientation orientation, deviceType) {
-          return ScreenUtilInit(
-            ensureScreenSize: true,
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, _) {
-              return MaterialApp(
-                title: 'Flutter Demo',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                  scaffoldBackgroundColor: Colors.white,
-                  colorScheme:
-                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                  // useMaterial3: true,
-
-                  fontFamily: 'Open Sans',
-                ),
-                home: SplashScreen(),
-              );
-            },
-            designSize: isTablet(deviceType) ? Size(600, 844) : Size(390, 844),
-          );
-        },
+      child: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(
+          authRepository: context.read<AuthRepository>(),
+        ),
+        child: Sizer(
+          builder: (BuildContext context, Orientation orientation, deviceType) {
+            return ScreenUtilInit(
+              ensureScreenSize: true,
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, _) {
+                return MaterialApp(
+                  title: 'Flutter Demo',
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                    scaffoldBackgroundColor: Colors.white,
+                    colorScheme:
+                        ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                    fontFamily: 'Open Sans',
+                  ),
+                  home: SplashScreen(),
+                );
+              },
+              designSize:
+                  isTablet(deviceType) ? Size(600, 844) : Size(390, 844),
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'image_picker_state.dart';
@@ -16,8 +17,8 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
     try {
       final image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-        imageQuality: 40,
       );
+
       if (image == null) {
         if (state.imageStatus != ImageStatus.picked) {
           emit(
@@ -29,7 +30,12 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
 
         return;
       } else {
-        var imageFile = File(image.path);
+        final compressedImage = await FlutterImageCompress.compressAndGetFile(
+          image.path,
+          '${image.path}.jpeg',
+          quality: 40,
+        );
+        var imageFile = File(compressedImage!.path);
         emit(
           state.copyWith(
             imageStatus: ImageStatus.picked,
