@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/repositories/auth_repository.dart';
+import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/splash_screen.dart';
+import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await ScreenUtil.ensureScreenSize();
+  await StorageService.init();
   runApp(const MyApp());
 }
 
@@ -25,16 +28,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<AuthRepository>(
-      create: (BuildContext context) => AuthRepository(
-        firebaseAuth: FirebaseAuth.instance,
-        firebaseFirestore: FirebaseFirestore.instance,
-        firebaseStorage: FirebaseStorage.instance,
-      ),
-      child: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(
-          authRepository: context.read<AuthRepository>(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (BuildContext context) =>
+              AuthRepository(
+                firebaseAuth: FirebaseAuth.instance,
+                firebaseFirestore: FirebaseFirestore.instance,
+                firebaseStorage: FirebaseStorage.instance,
+              ),
         ),
+        RepositoryProvider(
+          create: (context) => UserRepository(firebaseFirestore: FirebaseFirestore.instance),
+        ),
+      ],
+      child: BlocProvider<AuthBloc>(
+        create: (context) =>
+            AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+            ),
         child: Sizer(
           builder: (BuildContext context, Orientation orientation, deviceType) {
             return ScreenUtilInit(
@@ -48,14 +60,14 @@ class MyApp extends StatelessWidget {
                   theme: ThemeData(
                     scaffoldBackgroundColor: Colors.white,
                     colorScheme:
-                        ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                    ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                     fontFamily: 'Open Sans',
                   ),
                   home: SplashScreen(),
                 );
               },
               designSize:
-                  isTablet(deviceType) ? Size(600, 844) : Size(390, 844),
+              isTablet(deviceType) ? Size(600, 844) : Size(390, 844),
             );
           },
         ),

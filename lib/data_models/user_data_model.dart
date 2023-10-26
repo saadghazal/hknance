@@ -10,7 +10,14 @@ class UserModel {
     required this.profilePicture,
     required this.email,
   });
-
+  factory UserModel.initial() {
+    return UserModel(
+      id: '',
+      name: '',
+      profilePicture: '',
+      email: '',
+    );
+  }
   Map<String, dynamic> toJSON() {
     return {
       'id': id,
@@ -24,8 +31,13 @@ class UserModel {
     return UserModel(
       id: json['id'] as String,
       name: json['name'] as String,
-      profilePicture: json['profilePicture'] as String,
+      profilePicture: json['profile_pic'] as String,
       email: json['email'] as String,
     );
+  }
+
+  @override
+  String toString() {
+    return 'UserModel{id: $id, name: $name, profilePicture: $profilePicture, email: $email}';
   }
 }

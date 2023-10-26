@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/main_screens/community_screen.dart';
 import 'package:hknance/screens/profile_related_screens/profile_screen.dart';
 import 'package:hknance/screens/main_screens/tips_screen.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 import 'package:hknance/widgets/nav_bar_widget.dart';
 
 import 'home_screen.dart';
@@ -30,12 +33,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: screens[currentIndex],
-      bottomNavigationBar: NavBarWidget(
-        currentIndex: currentIndex,
-        onTap: changeCurrentScreen,
+    return BlocProvider<UserBloc>(
+      create: (context) =>
+          UserBloc(userRepository: context.read<UserRepository>())
+            ..add(GetUserDataEvent()),
+      lazy: false,
+      child: Scaffold(
+        body: screens[currentIndex],
+        bottomNavigationBar: NavBarWidget(
+          currentIndex: currentIndex,
+          onTap: changeCurrentScreen,
+        ),
       ),
     );
   }

@@ -5,14 +5,14 @@ import 'package:hknance/screens/authentication_related_screens/sign_up_successfu
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
+import 'package:hknance/widgets/auth_button.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_loading.dart';
 import 'package:hknance/widgets/password_text_field.dart';
+import 'package:hknance/widgets/text_field_section.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
-import '../../widgets/main_app_button.dart';
-import '../../widgets/main_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -171,37 +171,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 15.h,
                         ),
-                        AppTexts.body(
-                          text: 'Name',
-                          fontSize: 15.sp,
-                          fontColor: AppColors.primaryDark,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        MainTextField(
+                        TextFieldSection(
                           controller: nameController,
+                          title: 'Name',
                           hintText: 'Enter your name',
-                          textInputAction: TextInputAction.next,
+                          isLastField: false,
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        AppTexts.body(
-                          text: 'Email',
-                          fontSize: 15.sp,
-                          fontColor: AppColors.primaryDark,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        MainTextField(
+                        TextFieldSection(
                           controller: emailController,
+                          title: 'Email',
                           hintText: 'Enter your email',
-                          textInputAction: TextInputAction.next,
-                          suffix: Padding(
+                          isLastField: false,
+                          icon: Padding(
                             padding: EdgeInsets.only(right: 10.w),
                             child: Image.asset(
                               'assets/icons/mail.png',
@@ -209,9 +190,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: AppColors.primaryDark,
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
                         ),
                         AppTexts.body(
                           text: 'Password',
@@ -228,10 +206,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         state.loadingStatus == LoadingStatus.loading
                             ? const MainLoading()
-                            : MainAppButton(
+                            : AuthButton(
                                 label: 'SignUp',
-                                height: 40.h,
-                                width: double.maxFinite,
                                 onTap: () async {
                                   if (emailController.text.isEmpty ||
                                       passwordController.text.isEmpty ||
@@ -250,7 +226,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         pictureFile: imageState.imageFile,
                                       );
                                 },
-                                borderRadius: 12.r,
                               ),
                       ],
                     );
