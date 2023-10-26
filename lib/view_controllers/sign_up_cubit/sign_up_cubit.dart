@@ -18,7 +18,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String name,
     required String email,
     required String password,
-    File? pictureFile,
+    required File pictureFile,
   }) async {
     try {
       emit(

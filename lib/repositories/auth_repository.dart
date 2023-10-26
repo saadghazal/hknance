@@ -22,7 +22,7 @@ class AuthRepository {
     required String name,
     required String email,
     required String password,
-    File? profilePic,
+    required File profilePic,
   }) async {
     try {
       final userCredentials =
@@ -31,7 +31,8 @@ class AuthRepository {
         password: password,
       );
       String userId = userCredentials.user!.uid;
-      if (profilePic != null) {
+      if (profilePic.path.isNotEmpty) {
+        print('hi not empty image');
         final data = await _firebaseStorage
             .ref()
             .child('users/$userId')
@@ -83,8 +84,8 @@ class AuthRepository {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      if(e.code == 'INVALID_LOGIN_CREDENTIALS'){
-        throw  ErrorHandler(
+      if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
+        throw ErrorHandler(
           code: e.code,
           message: 'Either your email or password are wrong',
           plugin: e.plugin,
@@ -103,17 +104,17 @@ class AuthRepository {
       );
     }
   }
-  Future<void> logout()async{
-    try{
+
+  Future<void> logout() async {
+    try {
       await _firebaseAuth.signOut();
-    }on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       throw ErrorHandler(
         code: e.code,
         message: e.message ?? 'Unexpected Error',
         plugin: e.plugin,
       );
-    }
-    on FirebaseException catch(e){
+    } on FirebaseException catch (e) {
       throw ErrorHandler(
         code: e.code,
         message: e.message ?? 'Unexpected Error',

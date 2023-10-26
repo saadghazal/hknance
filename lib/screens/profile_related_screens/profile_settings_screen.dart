@@ -31,7 +31,7 @@ class ProfileSettingsScreen extends StatelessWidget {
         if (state.loadingStatus == LoadingStatus.loaded) {
           Navigator.pushAndRemoveUntil(
             context,
-            RoutingAnimation.leftToRight(screen: OnBoardingScreen()),
+            RoutingAnimation.leftToRight(screen:const OnBoardingScreen()),
             (route) => false,
           );
         }
@@ -60,7 +60,7 @@ class ProfileSettingsScreen extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 35.r,
-                backgroundImage: AssetImage(
+                backgroundImage: const AssetImage(
                   'assets/icons/profile_photo.png',
                 ),
               ),
@@ -116,7 +116,7 @@ class ProfileSettingsScreen extends StatelessWidget {
               vertical: bottomPadding == 0 ? 20.h : bottomPadding.h,
             ),
             child: state.loadingStatus == LoadingStatus.loading
-                ? MainLoading(
+                ? const MainLoading(
                     color: Colors.redAccent,
                   )
                 : MainLogoutButton(),

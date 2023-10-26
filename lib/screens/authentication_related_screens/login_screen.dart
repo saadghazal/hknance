@@ -8,6 +8,7 @@ import 'package:hknance/screens/authentication_related_screens/sign_up_screen.da
 import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/utils/routing_animation.dart';
+import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:hknance/view_controllers/password_config_cubit/password_config_cubit.dart';
 import 'package:hknance/view_controllers/sign_in_cubit/sign_in_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
@@ -240,6 +241,7 @@ void openSignUpScreen(BuildContext context) {
           BlocProvider<PasswordConfigCubit>(
             create: (context) => PasswordConfigCubit(),
           ),
+          BlocProvider<ImagePickerCubit>(create: (context)=> ImagePickerCubit(),),
         ],
         child: SignUpScreen(),
       ),
