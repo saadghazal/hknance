@@ -23,15 +23,15 @@ class PostModel {
     required this.createdAt,
   }) : postId = id ?? uuid.v1();
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
-      'post_id': this.postId,
-      'user_id': this.userId,
-      'post_user_name': this.postUserName,
-      'post_user_photo': this.postUserPhoto,
-      'post_content': this.postContent,
-      'comments': this.comments,
-      'createdAt': this.createdAt,
+      'post_id': postId,
+      'user_id': userId,
+      'post_user_name': postUserName,
+      'post_user_photo': postUserPhoto,
+      'post_content': postContent,
+      'comments': comments,
+      'createdAt': createdAt,
     };
   }
 
