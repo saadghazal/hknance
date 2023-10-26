@@ -25,6 +25,33 @@ class CommunityRepository {
     }
   }
 
+  Future<List<PostModel>> getCommunityPosts() async {
+    try {
+      final userId = await StorageService.getUserId();
+      final userData = await _firebaseFirestore
+          .collection('community')
+          .where('user_id', isNotEqualTo: userId)
+          .get();
+
+      final List<PostModel> userPosts = [];
+      userData.docs.forEach(
+        (e) => userPosts.add(
+          PostModel.fromJson(
+            e.data(),
+          ),
+        ),
+      );
+
+      return userPosts;
+    } on FirebaseException catch (e) {
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+  }
+
   Future<List<PostModel>> getUserPosts() async {
     try {
       final userId = await StorageService.getUserId();

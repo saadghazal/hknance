@@ -61,7 +61,7 @@ class NavBarWidget extends StatelessWidget {
                 ),
                 navBarItem(
                   condition: currentIndex == 2,
-                  onTap: ()  {
+                  onTap: () {
                     onTap(2);
                   },
                   icon: 'assets/icons/user.png',
@@ -86,20 +86,25 @@ class NavBarWidget extends StatelessWidget {
                 ),
                 navBarItem(
                   condition: currentIndex == 2,
-                  onTap: () => onTap(2),
+                  onTap: () async {
+                    if (currentIndex == 2) {
+                      return;
+                    }
+                    onTap(2);
+                    await context.read<CommunityCubit>().getCommunityPosts();
+                  },
                   icon: 'assets/icons/globe.png',
                   label: 'Community',
                 ),
                 navBarItem(
                   condition: currentIndex == 3,
-                  onTap: () async{
-                    if(currentIndex == 3){
-                      return ;
+                  onTap: () async {
+                    if (currentIndex == 3) {
+                      return;
                     }
                     onTap(3);
                     await context.read<CommunityCubit>().getUserPosts();
-
-                  } ,
+                  },
                   icon: 'assets/icons/user.png',
                   label: 'Profile',
                 ),

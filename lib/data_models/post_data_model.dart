@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,7 +13,7 @@ class PostModel extends Equatable {
   final String postUserPhoto;
   final String postContent;
   final List<CommentModel> comments;
-  final String createdAt;
+  final DateTime createdAt;
 
   PostModel({
     String? id,
@@ -37,7 +38,6 @@ class PostModel extends Equatable {
   }
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     return PostModel(
       id: json['post_id'] as String,
       userId: json['user_id'] as String,
@@ -49,7 +49,7 @@ class PostModel extends Equatable {
           (comment) => CommentModel.fromJson(comment),
         ),
       ),
-      createdAt: json['createdAt'],
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
     );
   }
 

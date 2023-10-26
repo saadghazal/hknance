@@ -29,8 +29,7 @@ class CommunityCubit extends Cubit<CommunityState> {
         postUserPhoto: userPhoto,
         postContent: postContent,
         comments: [],
-        createdAt:
-            '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
+        createdAt: DateTime.now(),
       );
       await _communityRepository.addPost(postModel: newPost);
       emit(
@@ -67,6 +66,30 @@ class CommunityCubit extends Cubit<CommunityState> {
       emit(
         state.copyWith(
           getUserPostsLoading: LoadingStatus.error,
+          errorHandler: e,
+        ),
+      );
+    }
+  }
+
+  Future<void> getCommunityPosts() async {
+    try {
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.loading,
+        ),
+      );
+      final result = await _communityRepository.getCommunityPosts();
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.loaded,
+          communityPosts: result,
+        ),
+      );
+    } on ErrorHandler catch (e) {
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
           errorHandler: e,
         ),
       );

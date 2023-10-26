@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/utils/theme/app_texts.dart';
 import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
 
@@ -55,40 +56,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      top: 20.h,
-                      bottom: 20.h,
-                    ),
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 10.h,
-                    ),
-                    itemBuilder: (context, index) {
-                      if (userPostsState.getUserPostsLoading ==
-                          LoadingStatus.loading) {
-                        return PostPlaceHolder();
-                      }
-                      final post = context
-                          .watch<CommunityCubit>()
-                          .state
-                          .userPosts[index];
-                      return PostWidget(
-                        postModel: post,
-                      );
-                    },
-                    itemCount: userPostsState.getUserPostsLoading ==
-                            LoadingStatus.loading
-                        ? 3
-                        : context
-                            .watch<CommunityCubit>()
-                            .state
-                            .userPosts
-                            .length,
-                  ),
-                ),
+                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
+                        userPostsState.userPosts.isEmpty
+                    ? Spacer()
+                    : SizedBox(),
+                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
+                        userPostsState.userPosts.isEmpty
+                    ? AppTexts.title2(
+                        text: 'No Posts',
+                        fontWeight: FontWeight.w500,
+                      )
+                    : Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.only(
+                            top: 20.h,
+                            bottom: 20.h,
+                          ),
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 10.h,
+                          ),
+                          itemBuilder: (context, index) {
+                            if (userPostsState.getUserPostsLoading ==
+                                LoadingStatus.loading) {
+                              return PostPlaceHolder();
+                            }
+                            final post = context
+                                .watch<CommunityCubit>()
+                                .state
+                                .userPosts[index];
+                            return PostWidget(
+                              postModel: post,
+                            );
+                          },
+                          itemCount: userPostsState.getUserPostsLoading ==
+                                  LoadingStatus.loading
+                              ? 3
+                              : context
+                                  .watch<CommunityCubit>()
+                                  .state
+                                  .userPosts
+                                  .length,
+                        ),
+                      ),
+                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
+                        userPostsState.userPosts.isEmpty
+                    ? Spacer(
+                        flex: 2,
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -97,3 +114,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+

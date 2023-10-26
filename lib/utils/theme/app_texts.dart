@@ -41,10 +41,12 @@ class AppTexts {
     FontWeight fontWeight = FontWeight.w400,
     Color fontColor = Colors.black,
     TextAlign textAlign = TextAlign.start,
+    TextOverflow overflow = TextOverflow.ellipsis
   }) {
     return Text(
       text,
       textAlign: textAlign,
+      overflow: overflow,
       style: TextStyle(
         fontSize:
             ScreenUtil().deviceType() == DeviceType.tablet ? 24.sp : 22.sp,
