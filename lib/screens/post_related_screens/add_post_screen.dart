@@ -127,14 +127,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         children: [
                           CircleAvatar(
                             radius: 16.r,
-                            backgroundImage:
-                                AssetImage('assets/icons/profile_photo.png'),
+                            backgroundColor: AppColors.primaryDark,
+                            backgroundImage: userModel.profilePicture.isNotEmpty
+                                ? NetworkImage(
+                              userModel.profilePicture,
+                            )
+                                :  AssetImage('assets/icons/profile-icon-9.png')
+                            as ImageProvider,
                           ),
                           SizedBox(
                             width: 7.w,
                           ),
                           AppTexts.body(
-                            text: 'Username',
+                            text: userModel.name,
                             fontSize: 14.sp,
                             isHeadline: true,
                           ),

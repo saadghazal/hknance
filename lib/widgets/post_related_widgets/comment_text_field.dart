@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/post_data_model.dart';
+import 'package:hknance/data_models/user_data_model.dart';
+import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 
 import '../../utils/theme/app_colors.dart';
 
 class CommentTextField extends StatefulWidget {
-  const CommentTextField({super.key});
+  const CommentTextField({
+    required this.postModel,
+    required this.userModel,
+    super.key,
+  });
+  final UserModel userModel;
+  final PostModel postModel;
 
   @override
   State<CommentTextField> createState() => _CommentTextFieldState();
@@ -27,12 +38,12 @@ class _CommentTextFieldState extends State<CommentTextField> {
       elevation: 0,
       color: Colors.white,
       child: Container(
-        height: ScreenUtil().deviceType() == DeviceType.tablet ? 60.h: 80.h,
+        height: ScreenUtil().deviceType() == DeviceType.tablet ? 60.h : 80.h,
         padding: EdgeInsets.only(
           left: 28.w,
           right: 28.w,
           bottom: 20.h,
-          top:  5.h,
+          top: 5.h,
         ),
         width: double.maxFinite,
         decoration: const BoxDecoration(
@@ -49,6 +60,19 @@ class _CommentTextFieldState extends State<CommentTextField> {
                   autofocus: true,
                   cursorColor: AppColors.lightGrey,
                   controller: commentController,
+                  onFieldSubmitted: (_) {
+                    if (commentController.text.isNotEmpty) {
+                      context.read<CommunityCubit>().addComment(
+                            userModel: widget.userModel,
+                            commentContent: commentController.text,
+                            postId: widget.postModel.postId,
+                          );
+                      commentController.clear();
+                      setState(() {
+
+                      });
+                    }
+                  },
                   onChanged: (_) {
                     if (commentController.text.isNotEmpty) {
                       isTyping = true;
@@ -57,19 +81,23 @@ class _CommentTextFieldState extends State<CommentTextField> {
                     }
                     setState(() {});
                   },
-                  style:  TextStyle(
+                  style: TextStyle(
                     color: AppColors.lightGrey,
                     fontWeight: FontWeight.w500,
-                    fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 12.sp : null,
+                    fontSize: ScreenUtil().deviceType() == DeviceType.tablet
+                        ? 12.sp
+                        : null,
                   ),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.primaryDarkGrey,
                     hintText: 'Aa',
-                    hintStyle:  TextStyle(
+                    hintStyle: TextStyle(
                       color: AppColors.lightGrey,
                       fontWeight: FontWeight.w500,
-                      fontSize: ScreenUtil().deviceType() == DeviceType.tablet ? 12.sp : null,
+                      fontSize: ScreenUtil().deviceType() == DeviceType.tablet
+                          ? 12.sp
+                          : null,
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.r),
@@ -91,7 +119,9 @@ class _CommentTextFieldState extends State<CommentTextField> {
                     ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 15.w,
-                      vertical: ScreenUtil().deviceType() == DeviceType.tablet ? 10.h : 5.h,
+                      vertical: ScreenUtil().deviceType() == DeviceType.tablet
+                          ? 10.h
+                          : 5.h,
                     ),
                   ),
                 ),
@@ -104,11 +134,28 @@ class _CommentTextFieldState extends State<CommentTextField> {
                 : const SizedBox(),
             Visibility(
               visible: isTyping,
-              child: Image.asset(
-                'assets/icons/send.png',
-                height: 40.h,
-                width: 20.w,
-                color: AppColors.lightGrey,
+              child: InkWell(
+                onTap: () {
+                  context.read<CommunityCubit>().addComment(
+                        userModel: widget.userModel,
+                        commentContent: commentController.text,
+                        postId: widget.postModel.postId,
+                      );
+                  commentController.clear();
+                  setState(() {
+
+                  });
+                },
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                child: Image.asset(
+                  'assets/icons/send.png',
+                  height: 40.h,
+                  width: 20.w,
+                  color: AppColors.lightGrey,
+                ),
               ),
             )
           ],

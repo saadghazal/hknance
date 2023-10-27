@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hknance/data_models/comment_data_model.dart';
 import 'package:hknance/data_models/post_data_model.dart';
+import 'package:hknance/data_models/user_data_model.dart';
 import 'package:hknance/utils/errors/error_handler.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
-import 'package:intl/intl.dart';
 
 import '../../repositories/community_repository.dart';
 
@@ -28,7 +32,6 @@ class CommunityCubit extends Cubit<CommunityState> {
         postUserName: username,
         postUserPhoto: userPhoto,
         postContent: postContent,
-        comments: [],
         createdAt: DateTime.now(),
       );
       await _communityRepository.addPost(postModel: newPost);
@@ -90,6 +93,42 @@ class CommunityCubit extends Cubit<CommunityState> {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
+          errorHandler: e,
+        ),
+      );
+    }
+  }
+
+  Future<void> addComment({
+    required UserModel userModel,
+    required String commentContent,
+    required String postId,
+  }) async {
+    try {
+      emit(
+        state.copyWith(
+          addCommentStatus: LoadingStatus.loading,
+        ),
+      );
+      CommentModel newComment = CommentModel(
+        commentUserName: userModel.name,
+        commentUserPhoto: userModel.profilePicture,
+        commentContent: commentContent,
+        createdAt: DateTime.now(),
+      );
+      await _communityRepository.addComment(
+        postId: postId,
+        newComment: newComment,
+      );
+      emit(
+        state.copyWith(
+          addCommentStatus: LoadingStatus.loaded,
+        ),
+      );
+    } on ErrorHandler catch (e) {
+      emit(
+        state.copyWith(
+          addCommentStatus: LoadingStatus.error,
           errorHandler: e,
         ),
       );

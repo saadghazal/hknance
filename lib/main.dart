@@ -13,11 +13,14 @@ import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:sizer/sizer.dart';
 
+import 'firebase_options.dart';
 import 'utils/device_type.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await ScreenUtil.ensureScreenSize();
   await StorageService.init();
   runApp(const MyApp());
@@ -69,11 +72,11 @@ class MyApp extends StatelessWidget {
                         ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                     fontFamily: 'Open Sans',
                   ),
-                  home: SplashScreen(),
+                  home: const SplashScreen(),
                 );
               },
               designSize:
-                  isTablet(deviceType) ? Size(600, 844) : Size(390, 844),
+                  isTablet(deviceType) ? const Size(600, 844) : const Size(390, 844),
             );
           },
         ),

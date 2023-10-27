@@ -12,7 +12,6 @@ class PostModel extends Equatable {
   final String postUserName;
   final String postUserPhoto;
   final String postContent;
-  final List<CommentModel> comments;
   final DateTime createdAt;
 
   PostModel({
@@ -21,7 +20,6 @@ class PostModel extends Equatable {
     required this.postUserName,
     required this.postUserPhoto,
     required this.postContent,
-    required this.comments,
     required this.createdAt,
   }) : postId = id ?? uuid.v1();
 
@@ -32,7 +30,6 @@ class PostModel extends Equatable {
       'post_user_name': postUserName,
       'post_user_photo': postUserPhoto,
       'post_content': postContent,
-      'comments': comments,
       'createdAt': createdAt,
     };
   }
@@ -44,12 +41,17 @@ class PostModel extends Equatable {
       postUserName: json['post_user_name'] as String,
       postUserPhoto: json['post_user_photo'] as String,
       postContent: json['post_content'] as String,
-      comments: List<CommentModel>.from(
-        json['comments'].map(
-          (comment) => CommentModel.fromJson(comment),
-        ),
-      ),
+
       createdAt: (json['createdAt'] as Timestamp).toDate(),
+    );
+  }
+  factory PostModel.initial() {
+    return PostModel(
+      userId: '',
+      postUserName: '',
+      postUserPhoto: '',
+      postContent: '',
+      createdAt: DateTime.now(),
     );
   }
 
@@ -60,7 +62,6 @@ class PostModel extends Equatable {
         postUserName,
         postUserPhoto,
         postContent,
-        comments,
         createdAt,
       ];
 }

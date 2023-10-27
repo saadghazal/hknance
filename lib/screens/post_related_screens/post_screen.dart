@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/comment_data_model.dart';
 import 'package:hknance/data_models/post_data_model.dart';
+import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
+import 'package:hknance/widgets/main_loading.dart';
 import 'package:hknance/widgets/post_related_widgets/comment_text_field.dart';
 
 import '../../utils/theme/app_colors.dart';
@@ -16,8 +21,8 @@ class PostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
     final keyboardPadding = MediaQuery.of(context).viewInsets.bottom;
+    final bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -99,16 +104,38 @@ class PostScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) => SizedBox(
-                    height: 10.h,
-                  ),
-                  itemBuilder: (context, index) {
-                    return SizedBox();
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('community')
+                      .doc(postModel.postId)
+                      .collection('comments')
+                      .orderBy('createdAt',descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return MainLoading();
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.active) {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: 10.h,
+                        ),
+                        itemBuilder: (context, index) {
+                          final comment = CommentModel.fromJson(
+                            snapshot.data!.docs[index].data(),
+                          );
+                          return CommentWidget(
+                            commentModel: comment,
+                          );
+                        },
+                        itemCount: snapshot.data!.docs.length,
+                      );
+                    } else {
+                      return SizedBox();
+                    }
                   },
-                  itemCount: postModel.comments.length,
                 ),
                 SizedBox(
                   height: keyboardPadding == 0
@@ -123,7 +150,10 @@ class PostScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomSheet: CommentTextField(),
+        bottomSheet: CommentTextField(
+          postModel: postModel,
+          userModel: context.read<UserBloc>().state.userModel,
+        ),
       ),
     );
   }

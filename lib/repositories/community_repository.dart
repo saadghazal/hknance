@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hknance/data_models/comment_data_model.dart';
 import 'package:hknance/data_models/post_data_model.dart';
 import 'package:hknance/utils/errors/error_handler.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
@@ -73,6 +74,26 @@ class CommunityRepository {
       throw ErrorHandler(
         code: e.code,
         message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+  }
+
+  Future<void> addComment({
+    required String postId,
+    required CommentModel newComment,
+  }) async {
+    try {
+      await _firebaseFirestore
+          .collection('community')
+          .doc(postId)
+          .collection('comments')
+          .doc(newComment.commentId)
+          .set(newComment.toJson());
+    } on FirebaseException catch (e) {
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected',
         plugin: e.plugin,
       );
     }

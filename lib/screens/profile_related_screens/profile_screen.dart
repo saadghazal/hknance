@@ -11,6 +11,7 @@ import 'package:hknance/widgets/post_related_widgets/post_place_holder.dart';
 import 'package:hknance/widgets/profile_related_widgets/profile_header.dart';
 
 import '../../widgets/post_related_widgets/post_widget.dart';
+import '../post_related_screens/post_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -88,6 +89,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .userPosts[index];
                             return PostWidget(
                               postModel: post,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider.value(
+                                          value: context.read<CommunityCubit>(),
+                                        ),
+                                        BlocProvider.value(
+                                          value: context.read<UserBloc>(),
+                                        ),
+                                      ],
+                                      child: PostScreen(
+                                        postModel: post,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           },
                           itemCount: userPostsState.getUserPostsLoading ==
@@ -114,4 +134,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-

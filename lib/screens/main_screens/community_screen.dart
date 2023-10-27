@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/utils/routing_animation.dart';
@@ -13,25 +12,10 @@ import 'package:hknance/widgets/post_related_widgets/post_widget.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 import '../post_related_screens/add_post_screen.dart';
+import '../post_related_screens/post_screen.dart';
 
-class CommunityScreen extends StatefulWidget {
+class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
-
-  @override
-  State<CommunityScreen> createState() => _CommunityScreenState();
-}
-
-class _CommunityScreenState extends State<CommunityScreen> {
-  List<String> questions = [
-    'How can i make money faster? Any advice?',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nibh praesent tristique magna sit amet. Neque volutpat ac tincidunt vitae semper. Volutpat sed cras ornare arcu dui vivamus arcu. Eu volutpat odio facilisis mauris sit amet. Elit sed vulputate mi sit amet. Adipiscing at in tellus integer. Pretium nibh ipsum consequat nisl. Urna condimentum mattis pellentesque id nibh tortor id aliquet lectus. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Sociis natoque penatibus et magnis. Risus nec feugiat in fermentum posuere.',
-    'How to get benefits from selling a house that is too old?',
-  ];
-  List<String> profilePictures = [
-    'assets/icons/profile_photo.png',
-    'assets/icons/avatar-1.png',
-    'assets/icons/avatar-2.png',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +24,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
         // TODO: implement listener
       },
       builder: (context, state) {
-        print(state.communityPosts);
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -67,7 +50,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                 value: context.read<UserBloc>(),
                               ),
                             ],
-                            child: AddPostScreen(),
+                            child: const AddPostScreen(),
                           ),
                         ),
                       );
@@ -114,13 +97,34 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     ),
                     itemBuilder: (context, index) {
                       if (state.loadingStatus == LoadingStatus.loading) {
-                        return PostPlaceHolder();
+                        return const PostPlaceHolder();
                       }
                       final post = context
                           .watch<CommunityCubit>()
                           .state
                           .communityPosts[index];
-                      return PostWidget(postModel: post);
+                      return PostWidget(
+                        postModel: post,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => MultiBlocProvider(
+                                providers: [
+                                  BlocProvider.value(
+                                    value: context.read<CommunityCubit>(),
+                                  ),
+                                  BlocProvider.value(
+                                    value: context.read<UserBloc>(),
+                                  ),
+                                ],
+                                child: PostScreen(
+                                  postModel: post,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     },
                     itemCount: state.loadingStatus == LoadingStatus.loading
                         ? 3

@@ -7,12 +7,15 @@ class CommunityState extends Equatable {
   final List<PostModel> communityPosts;
   final List<PostModel> userPosts;
 
+  final LoadingStatus addCommentStatus;
+
   const CommunityState({
     required this.errorHandler,
     required this.loadingStatus,
     required this.userPosts,
     required this.communityPosts,
     required this.getUserPostsLoading,
+    required this.addCommentStatus,
   });
 
   factory CommunityState.initial() {
@@ -22,11 +25,19 @@ class CommunityState extends Equatable {
       userPosts: [],
       communityPosts: [],
       getUserPostsLoading: LoadingStatus.initial,
+      addCommentStatus: LoadingStatus.initial,
     );
   }
 
   @override
-  List<Object> get props => [loadingStatus, errorHandler,userPosts,communityPosts,getUserPostsLoading,];
+  List<Object> get props => [
+        loadingStatus,
+        errorHandler,
+        userPosts,
+        communityPosts,
+        getUserPostsLoading,
+        addCommentStatus,
+      ];
 
   CommunityState copyWith({
     LoadingStatus? loadingStatus,
@@ -34,6 +45,7 @@ class CommunityState extends Equatable {
     ErrorHandler? errorHandler,
     List<PostModel>? communityPosts,
     List<PostModel>? userPosts,
+    LoadingStatus? addCommentStatus,
   }) {
     return CommunityState(
       loadingStatus: loadingStatus ?? this.loadingStatus,
@@ -41,6 +53,7 @@ class CommunityState extends Equatable {
       errorHandler: errorHandler ?? this.errorHandler,
       communityPosts: communityPosts ?? this.communityPosts,
       userPosts: userPosts ?? this.userPosts,
+      addCommentStatus: addCommentStatus ?? this.addCommentStatus,
     );
   }
 }
