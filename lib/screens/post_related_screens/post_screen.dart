@@ -12,13 +12,31 @@ import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 import '../../widgets/post_related_widgets/comment_widget.dart';
 
-class PostScreen extends StatelessWidget {
+class PostScreen extends StatefulWidget {
   const PostScreen({
     required this.postModel,
     super.key,
   });
   final PostModel postModel;
 
+  @override
+  State<PostScreen> createState() => _PostScreenState();
+}
+
+class _PostScreenState extends State<PostScreen> {
+  late Stream _commentsStream;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _commentsStream = FirebaseFirestore.instance
+        .collection('community')
+        .doc(widget.postModel.postId)
+        .collection('comments')
+        .orderBy('createdAt',descending: true)
+        .snapshots();
+
+  }
   @override
   Widget build(BuildContext context) {
     final keyboardPadding = MediaQuery.of(context).viewInsets.bottom;
@@ -54,9 +72,9 @@ class PostScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 16.r,
                   backgroundColor: AppColors.primaryDark,
-                  backgroundImage: postModel.postUserPhoto.isNotEmpty
+                  backgroundImage: widget.postModel.postUserPhoto.isNotEmpty
                       ? NetworkImage(
-                          postModel.postUserPhoto,
+                          widget.postModel.postUserPhoto,
                         )
                       : AssetImage('assets/icons/profile-icon-9.png')
                           as ImageProvider,
@@ -65,7 +83,7 @@ class PostScreen extends StatelessWidget {
                   width: 7.w,
                 ),
                 AppTexts.body(
-                  text: postModel.postUserName,
+                  text: widget.postModel.postUserName,
                   fontSize: 14.sp,
                   isHeadline: true,
                 ),
@@ -91,7 +109,7 @@ class PostScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: AppTexts.body(
-                    text: postModel.postContent,
+                    text: widget.postModel.postContent,
                     overflow: TextOverflow.clip,
                     fontSize: 13.5.sp,
                     fontColor: AppColors.primaryDark,
@@ -105,14 +123,9 @@ class PostScreen extends StatelessWidget {
                   height: 10.h,
                 ),
                 StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('community')
-                      .doc(postModel.postId)
-                      .collection('comments')
-                      .orderBy('createdAt',descending: true)
-                      .snapshots(),
+                  stream: _commentsStream,
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
+                    if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
                       return MainLoading();
                     } else if (snapshot.connectionState ==
                         ConnectionState.active) {
@@ -151,7 +164,7 @@ class PostScreen extends StatelessWidget {
           ),
         ),
         bottomSheet: CommentTextField(
-          postModel: postModel,
+          postModel: widget.postModel,
           userModel: context.read<UserBloc>().state.userModel,
         ),
       ),

@@ -50,7 +50,7 @@ class CommentWidget extends StatelessWidget {
                   ),
                   AppTexts.body(
                       text:
-                          '${DateFormat.yMMMMEEEEd().format(commentModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(commentModel.createdAt)}',
+                          '${DateFormat.yMMMMEEEEd().format(commentModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(commentModel.createdAt)}, ${DateFormat.jm().format(commentModel.createdAt)}',
                       fontSize: 10.sp,
                       fontColor: AppColors.primaryDark.withOpacity(0.7)),
                 ],

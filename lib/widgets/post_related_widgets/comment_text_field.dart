@@ -136,14 +136,17 @@ class _CommentTextFieldState extends State<CommentTextField> {
               visible: isTyping,
               child: InkWell(
                 onTap: () {
-                  context.read<CommunityCubit>().addComment(
-                        userModel: widget.userModel,
-                        commentContent: commentController.text,
-                        postId: widget.postModel.postId,
-                      );
+                  if(commentController.text.isNotEmpty){
+                    context.read<CommunityCubit>().addComment(
+                      userModel: widget.userModel,
+                      commentContent: commentController.text,
+                      postId: widget.postModel.postId,
+                    );
+                  }
+
                   commentController.clear();
                   setState(() {
-
+                    isTyping = false;
                   });
                 },
                 splashColor: Colors.transparent,

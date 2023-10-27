@@ -29,21 +29,22 @@ class CommunityRepository {
   Future<List<PostModel>> getCommunityPosts() async {
     try {
       final userId = await StorageService.getUserId();
-      final userData = await _firebaseFirestore
+      final communityPostsSnapshots = _firebaseFirestore
           .collection('community')
           .where('user_id', isNotEqualTo: userId)
-          .get();
+          .snapshots();
+      final communityPostsData = await communityPostsSnapshots.elementAt(0);
 
-      final List<PostModel> userPosts = [];
-      userData.docs.forEach(
-        (e) => userPosts.add(
+      final List<PostModel> communityPosts = [];
+      communityPostsData.docs.forEach(
+        (e) => communityPosts.add(
           PostModel.fromJson(
             e.data(),
           ),
         ),
       );
 
-      return userPosts;
+      return communityPosts;
     } on FirebaseException catch (e) {
       throw ErrorHandler(
         code: e.code,
@@ -56,12 +57,15 @@ class CommunityRepository {
   Future<List<PostModel>> getUserPosts() async {
     try {
       final userId = await StorageService.getUserId();
-      final userData = await _firebaseFirestore
+      final userPostsSnapshots = _firebaseFirestore
           .collection('community')
           .where('user_id', isEqualTo: userId)
-          .get();
+          .orderBy('createdAt', descending: true)
+          .snapshots();
+      final userPostsData = await userPostsSnapshots.elementAt(0);
+
       final List<PostModel> userPosts = [];
-      userData.docs.forEach(
+      userPostsData.docs.forEach(
         (e) => userPosts.add(
           PostModel.fromJson(
             e.data(),

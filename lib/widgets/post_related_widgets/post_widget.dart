@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/post_data_model.dart';
-import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
+import 'package:intl/intl.dart';
 
-import '../../screens/post_related_screens/post_screen.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 
@@ -47,10 +45,20 @@ class PostWidget extends StatelessWidget {
                 SizedBox(
                   width: 7.w,
                 ),
-                AppTexts.body(
-                  text: postModel.postUserName,
-                  fontSize: 14.sp,
-                  isHeadline: true,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppTexts.body(
+                      text: postModel.postUserName,
+                      fontSize: 14.sp,
+                      isHeadline: true,
+                    ),
+                    AppTexts.body(
+                        text:
+                        '${DateFormat.yMMMMEEEEd().format(postModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(postModel.createdAt)}, ${DateFormat.jm().format(postModel.createdAt)}',
+                        fontSize: 10.sp,
+                        fontColor: AppColors.primaryDark.withOpacity(0.7)),
+                  ],
                 ),
                 const Spacer(),
                 Icon(
