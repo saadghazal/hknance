@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
             body: Column(
               children: [
-                ProfileHeader(userModel: state.userModel),
+                ProfileHeader(userModel: state.userModel,postsNumber: userPostsState.userPosts.length,),
                 SizedBox(
                   height: 10.h,
                 ),

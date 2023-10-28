@@ -14,8 +14,12 @@ import '../../view_controllers/sign_out_cubit/sign_out_cubit.dart';
 import '../main_app_button.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({required this.userModel, super.key});
-
+  const ProfileHeader({
+    required this.userModel,
+    required this.postsNumber,
+    super.key,
+  });
+  final int postsNumber;
   final UserModel userModel;
 
   @override
@@ -79,7 +83,7 @@ class ProfileHeader extends StatelessWidget {
                         height: 5.h,
                       ),
                       AppTexts.body(
-                        text: '3',
+                        text: postsNumber.toString(),
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
                       )
