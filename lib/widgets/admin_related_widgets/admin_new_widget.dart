@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:intl/intl.dart';
 
 import '../../screens/admin_related_screens/add_new_screen.dart';
@@ -60,7 +62,8 @@ class AdminNewWidget extends StatelessWidget {
                 ),
                 AppTexts.body(
                   text:
-                      '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
+                  '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(
+                      ',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
                   fontSize: 12.sp,
                   fontColor: AppColors.primaryDarkGrey,
                 ),
@@ -72,7 +75,10 @@ class AdminNewWidget extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 RoutingAnimation.downToUp(
-                  screen: const AddNewScreen(),
+                  screen: BlocProvider(
+                    create: (context) => ImagePickerCubit(),
+                    child: AddNewScreen(),
+                  ),
                 ),
               );
             },

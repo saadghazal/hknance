@@ -46,7 +46,7 @@ class AdminNewsScreen extends StatelessWidget {
         Navigator.of(context).push(
           RoutingAnimation.downToUp(
             screen: BlocProvider<ImagePickerCubit>(
-              create: (_) => ImagePickerCubit(),
+              create: (context) => ImagePickerCubit(),
               child: AddNewScreen(),
             ),
           ),
