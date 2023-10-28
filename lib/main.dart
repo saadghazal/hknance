@@ -7,10 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/repositories/community_repository.dart';
+import 'package:hknance/repositories/news_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/splash_screen.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
+import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'firebase_options.dart';
@@ -51,11 +53,26 @@ class MyApp extends StatelessWidget {
             firebaseFirestore: FirebaseFirestore.instance,
           ),
         ),
-      ],
-      child: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(
-          authRepository: context.read<AuthRepository>(),
+        RepositoryProvider(
+          create: (context) => NewsRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseStorage: FirebaseStorage.instance,
+          ),
         ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => NewsBloc(
+              newsRepository: context.read<NewsRepository>(),
+            ),
+          ),
+        ],
         child: Sizer(
           builder: (BuildContext context, Orientation orientation, deviceType) {
             return ScreenUtilInit(
@@ -75,8 +92,9 @@ class MyApp extends StatelessWidget {
                   home: const SplashScreen(),
                 );
               },
-              designSize:
-                  isTablet(deviceType) ? const Size(600, 844) : const Size(390, 844),
+              designSize: isTablet(deviceType)
+                  ? const Size(600, 844)
+                  : const Size(390, 844),
             );
           },
         ),

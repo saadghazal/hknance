@@ -13,8 +13,7 @@ class AdminNewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      //
+    return Container(
       width: double.maxFinite,
       padding: EdgeInsets.all(10.r),
       decoration: BoxDecoration(
@@ -61,7 +60,7 @@ class AdminNewWidget extends StatelessWidget {
                 ),
                 AppTexts.body(
                   text:
-                  '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
+                      '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
                   fontSize: 12.sp,
                   fontColor: AppColors.primaryDarkGrey,
                 ),
@@ -73,20 +72,16 @@ class AdminNewWidget extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 RoutingAnimation.downToUp(
-                  screen: const AddNewScreen(
-                    isEditing: true,
-                    title: 'New Title',
-                    newCover: 'assets/icons/news_cover.jpg',
-                    newBody:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                  ),
+                  screen: const AddNewScreen(),
                 ),
               );
             },
             child: Icon(
               Icons.edit,
               color: AppColors.primaryDark,
-              size: ScreenUtil().deviceType() == DeviceType.tablet ? 24.sp : 22.sp,
+              size: ScreenUtil().deviceType() == DeviceType.tablet
+                  ? 24.sp
+                  : 22.sp,
             ),
           ),
         ],

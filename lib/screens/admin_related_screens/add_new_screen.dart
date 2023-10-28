@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/new_data_model.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
+import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
+import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
 import 'package:hknance/widgets/admin_related_widgets/add_cover_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/delete_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_button.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_text_field.dart';
 
-class AddNewScreen extends StatelessWidget {
+class AddNewScreen extends StatefulWidget {
   const AddNewScreen({
-    this.isEditing = false,
-    this.title = '',
-    this.newBody = '',
-    this.newCover = '',
+    this.newModel,
     super.key,
   });
-  final bool isEditing;
-  final String title;
-  final String newCover;
-  final String newBody;
+
+  final NewModel? newModel;
+
+  @override
+  State<AddNewScreen> createState() => _AddNewScreenState();
+}
+
+class _AddNewScreenState extends State<AddNewScreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController bodyController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    titleController.dispose();
+    bodyController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +55,8 @@ class AddNewScreen extends StatelessWidget {
               color: AppColors.primaryDark,
             ),
           ),
-          actions: isEditing
-              ? [
-                  DeleteWidget(onTap: (){})
-                ]
-              : null,
+          actions:
+              widget.newModel != null ? [DeleteWidget(onTap: () {})] : null,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -65,9 +77,10 @@ class AddNewScreen extends StatelessWidget {
                   height: 10.h,
                 ),
                 MainTextField(
-                  controller: TextEditingController(),
-                  hintText: isEditing ? title : 'Enter the new title',
-                  isReadOnly: isEditing,
+                  controller: titleController,
+                  hintText: widget.newModel == null
+                      ? 'Enter the new title'
+                      : widget.newModel!.newTitle,
                 ),
                 SizedBox(
                   height: 20.h,
@@ -81,7 +94,15 @@ class AddNewScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                AddCoverWidget(tipCover: newCover),
+                BlocBuilder<ImagePickerCubit, ImagePickerState>(
+                  builder: (context, state) {
+                    return AddCoverWidget(
+                      tipCover: widget.newModel == null
+                          ? state.imageFile.path
+                          : widget.newModel!.newCover,
+                    );
+                  },
+                ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -95,11 +116,12 @@ class AddNewScreen extends StatelessWidget {
                   height: 10.h,
                 ),
                 MainTextField(
-                  controller: TextEditingController(),
-                  hintText: isEditing ? newBody : 'Enter the new content',
+                  controller: bodyController,
+                  hintText: widget.newModel == null
+                      ? 'Enter the new content'
+                      : widget.newModel!.newDescription,
                   textInputAction: TextInputAction.newline,
                   isMultiline: true,
-                  isReadOnly: isEditing,
                 ),
                 SizedBox(
                   height: 20.h,
@@ -108,7 +130,27 @@ class AddNewScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SaveButton(onTap: () {}),
+        bottomNavigationBar: BlocBuilder<ImagePickerCubit, ImagePickerState>(
+          builder: (context, state) {
+            return SaveButton(onTap: () async {
+              if (titleController.text.isNotEmpty &&
+                  titleController.text.isNotEmpty &&
+                  state.imageFile.path.isNotEmpty) {
+                final NewModel newModel = NewModel(
+                  newTitle: titleController.text,
+                  newCover: '',
+                  newDescription: bodyController.text,
+                );
+                context.read<NewsBloc>().add(
+                      AddNewEvent(
+                        newModel: newModel,
+                        newCover: state.imageFile,
+                      ),
+                    );
+              }
+            });
+          },
+        ),
       ),
     );
   }

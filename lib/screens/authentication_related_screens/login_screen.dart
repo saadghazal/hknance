@@ -152,10 +152,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             await context.read<SignInCubit>().signIn(
                                   email: emailController.text,
                                   password: passwordController.text,
+                                  isAdmin: widget.isAdmin,
                                 );
                           },
                         ),
-                 signUp(isAdmin: !widget.isAdmin),
+                  signUp(isAdmin: !widget.isAdmin),
                 ],
               ),
             ),
@@ -166,8 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Widget signUp({required bool isAdmin}){
-  return  Visibility(
+Widget signUp({required bool isAdmin}) {
+  return Visibility(
     visible: isAdmin,
     replacement: SizedBox(),
     child: Column(

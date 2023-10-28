@@ -16,4 +16,16 @@ class StorageService {
       userId,
     );
   }
+
+  static Future<void> setIsAdmin({required bool isAdmin}) async {
+    await sharedPreferences.setBool(
+      'is_admin',
+      isAdmin,
+    );
+  }
+
+  static bool? getIsAdmin()  {
+    return sharedPreferences.getBool('is_admin');
+  }
+
 }

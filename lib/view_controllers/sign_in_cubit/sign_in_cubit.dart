@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hknance/utils/errors/error_handler.dart';
+import 'package:hknance/utils/storage_service/storage_service.dart';
 
 import '../../repositories/auth_repository.dart';
 import '../sign_up_cubit/sign_up_cubit.dart';
@@ -13,8 +14,13 @@ class SignInCubit extends Cubit<SignInState> {
       : _authRepository = authRepository,
         super(SignInState.initial());
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn({
+    required String email,
+    required String password,
+    required bool isAdmin
+  }) async {
     try {
+      await StorageService.setIsAdmin(isAdmin: isAdmin);
       emit(state.copyWith(loadingStatus: LoadingStatus.loading));
       await _authRepository.signIn(
         email: email,
