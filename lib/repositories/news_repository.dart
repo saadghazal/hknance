@@ -32,6 +32,7 @@ class NewsRepository {
         'new_description': newModel.newDescription,
         'new_cover': coverLink,
         'new_title': newModel.newTitle,
+        'createdAt': Timestamp.now(),
       });
     } on FirebaseException catch (e) {
       throw ErrorHandler(

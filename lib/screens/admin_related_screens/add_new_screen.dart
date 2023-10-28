@@ -179,6 +179,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           newTitle: titleController.text,
                           newCover: '',
                           newDescription: bodyController.text,
+                          createdAt: DateTime.now(),
                         );
                         context.read<NewsBloc>().add(
                               AddNewEvent(

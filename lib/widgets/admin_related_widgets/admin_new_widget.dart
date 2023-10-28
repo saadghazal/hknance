@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/new_data_model.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +12,8 @@ import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 
 class AdminNewWidget extends StatelessWidget {
-  const AdminNewWidget({super.key});
+  const AdminNewWidget({required this.newModel, super.key});
+  final NewModel newModel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class AdminNewWidget extends StatelessWidget {
             height: 45.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.r),
-              image: const DecorationImage(
-                image: AssetImage(
-                  'assets/icons/news_cover.jpg',
+              image: DecorationImage(
+                image: NetworkImage(
+                  newModel.newCover,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -52,7 +54,7 @@ class AdminNewWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppTexts.body(
-                  text: 'New Title',
+                  text: newModel.newTitle,
                   fontSize: 14.sp,
                   fontColor: AppColors.primaryDark,
                   fontWeight: FontWeight.w500,
@@ -62,8 +64,7 @@ class AdminNewWidget extends StatelessWidget {
                 ),
                 AppTexts.body(
                   text:
-                  '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(
-                      ',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
+                      '${DateFormat.yMMMMEEEEd().format(newModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(newModel.createdAt)}, ${DateFormat.jm().format(newModel.createdAt)}',
                   fontSize: 12.sp,
                   fontColor: AppColors.primaryDarkGrey,
                 ),

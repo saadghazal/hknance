@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,9 @@ import 'package:hknance/utils/theme/app_texts.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:hknance/widgets/admin_related_widgets/admin_new_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/floating_add_button.dart';
-import 'package:intl/intl.dart';
+import 'package:hknance/widgets/main_loading.dart';
+
+import '../../data_models/new_data_model.dart';
 
 class AdminNewsScreen extends StatelessWidget {
   const AdminNewsScreen({super.key});
@@ -17,7 +20,6 @@ class AdminNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SizedBox(
         height: double.maxFinite,
         width: double.maxFinite,
@@ -37,7 +39,54 @@ class AdminNewsScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              AdminNewWidget(),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('news')
+                    .orderBy('createdAt', descending: false)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Center(
+                          child: AppTexts.title3(
+                            text: 'No News Added Yet.',
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final NewModel newModel = NewModel.fromJson(
+                            snapshot.data!.docs[index].data(),
+                          );
+                          return AdminNewWidget(
+                            newModel: newModel,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            height: 10.h,
+                          );
+                        },
+                        itemCount: snapshot.data!.docs.length,
+                      );
+                    } else {
+                      return AppTexts.title2(
+                        text: 'No News Added Yet.',
+                        fontColor: AppColors.primaryDark,
+                        fontWeight: FontWeight.w500,
+                      );
+                    }
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return MainLoading();
+                  } else {
+                    return AppTexts.title2(text: 'No News Added Yet.');
+                  }
+                },
+              ),
             ],
           ),
         ),

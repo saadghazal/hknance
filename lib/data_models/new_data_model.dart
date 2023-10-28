@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -8,12 +9,14 @@ class NewModel extends Equatable {
   final String newTitle;
   final String newCover;
   final String newDescription;
+  final DateTime createdAt;
 
   NewModel({
     String? id,
     required this.newTitle,
     required this.newCover,
     required this.newDescription,
+    required this.createdAt,
   }) : newId = id ?? uuid.v1();
 
   @override
@@ -30,6 +33,7 @@ class NewModel extends Equatable {
       'new_title': newTitle,
       'new_cover': newCover,
       'new_description': newDescription,
+      'createdAt': createdAt,
     };
   }
 
@@ -39,6 +43,7 @@ class NewModel extends Equatable {
       newTitle: json['new_title'] as String,
       newCover: json['new_cover'] as String,
       newDescription: json['new_description'] as String,
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
     );
   }
 }
