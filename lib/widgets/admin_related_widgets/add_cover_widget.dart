@@ -10,13 +10,15 @@ import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 
 class AddCoverWidget extends StatelessWidget {
-  const AddCoverWidget({required this.tipCover, super.key});
-  final String tipCover;
+  const AddCoverWidget(
+      {required this.cover, required this.isNewCover, super.key});
+  final String cover;
+  final bool isNewCover;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: tipCover.isEmpty
+      onTap: cover.isEmpty
           ? () async {
               await context.read<ImagePickerCubit>().pickImage();
             }
@@ -30,14 +32,16 @@ class AddCoverWidget extends StatelessWidget {
             width: 0.5.w,
           ),
           borderRadius: BorderRadius.circular(12.r),
-          image: tipCover.isNotEmpty
+          image: cover.isNotEmpty
               ? DecorationImage(
-                  image: FileImage(File(tipCover)),
+                  image: isNewCover
+                      ? NetworkImage(cover)
+                      : FileImage(File(cover)) as ImageProvider,
                   fit: BoxFit.cover,
                 )
               : null,
         ),
-        child: tipCover.isNotEmpty
+        child: cover.isNotEmpty
             ? SizedBox()
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

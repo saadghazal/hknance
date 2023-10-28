@@ -47,6 +47,7 @@ class AdminNewsScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
                     if (snapshot.hasData) {
+                      final news = snapshot.data!.docs.reversed.toList();
                       if (snapshot.data!.docs.isEmpty) {
                         return Center(
                           child: AppTexts.title3(
@@ -59,7 +60,7 @@ class AdminNewsScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           final NewModel newModel = NewModel.fromJson(
-                            snapshot.data!.docs[index].data(),
+                            news[index].data(),
                           );
                           return AdminNewWidget(
                             newModel: newModel,

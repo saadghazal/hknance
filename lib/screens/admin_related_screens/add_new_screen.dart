@@ -57,18 +57,31 @@ class _AddNewScreenState extends State<AddNewScreen> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: BlocListener<NewsBloc, NewsState>(
-        listener: (context, state) {
-          if (state.loadingStatus == LoadingStatus.loaded) {
-            Navigator.pop(context);
-
-          } else if (state.loadingStatus == LoadingStatus.error) {
-            showErrorSnackBar(
-              context: context,
-              errorMessage: state.errorHandler.message,
-            );
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<NewsBloc, NewsState>(
+            listener: (context, state) {
+              if (state.loadingStatus == LoadingStatus.loaded) {
+                Navigator.pop(context);
+              } else if (state.loadingStatus == LoadingStatus.error) {
+                showErrorSnackBar(
+                  context: context,
+                  errorMessage: state.errorHandler.message,
+                );
+              }
+            },
+          ),
+          BlocListener<ImagePickerCubit, ImagePickerState>(
+            listener: (context, state) {
+              if (state.imageStatus == ImageStatus.error) {
+                showErrorSnackBar(
+                  context: context,
+                  errorMessage: 'Please allow access to your photos',
+                );
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: MainAppBar(
@@ -127,9 +140,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
                   BlocBuilder<ImagePickerCubit, ImagePickerState>(
                     builder: (context, state) {
                       return AddCoverWidget(
-                        tipCover: widget.newModel == null
+                        cover: widget.newModel == null
                             ? state.imageFile.path
                             : widget.newModel!.newCover,
+                        isNewCover: widget.newModel != null,
                       );
                     },
                   ),

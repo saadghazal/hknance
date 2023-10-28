@@ -78,7 +78,9 @@ class AdminNewWidget extends StatelessWidget {
                 RoutingAnimation.downToUp(
                   screen: BlocProvider(
                     create: (context) => ImagePickerCubit(),
-                    child: AddNewScreen(),
+                    child: AddNewScreen(
+                      newModel: newModel,
+                    ),
                   ),
                 ),
               );

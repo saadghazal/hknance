@@ -80,7 +80,7 @@ class AddTipScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              AddCoverWidget(tipCover: tipCover),
+              AddCoverWidget(cover: tipCover,isNewCover: false,),
               SizedBox(
                 height: 20.h,
               ),

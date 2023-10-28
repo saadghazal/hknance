@@ -17,3 +17,14 @@ class AddNewEvent extends NewsEvent {
   @override
   List<Object> get props => [newModel, newCover];
 }
+
+class UpdateNewEvent extends NewsEvent {
+  final NewModel newModel;
+
+  const UpdateNewEvent({
+    required this.newModel,
+  });
+
+  @override
+  List<Object> get props => [newModel];
+}
