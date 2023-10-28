@@ -59,4 +59,17 @@ class NewsRepository {
       );
     }
   }
+  Future<void> deleteNew({
+    required String newId,
+  }) async {
+    try {
+      await _firebaseFirestore.collection('news').doc(newId).delete();
+    } on FirebaseException catch (e) {
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+  }
 }

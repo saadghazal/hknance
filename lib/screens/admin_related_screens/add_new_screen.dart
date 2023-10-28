@@ -14,6 +14,7 @@ import 'package:hknance/widgets/admin_related_widgets/add_cover_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/delete_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_button.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
+import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/main_loading.dart';
 import 'package:hknance/widgets/main_text_field.dart';
 
@@ -98,7 +99,91 @@ class _AddNewScreenState extends State<AddNewScreen> {
             ),
             actions: widget.newModel != null
                 ? [
-                    DeleteWidget(onTap: () {}),
+                    DeleteWidget(
+                      onTap: () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            actionsPadding: EdgeInsets.zero,
+                            titlePadding: EdgeInsets.zero,
+                            iconPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content:Container(
+                              width: double.maxFinite,
+                              padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  AppTexts.title3(
+                                    text: 'Delete New',
+                                    textAlign: TextAlign.center,
+                                    fontColor: Colors.redAccent,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  AppTexts.body(
+                                    text: 'Are you sure?',
+                                    fontSize: 16.sp,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  MainAppButton(
+                                    label: 'Delete',
+                                    height: 35.h,
+                                    width: double.maxFinite,
+                                    fontSize: ScreenUtil().deviceType() ==
+                                        DeviceType.tablet
+                                        ? 18.sp
+                                        : 16.sp,
+                                    onTap: () async {
+                                      context.read<NewsBloc>().add(
+                                            DeleteNewEvent(
+                                              newId: widget.newModel!.newId,
+                                            ),
+                                          );
+                                      Navigator.of(context).pop();
+                                    },
+                                    borderRadius: 12.r,
+                                    backgroundColor: Colors.redAccent,
+                                    splashColor: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  MainAppButton(
+                                    label: 'Cancel',
+                                    height: 35.h,
+                                    width: double.maxFinite,
+                                    fontSize: ScreenUtil().deviceType() ==
+                                        DeviceType.tablet
+                                        ? 18.sp
+                                        : 16.sp,
+                                    onTap: () async {
+                                      Navigator.pop(context);
+                                    },
+                                    borderRadius: 12.r,
+                                    backgroundColor: Colors.blueAccent,
+                                    splashColor: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                          ),
+                        );
+                      },
+                    ),
                   ]
                 : null,
           ),
@@ -187,15 +272,17 @@ class _AddNewScreenState extends State<AddNewScreen> {
                       ),
                       child: const MainLoading(),
                     )
-                  : SaveButton(onTap: () async {
-                      updateOrAddNew(
-                        context: context,
-                        title: titleController.text,
-                        body: bodyController.text,
-                        imageFile: state.imageFile,
-                        updatedNew: widget.newModel,
-                      );
-                    });
+                  : SaveButton(
+                      onTap: () async {
+                        updateOrAddNew(
+                          context: context,
+                          title: titleController.text,
+                          body: bodyController.text,
+                          imageFile: state.imageFile,
+                          updatedNew: widget.newModel,
+                        );
+                      },
+                    );
             },
           ),
         ),
@@ -212,7 +299,7 @@ void updateOrAddNew({
   required File imageFile,
 }) {
   if (updatedNew != null) {
-    if(title.isNotEmpty && body.isNotEmpty){
+    if (title.isNotEmpty && body.isNotEmpty) {
       final NewModel newModel = NewModel(
         id: updatedNew.newId,
         newTitle: title,
@@ -221,18 +308,16 @@ void updateOrAddNew({
         createdAt: DateTime.now(),
       );
       context.read<NewsBloc>().add(
-        UpdateNewEvent(
-          newModel: newModel,
-        ),
-      );
-    }else{
+            UpdateNewEvent(
+              newModel: newModel,
+            ),
+          );
+    } else {
       showErrorSnackBar(
         context: context,
-        errorMessage:
-        'Please fill the missing fields',
+        errorMessage: 'Please fill the missing fields',
       );
     }
-
   } else {
     if (title.isNotEmpty && body.isNotEmpty && imageFile.path.isNotEmpty) {
       final NewModel newModel = NewModel(
@@ -247,11 +332,10 @@ void updateOrAddNew({
               newCover: imageFile,
             ),
           );
-    }else{
+    } else {
       showErrorSnackBar(
         context: context,
-        errorMessage:
-        'Please fill the missing fields',
+        errorMessage: 'Please fill the missing fields',
       );
     }
   }

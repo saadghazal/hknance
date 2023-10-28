@@ -28,3 +28,14 @@ class UpdateNewEvent extends NewsEvent {
   @override
   List<Object> get props => [newModel];
 }
+
+class DeleteNewEvent extends NewsEvent {
+  final String newId;
+
+  const DeleteNewEvent({
+    required this.newId,
+  });
+
+  @override
+  List<Object> get props => [newId];
+}

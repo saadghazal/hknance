@@ -19,54 +19,89 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     on<NewsEvent>(
       (event, emit) async {
         if (event is AddNewEvent) {
-          emit(
-            state.copyWith(
-              loadingStatus: LoadingStatus.loading,
-            ),
-          );
-          try {
-            await _newsRepository.addNew(
-              newModel: event.newModel,
-              coverFile: event.newCover,
-            );
-            emit(
-              state.copyWith(
-                loadingStatus: LoadingStatus.loaded,
-              ),
-            );
-          } on ErrorHandler catch (e) {
-            emit(
-              state.copyWith(
-                loadingStatus: LoadingStatus.error,
-                errorHandler: e,
-              ),
-            );
-          }
+          await addNew(event, emit);
         } else if (event is UpdateNewEvent) {
-          emit(
-            state.copyWith(
-              loadingStatus: LoadingStatus.loading,
-            ),
-          );
-          try {
-            await _newsRepository.updateNew(
-              newModel: event.newModel,
-            );
-            emit(
-              state.copyWith(
-                loadingStatus: LoadingStatus.loaded,
-              ),
-            );
-          } on ErrorHandler catch (e) {
-            emit(
-              state.copyWith(
-                loadingStatus: LoadingStatus.error,
-                errorHandler: e,
-              ),
-            );
-          }
+          await updateNew(event, emit);
+        } else if (event is DeleteNewEvent) {
+          await deleteNew(event, emit);
         }
       },
     );
+  }
+
+  Future<void> addNew(AddNewEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(
+        loadingStatus: LoadingStatus.loading,
+      ),
+    );
+    try {
+      await _newsRepository.addNew(
+        newModel: event.newModel,
+        coverFile: event.newCover,
+      );
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.loaded,
+        ),
+      );
+    } on ErrorHandler catch (e) {
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
+          errorHandler: e,
+        ),
+      );
+    }
+  }
+
+  Future<void> updateNew(UpdateNewEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(
+        loadingStatus: LoadingStatus.loading,
+      ),
+    );
+    try {
+      await _newsRepository.updateNew(
+        newModel: event.newModel,
+      );
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.loaded,
+        ),
+      );
+    } on ErrorHandler catch (e) {
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
+          errorHandler: e,
+        ),
+      );
+    }
+  }
+
+  Future<void> deleteNew(DeleteNewEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(
+        loadingStatus: LoadingStatus.loading,
+      ),
+    );
+    try {
+      await _newsRepository.deleteNew(
+        newId: event.newId,
+      );
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.loaded,
+        ),
+      );
+    } on ErrorHandler catch (e) {
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
+          errorHandler: e,
+        ),
+      );
+    }
   }
 }
