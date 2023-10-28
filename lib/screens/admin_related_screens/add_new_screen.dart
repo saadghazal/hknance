@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/new_data_model.dart';
-import 'package:hknance/repositories/news_repository.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
@@ -184,29 +185,74 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         right: 28.w,
                         bottom: bottomPadding == 0 ? 20.h : bottomPadding.h,
                       ),
-                      child: MainLoading())
+                      child: const MainLoading(),
+                    )
                   : SaveButton(onTap: () async {
-                      if (titleController.text.isNotEmpty &&
-                          titleController.text.isNotEmpty &&
-                          state.imageFile.path.isNotEmpty) {
-                        final NewModel newModel = NewModel(
-                          newTitle: titleController.text,
-                          newCover: '',
-                          newDescription: bodyController.text,
-                          createdAt: DateTime.now(),
-                        );
-                        context.read<NewsBloc>().add(
-                              AddNewEvent(
-                                newModel: newModel,
-                                newCover: state.imageFile,
-                              ),
-                            );
-                      }
+                      updateOrAddNew(
+                        context: context,
+                        title: titleController.text,
+                        body: bodyController.text,
+                        imageFile: state.imageFile,
+                        updatedNew: widget.newModel,
+                      );
                     });
             },
           ),
         ),
       ),
     );
+  }
+}
+
+void updateOrAddNew({
+  required BuildContext context,
+  NewModel? updatedNew,
+  required String title,
+  required String body,
+  required File imageFile,
+}) {
+  if (updatedNew != null) {
+    if(title.isNotEmpty && body.isNotEmpty){
+      final NewModel newModel = NewModel(
+        id: updatedNew.newId,
+        newTitle: title,
+        newCover: '',
+        newDescription: body,
+        createdAt: DateTime.now(),
+      );
+      context.read<NewsBloc>().add(
+        UpdateNewEvent(
+          newModel: newModel,
+        ),
+      );
+    }else{
+      showErrorSnackBar(
+        context: context,
+        errorMessage:
+        'Please fill the missing fields',
+      );
+    }
+
+  } else {
+    if (title.isNotEmpty && body.isNotEmpty && imageFile.path.isNotEmpty) {
+      final NewModel newModel = NewModel(
+        newTitle: title,
+        newCover: '',
+        newDescription: body,
+        createdAt: DateTime.now(),
+      );
+      context.read<NewsBloc>().add(
+            AddNewEvent(
+              newModel: newModel,
+              newCover: imageFile,
+            ),
+          );
+    }else{
+      showErrorSnackBar(
+        context: context,
+        errorMessage:
+        'Please fill the missing fields',
+      );
+    }
   }
 }

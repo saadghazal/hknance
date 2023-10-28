@@ -16,30 +16,57 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc({required NewsRepository newsRepository})
       : _newsRepository = newsRepository,
         super(NewsState.initial()) {
-    on<AddNewEvent>((event, emit) async {
-      emit(
-        state.copyWith(
-          loadingStatus: LoadingStatus.loading,
-        ),
-      );
-      try {
-        await _newsRepository.addNew(
-          newModel: event.newModel,
-          coverFile: event.newCover,
-        );
-        emit(
-          state.copyWith(
-            loadingStatus: LoadingStatus.loaded,
-          ),
-        );
-      } on ErrorHandler catch (e) {
-        emit(
-          state.copyWith(
-            loadingStatus: LoadingStatus.error,
-            errorHandler: e,
-          ),
-        );
-      }
-    });
+    on<NewsEvent>(
+      (event, emit) async {
+        if (event is AddNewEvent) {
+          emit(
+            state.copyWith(
+              loadingStatus: LoadingStatus.loading,
+            ),
+          );
+          try {
+            await _newsRepository.addNew(
+              newModel: event.newModel,
+              coverFile: event.newCover,
+            );
+            emit(
+              state.copyWith(
+                loadingStatus: LoadingStatus.loaded,
+              ),
+            );
+          } on ErrorHandler catch (e) {
+            emit(
+              state.copyWith(
+                loadingStatus: LoadingStatus.error,
+                errorHandler: e,
+              ),
+            );
+          }
+        } else if (event is UpdateNewEvent) {
+          emit(
+            state.copyWith(
+              loadingStatus: LoadingStatus.loading,
+            ),
+          );
+          try {
+            await _newsRepository.updateNew(
+              newModel: event.newModel,
+            );
+            emit(
+              state.copyWith(
+                loadingStatus: LoadingStatus.loaded,
+              ),
+            );
+          } on ErrorHandler catch (e) {
+            emit(
+              state.copyWith(
+                loadingStatus: LoadingStatus.error,
+                errorHandler: e,
+              ),
+            );
+          }
+        }
+      },
+    );
   }
 }

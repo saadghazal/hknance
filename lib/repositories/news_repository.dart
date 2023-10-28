@@ -42,4 +42,21 @@ class NewsRepository {
       );
     }
   }
+
+  Future<void> updateNew({
+    required NewModel newModel,
+  }) async {
+    try {
+      await _firebaseFirestore.collection('news').doc(newModel.newId).update({
+        'new_description': newModel.newDescription,
+        'new_title': newModel.newTitle,
+      });
+    } on FirebaseException catch (e) {
+      throw ErrorHandler(
+        code: e.code,
+        message: e.message ?? 'Unexpected Error',
+        plugin: e.plugin,
+      );
+    }
+  }
 }
