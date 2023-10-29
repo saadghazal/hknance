@@ -1,12 +1,9 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:hknance/widgets/home_related_widgets/hot_news_list_widget.dart';
 import 'package:hknance/widgets/home_related_widgets/latest_news_list.dart';
-import 'package:intl/intl.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';

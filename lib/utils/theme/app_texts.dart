@@ -80,7 +80,8 @@ class AppTexts {
     required double fontSize,
     FontWeight fontWeight = FontWeight.w400,
     TextAlign textAlign = TextAlign.start,
-    TextOverflow overflow = TextOverflow.ellipsis
+    TextOverflow overflow = TextOverflow.ellipsis,
+    double? height,
   }) {
     return Text(
       text,
@@ -90,6 +91,7 @@ class AppTexts {
         fontSize: fontSize,
         fontWeight: isHeadline ? FontWeight.w600 : fontWeight,
         color: fontColor,
+        height: height
       ),
     );
   }
