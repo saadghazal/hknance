@@ -56,22 +56,25 @@ class AdminNewsScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final NewModel newModel = NewModel.fromJson(
-                            news[index].data(),
-                          );
-                          return AdminNewWidget(
-                            newModel: newModel,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 10.h,
-                          );
-                        },
-                        itemCount: snapshot.data!.docs.length,
+                      return Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.only(bottom: 100.h),
+                          itemBuilder: (context, index) {
+                            final NewModel newModel = NewModel.fromJson(
+                              news[index].data(),
+                            );
+                            return AdminNewWidget(
+                              newModel: newModel,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: 10.h,
+                            );
+                          },
+                          itemCount: snapshot.data!.docs.length,
+                        ),
                       );
                     } else {
                       return AppTexts.title2(
@@ -92,16 +95,23 @@ class AdminNewsScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingAddButton(onTap: () {
-        Navigator.of(context).push(
-          RoutingAnimation.downToUp(
-            screen: BlocProvider<ImagePickerCubit>(
-              create: (context) => ImagePickerCubit(),
-              child: AddNewScreen(),
-            ),
-          ),
-        );
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: FloatingAddButton(
+          onTap: () {
+            Navigator.of(context).push(
+              RoutingAnimation.downToUp(
+                screen: BlocProvider<ImagePickerCubit>(
+                  create: (context) => ImagePickerCubit(),
+                  child: AddNewScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

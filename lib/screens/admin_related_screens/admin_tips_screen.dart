@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/admin_related_screens/add_tip_screen.dart';
 import 'package:hknance/widgets/admin_related_widgets/admin_tip_widget.dart';
@@ -8,6 +8,7 @@ import 'package:hknance/widgets/admin_related_widgets/floating_add_button.dart';
 import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
+import '../../view_controllers/image_picker_cubit/image_picker_cubit.dart';
 
 class AdminTipsScreen extends StatelessWidget {
   const AdminTipsScreen({super.key});
@@ -15,7 +16,6 @@ class AdminTipsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SizedBox(
         height: double.maxFinite,
         width: double.maxFinite,
@@ -36,7 +36,6 @@ class AdminTipsScreen extends StatelessWidget {
                 height: 20.h,
               ),
               const AdminTipWidget(isVIP: true),
-
               SizedBox(
                 height: 20.h,
               ),
@@ -53,13 +52,23 @@ class AdminTipsScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingAddButton(onTap: (){
-        Navigator.of(context).push(
-          RoutingAnimation.downToUp(
-            screen: AddTipScreen(isEditing: false),
-          ),
-        );
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: FloatingAddButton(
+          onTap: () {
+            Navigator.of(context).push(
+              RoutingAnimation.downToUp(
+                screen: BlocProvider<ImagePickerCubit>(
+                  create: (context) => ImagePickerCubit(),
+                  child: AddTipScreen(isEditing: false),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
