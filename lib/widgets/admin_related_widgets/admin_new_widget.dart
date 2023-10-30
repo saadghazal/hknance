@@ -64,7 +64,7 @@ class AdminNewWidget extends StatelessWidget {
                 ),
                 AppTexts.body(
                   text:
-                      '${DateFormat.yMMMMEEEEd().format(newModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(newModel.createdAt)}, ${DateFormat.jm().format(newModel.createdAt)}',
+                      '${DateFormat.yMMMMEEEEd().format(newModel.createdAt).split(',')[0]}, ${DateFormat.yMd().format(newModel.createdAt)}',
                   fontSize: 12.sp,
                   fontColor: AppColors.primaryDarkGrey,
                 ),

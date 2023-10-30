@@ -32,3 +32,13 @@ class UpdateTipEvent extends TipsEvent {
   @override
   List<Object> get props => [updatedTip];
 }
+class DeleteTipEvent extends TipsEvent {
+  final String tipId;
+
+  const DeleteTipEvent({
+    required this.tipId,
+  });
+
+  @override
+  List<Object> get props => [tipId];
+}

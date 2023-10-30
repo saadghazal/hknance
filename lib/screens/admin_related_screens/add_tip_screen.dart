@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
+import 'package:hknance/utils/confirm_dialoge.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
 import 'package:hknance/view_controllers/tips_bloc/tips_bloc.dart';
@@ -69,7 +70,22 @@ class _AddTipScreenState extends State<AddTipScreen> {
         ),
         actions: widget.tipModel != null
             ? [
-                DeleteWidget(onTap: () {}),
+                DeleteWidget(
+                  onTap: () {
+                    showConfirmDialog(
+                      context: context,
+                      onDelete: () async {
+                        context.read<TipsBloc>().add(
+                              DeleteTipEvent(
+                                tipId: widget.tipModel!.tipId,
+                              ),
+                            );
+                        Navigator.pop(context);
+                      },
+                      title: 'Delete Tip',
+                    );
+                  },
+                ),
               ]
             : null,
       ),
