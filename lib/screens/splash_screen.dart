@@ -30,6 +30,19 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.authStatus == AuthStatus.authenticated) {
+          if(isAdmin == null){
+            Future.delayed(
+              Duration(seconds: 2),
+                  () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  RoutingAnimation.fade(screen: OnBoardingScreen()),
+                      (route) => false,
+                );
+              },
+            );
+            return;
+          }
           if (isAdmin!) {
             Future.delayed(
               Duration(seconds: 2),
