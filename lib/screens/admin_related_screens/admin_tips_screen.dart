@@ -62,7 +62,7 @@ class AdminTipsScreen extends StatelessWidget {
               RoutingAnimation.downToUp(
                 screen: BlocProvider<ImagePickerCubit>(
                   create: (context) => ImagePickerCubit(),
-                  child: AddTipScreen(isEditing: false),
+                  child: AddTipScreen(),
                 ),
               ),
             );

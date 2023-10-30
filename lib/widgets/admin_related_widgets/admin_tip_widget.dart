@@ -76,11 +76,7 @@ class AdminTipWidget extends StatelessWidget {
               Navigator.of(context).push(
                 RoutingAnimation.downToUp(
                   screen: AddTipScreen(
-                    isVIP: isVIP,
-                    isEditing: true,
-                    title: 'Tip Title',
-                    tipCover: 'assets/icons/news_cover.jpg',
-                    body: 'VIP TIP',
+
                   ),
                 ),
               );

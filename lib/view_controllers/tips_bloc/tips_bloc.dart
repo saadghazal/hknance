@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -23,6 +22,21 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
         ),
       );
       if (event is AddTipEvent) {
+        if (event.title.isEmpty ||
+            event.body.isEmpty ||
+            event.coverFile.path.isEmpty) {
+          emit(
+            state.copyWith(
+              loadingStatus: LoadingStatus.error,
+              errorHandler: const ErrorHandler(
+                code: '',
+                message: 'Please fill the missing fields',
+                plugin: '',
+              ),
+            ),
+          );
+          return;
+        }
         try {
           TipModel newTip = TipModel(
             tipTitle: event.title,

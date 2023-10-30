@@ -8,11 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/repositories/community_repository.dart';
 import 'package:hknance/repositories/news_repository.dart';
+import 'package:hknance/repositories/tips_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/splash_screen.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
+import 'package:hknance/view_controllers/tips_bloc/tips_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'firebase_options.dart';
@@ -59,6 +61,12 @@ class MyApp extends StatelessWidget {
             firebaseStorage: FirebaseStorage.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (context) => TipsRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseStorage: FirebaseStorage.instance,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -70,6 +78,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => NewsBloc(
               newsRepository: context.read<NewsRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => TipsBloc(
+              tipsRepository: context.read<TipsRepository>(),
             ),
           ),
         ],

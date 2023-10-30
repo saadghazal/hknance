@@ -15,7 +15,7 @@ class TipTypeSelectionWidget extends StatelessWidget {
   final VoidCallback onTap;
   final String label;
   final String icon;
-  final bool? isSelected;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,23 @@ class TipTypeSelectionWidget extends StatelessWidget {
               width: 20.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected == null ? Colors.transparent : !isSelected! ?  Colors.transparent : Colors.blueAccent,
-                border: Border.all(
-                  color: AppColors.primaryDarkGrey.withOpacity(0.2),
-                ),
+                color:
+                    isSelected ? AppColors.primaryYellow : Colors.transparent,
+                border: isSelected
+                    ? null
+                    : Border.all(
+                        color: AppColors.primaryDarkGrey.withOpacity(0.2),
+                      ),
               ),
+              child: isSelected
+                  ? Center(
+                      child: Icon(
+                        Icons.done,
+                        color: AppColors.primaryDark,
+                        size: 16.sp,
+                      ),
+                    )
+                  : SizedBox(),
             ),
             SizedBox(
               width: 10.w,
@@ -57,7 +69,8 @@ class TipTypeSelectionWidget extends StatelessWidget {
             Image.asset(
               icon,
               width: 30.w,
-              color: AppColors.primaryDark,
+              color:
+                  isSelected ? AppColors.primaryYellow : AppColors.primaryDark,
               height: 23.h,
             ),
           ],
