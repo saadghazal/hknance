@@ -21,3 +21,14 @@ class AddTipEvent extends TipsEvent {
   @override
   List<Object> get props => [title, body, isVIP, coverFile];
 }
+
+class UpdateTipEvent extends TipsEvent {
+  final TipModel updatedTip;
+
+  const UpdateTipEvent({
+    required this.updatedTip,
+  });
+
+  @override
+  List<Object> get props => [updatedTip];
+}

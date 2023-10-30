@@ -216,14 +216,30 @@ class _AddTipScreenState extends State<AddTipScreen> {
                   builder: (context, imageState) {
                     return SaveButton(
                       onTap: () async {
-                        context.read<TipsBloc>().add(
-                              AddTipEvent(
-                                title: titleController.text,
-                                body: bodyController.text,
-                                isVIP: isVIP,
-                                coverFile: imageState.imageFile,
-                              ),
-                            );
+                        if (widget.tipModel != null) {
+                          final updatedTip = TipModel(
+                            id: widget.tipModel!.tipId,
+                            tipTitle: titleController.text,
+                            tipCover: widget.tipModel!.tipCover,
+                            tipDescription: bodyController.text,
+                            isVIP: isVIP,
+                            createdAt: widget.tipModel!.createdAt,
+                          );
+                          context.read<TipsBloc>().add(
+                                UpdateTipEvent(
+                                  updatedTip: updatedTip,
+                                ),
+                              );
+                        } else {
+                          context.read<TipsBloc>().add(
+                                AddTipEvent(
+                                  title: titleController.text,
+                                  body: bodyController.text,
+                                  isVIP: isVIP,
+                                  coverFile: imageState.imageFile,
+                                ),
+                              );
+                        }
                       },
                     );
                   },
