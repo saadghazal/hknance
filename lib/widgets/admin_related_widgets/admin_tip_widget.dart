@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/data_models/tip_data_model.dart';
+import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import 'package:intl/intl.dart';
 
 import '../../screens/admin_related_screens/add_tip_screen.dart';
@@ -10,10 +13,11 @@ import '../../utils/theme/app_texts.dart';
 
 class AdminTipWidget extends StatelessWidget {
   const AdminTipWidget({
-    required this.isVIP,
+    required this.tipModel,
     super.key,
   });
-  final bool isVIP;
+
+  final TipModel tipModel;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +42,9 @@ class AdminTipWidget extends StatelessWidget {
             height: 45.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.r),
-              image: const DecorationImage(
-                image: AssetImage(
-                  'assets/icons/news_cover.jpg',
+              image:  DecorationImage(
+                image: NetworkImage(
+                  tipModel.tipCover,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -53,17 +57,21 @@ class AdminTipWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                isVIP
-                    ? vipWidget()
+                tipModel.isVIP
+                    ? vipWidget(tip: tipModel)
                     : AppTexts.body(
-                        text: 'Tip Title',
-                        fontSize: 14.sp,
-                        fontColor: AppColors.primaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  text: tipModel.tipTitle,
+                  fontSize: 14.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
                 AppTexts.body(
                   text:
-                      '${DateFormat.yMMMMEEEEd().format(DateTime.now()).split(',')[0]}, ${DateFormat.yMd().format(DateTime.now())}',
+                  '${DateFormat.yMMMMEEEEd().format(tipModel.createdAt).split(
+                      ',')[0]}, ${DateFormat.yMd().format(tipModel.createdAt)}',
                   fontSize: 12.sp,
                   fontColor: AppColors.primaryDarkGrey,
                 ),
@@ -75,17 +83,21 @@ class AdminTipWidget extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 RoutingAnimation.downToUp(
-                  screen: AddTipScreen(
-
+                  screen: BlocProvider<ImagePickerCubit>(
+                    create: (context) => ImagePickerCubit(),
+                    child: AddTipScreen(
+                      tipModel: tipModel,
+                    ),
                   ),
                 ),
               );
             },
-            child:  Icon(
+            child: Icon(
               Icons.edit,
               color: AppColors.primaryDark,
-              size: ScreenUtil().deviceType() == DeviceType.tablet ? 24.sp : 22.sp,
-
+              size: ScreenUtil().deviceType() == DeviceType.tablet
+                  ? 24.sp
+                  : 22.sp,
             ),
           ),
         ],
@@ -94,7 +106,7 @@ class AdminTipWidget extends StatelessWidget {
   }
 }
 
-Widget vipWidget() {
+Widget vipWidget({required TipModel tip}) {
   return Row(
     children: [
       Image.asset(
@@ -107,7 +119,7 @@ Widget vipWidget() {
         width: 5.w,
       ),
       AppTexts.body(
-        text: 'Tip Title',
+        text: tip.tipTitle,
         fontSize: 14.sp,
         fontColor: AppColors.primaryDark,
         fontWeight: FontWeight.w500,

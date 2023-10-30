@@ -8,11 +8,11 @@ class TipTypeSelectionWidget extends StatelessWidget {
   const TipTypeSelectionWidget({
     required this.icon,
     required this.label,
-    required this.onTap,
+     this.onTap,
     required this.isSelected,
     super.key,
   });
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String label;
   final String icon;
   final bool isSelected;

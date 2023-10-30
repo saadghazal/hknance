@@ -87,7 +87,7 @@ class AdminNewsScreen extends StatelessWidget {
                       ConnectionState.waiting) {
                     return MainLoading();
                   } else {
-                    return AppTexts.title2(text: 'No News Added Yet.');
+                    return AppTexts.title2(text: 'No news added yet.');
                   }
                 },
               ),

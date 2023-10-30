@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
 Uuid uuid = Uuid();
 
 class TipModel extends Equatable {
-
   final String tipId;
   final String tipTitle;
   final String tipCover;
@@ -12,19 +12,24 @@ class TipModel extends Equatable {
   final bool isVIP;
   final DateTime createdAt;
 
-   TipModel({
+  TipModel({
     String? id,
     required this.tipTitle,
     required this.tipCover,
     required this.tipDescription,
     required this.isVIP,
     required this.createdAt,
-  }): tipId = id ?? uuid.v1();
-
+  }) : tipId = id ?? uuid.v1();
 
   @override
-  List<Object> get props =>
-      [tipId, tipTitle, tipCover, tipDescription, isVIP, createdAt,];
+  List<Object> get props => [
+        tipId,
+        tipTitle,
+        tipCover,
+        tipDescription,
+        isVIP,
+        createdAt,
+      ];
 
   Map<String, dynamic> toJson() {
     return {
@@ -37,14 +42,14 @@ class TipModel extends Equatable {
     };
   }
 
-  factory TipModel.fromMap(Map<String, dynamic> map) {
+  factory TipModel.fromJson(Map<String, dynamic> json) {
     return TipModel(
-      id: map['tip_id'] as String,
-      tipTitle: map['tip_title'] as String,
-      tipCover: map['tip_cover'] as String,
-      tipDescription: map['tip_description'] as String,
-      isVIP: map['is_VIP'] as bool,
-      createdAt: map['createdAt'] as DateTime,
+      id: json['tip_id'] as String,
+      tipTitle: json['tip_title'] as String,
+      tipCover: json['tip_cover'] as String,
+      tipDescription: json['tip_description'] as String,
+      isVIP: json['is_VIP'] as bool,
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
     );
   }
 }

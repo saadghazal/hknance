@@ -140,11 +140,13 @@ class _AddTipScreenState extends State<AddTipScreen> {
               TipTypeSelectionWidget(
                 icon: 'assets/icons/24-hours.png',
                 label: 'Daily Tip',
-                onTap: () {
-                  setState(() {
-                    isVIP = false;
-                  });
-                },
+                onTap: widget.tipModel != null
+                    ? null
+                    : () {
+                        setState(() {
+                          isVIP = false;
+                        });
+                      },
                 isSelected:
                     widget.tipModel != null ? !widget.tipModel!.isVIP : !isVIP,
               ),
@@ -154,11 +156,13 @@ class _AddTipScreenState extends State<AddTipScreen> {
               TipTypeSelectionWidget(
                 icon: 'assets/icons/premium.png',
                 label: 'VIP Tip',
-                onTap: () {
-                  setState(() {
-                    isVIP = true;
-                  });
-                },
+                onTap: widget.tipModel != null
+                    ? null
+                    : () {
+                        setState(() {
+                          isVIP = true;
+                        });
+                      },
                 isSelected:
                     widget.tipModel != null ? widget.tipModel!.isVIP : isVIP,
               ),
