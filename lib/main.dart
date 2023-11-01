@@ -11,6 +11,7 @@ import 'package:hknance/repositories/news_repository.dart';
 import 'package:hknance/repositories/tips_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/splash_screen.dart';
+import 'package:hknance/utils/notifications_center/notifications_center.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
@@ -20,13 +21,15 @@ import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
 import 'utils/device_type.dart';
 
+final navigator = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await ScreenUtil.ensureScreenSize();
   await StorageService.init();
+  await NotificationsCenter().initNotifications();
   runApp(const MyApp());
 }
 
@@ -96,6 +99,7 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   title: 'Flutter Demo',
                   debugShowCheckedModeBanner: false,
+                  navigatorKey: navigator,
                   theme: ThemeData(
                     scaffoldBackgroundColor: Colors.white,
                     colorScheme:

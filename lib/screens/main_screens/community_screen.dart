@@ -135,15 +135,8 @@ class CommunityScreen extends StatelessWidget {
                     }
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return ListView.separated(
-                      padding: EdgeInsets.only(top: 20.h),
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 10.h,
-                      ),
-                      itemBuilder: (context, index) {
-                        return MainLoading();
-                      },
-                      itemCount: 3,
+                    return Center(
+                      child: MainLoading(),
                     );
                   } else {
                     return SizedBox();
