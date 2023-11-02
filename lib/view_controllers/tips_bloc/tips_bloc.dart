@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
 import 'package:hknance/repositories/tips_repository.dart';
 import 'package:hknance/utils/errors/error_handler.dart';
@@ -39,9 +40,9 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
-          errorHandler: const ErrorHandler(
+          errorHandler:  ErrorHandler(
             code: '',
-            message: 'Please fill the missing fields',
+            message: 'fill_fields'.tr,
             plugin: '',
           ),
         ),
@@ -81,9 +82,9 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
-          errorHandler: const ErrorHandler(
+          errorHandler:  ErrorHandler(
             code: '',
-            message: 'Please fill the missing fields',
+            message: 'fill_fields'.tr,
             plugin: '',
           ),
         ),

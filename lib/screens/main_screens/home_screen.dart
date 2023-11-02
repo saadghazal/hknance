@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:hknance/widgets/home_related_widgets/latest_news_list.dart';
 
@@ -40,33 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 5.h,
-            ),
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 16.w),
-            //   child: AppTexts.title2(
-            //     text: 'Hot News',
-            //     fontWeight: FontWeight.w600,
-            //     fontColor: AppColors.primaryDark,
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // SizedBox(
-            //   height: ScreenUtil().deviceType() == DeviceType.tablet
-            //       ? 200.h
-            //       : 160.h,
-            //   child: HotNewsListWidget(),
-            // ),
+
             SizedBox(
               height: 20.h,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: AppTexts.title2(
-                text: 'Latest News',
+                text: 'latest_news'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),

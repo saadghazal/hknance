@@ -53,30 +53,28 @@ class AdminTipWidget extends StatelessWidget {
           SizedBox(
             width: 10.w,
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                tipModel.isVIP
-                    ? vipWidget(tip: tipModel)
-                    : AppTexts.body(
-                  text: tipModel.tipTitle,
-                  fontSize: 14.sp,
-                  fontColor: AppColors.primaryDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                AppTexts.body(
-                  text:
-                  '${DateFormat.yMMMMEEEEd().format(tipModel.createdAt).split(
-                      ',')[0]}, ${DateFormat.yMd().format(tipModel.createdAt)}',
-                  fontSize: 12.sp,
-                  fontColor: AppColors.primaryDarkGrey,
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              tipModel.isVIP
+                  ? vipWidget(tip: tipModel)
+                  : AppTexts.body(
+                text: tipModel.tipTitle,
+                fontSize: 14.sp,
+                fontColor: AppColors.primaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              AppTexts.body(
+                text:
+                '${DateFormat.yMMMMEEEEd().format(tipModel.createdAt).split(
+                    ',')[0]}, ${DateFormat.yMd().format(tipModel.createdAt)}',
+                fontSize: 12.sp,
+                fontColor: AppColors.primaryDarkGrey,
+              ),
+            ],
           ),
           const Spacer(),
           InkWell(

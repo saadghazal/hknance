@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/screens/admin_related_screens/add_new_screen.dart';
 import 'package:hknance/utils/routing_animation.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
@@ -28,7 +29,7 @@ class AdminNewsScreen extends StatelessWidget {
                 height: 20.h,
               ),
               AppTexts.title3(
-                text: 'App News',
+                text: 'news'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),

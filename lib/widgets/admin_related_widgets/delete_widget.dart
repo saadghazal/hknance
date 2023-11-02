@@ -8,7 +8,7 @@ class DeleteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: EdgeInsets.only(top: 5.h, right: 16.w),
+      padding: EdgeInsets.only(top: 5.h, right: 16.w,left: 16.w),
       child: InkWell(
         onTap: onTap,
         child: Ink(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../repositories/auth_repository.dart';
 import '../screens/authentication_related_screens/sign_up_screen.dart';
@@ -29,12 +30,12 @@ class GoSignUp extends StatelessWidget {
           ),
           children: [
             TextSpan(
-                text: 'Don\'t have an account? ',
+                text: 'no_account_desc'.tr,
                 recognizer: TapGestureRecognizer()
                   ..onTap =
                       () => openSignUpScreen(context)),
             TextSpan(
-              text: 'Sign Up!',
+              text: 'sign_up_account'.tr,
               recognizer: TapGestureRecognizer()
                 ..onTap = () => openSignUpScreen(context),
               style: const TextStyle(

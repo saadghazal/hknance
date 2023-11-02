@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/utils.dart';
 import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/repositories/community_repository.dart';
 import 'package:hknance/repositories/news_repository.dart';
@@ -13,6 +15,7 @@ import 'package:hknance/repositories/user_repository.dart';
 import 'package:hknance/screens/splash_screen.dart';
 import 'package:hknance/utils/notifications_center/notifications_center.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
+import 'package:hknance/utils/translations/languages.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
 import 'package:hknance/view_controllers/tips_bloc/tips_bloc.dart';
@@ -29,6 +32,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await StorageService.init();
+  await StorageService.getLanguage();
   await NotificationsCenter().initNotifications();
   runApp(const MyApp());
 }
@@ -96,9 +100,13 @@ class MyApp extends StatelessWidget {
               minTextAdapt: true,
               splitScreenMode: true,
               builder: (context, _) {
-                return MaterialApp(
+                return GetMaterialApp(
                   title: 'Flutter Demo',
                   debugShowCheckedModeBanner: false,
+                  translations: Languages(),
+                  locale: Get.locale,
+                  fallbackLocale:const Locale('ar'),
+
                   navigatorKey: navigator,
                   theme: ThemeData(
                     scaffoldBackgroundColor: Colors.white,

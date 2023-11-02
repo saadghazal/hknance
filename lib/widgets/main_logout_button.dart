@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 
 
@@ -13,7 +14,7 @@ class MainLogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MainAppButton(
-      label: 'Logout',
+      label: 'logout'.tr,
       height: 40.h,
       width: double.maxFinite,
       onTap: () async{

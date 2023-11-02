@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../utils/theme/app_colors.dart';
 import '../view_controllers/password_config_cubit/password_config_cubit.dart';
@@ -16,11 +17,11 @@ class PasswordTextField extends StatelessWidget {
       builder: (context, password) {
         return MainTextField(
           controller: controller,
-          hintText: 'Enter your password',
+          hintText: 'password_field'.tr,
           isPassword:
           password.passwordStatus == PasswordStatus.hidden,
           suffix: Padding(
-            padding: EdgeInsets.only(right: 10.w),
+            padding: EdgeInsets.only(right: 10.w,left: 10.w),
             child: InkWell(
               onTap: () {
                 context

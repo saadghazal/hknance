@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../main_app_button.dart';
 
 class SaveButton extends StatelessWidget {
-  const SaveButton({required this.onTap,super.key,});
+  const SaveButton({
+    required this.onTap,
+    super.key,
+  });
   final VoidCallback onTap;
 
   @override
@@ -19,7 +23,7 @@ class SaveButton extends StatelessWidget {
         bottom: bottomPadding == 0 ? 20.h : bottomPadding.h,
       ),
       child: MainAppButton(
-        label: 'Save',
+        label: 'save'.tr,
         height: 40.h,
         width: double.maxFinite,
         onTap: onTap,

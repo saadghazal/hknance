@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/screens/authentication_related_screens/sign_up_successfully_screen.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
@@ -56,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: MainAppBar(
-            title: 'Sign Up',
+            title: 'sign_up'.tr,
             backIcon: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -93,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 20.h,
                         ),
                         AppTexts.title2(
-                          text: 'Create Account',
+                          text: 'create_account'.tr,
                           fontWeight: FontWeight.w600,
                         ),
                         SizedBox(
@@ -101,14 +102,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         AppTexts.body(
                           text:
-                              'Create account to get latest\ntrading tips and news',
+                              'create_account_desc'.tr,
                           fontSize: 14.sp,
                         ),
                         SizedBox(
                           height: 40.h,
                         ),
                         AppTexts.body(
-                          text: 'Profile Picture',
+                          text: 'profile_pic'.tr,
                           fontSize: 15.sp,
                           fontColor: AppColors.primaryDark,
                           fontWeight: FontWeight.w500,
@@ -173,17 +174,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         TextFieldSection(
                           controller: nameController,
-                          title: 'Name',
-                          hintText: 'Enter your name',
+                          title: 'name'.tr,
+                          hintText: 'name_field'.tr,
                           isLastField: false,
                         ),
                         TextFieldSection(
                           controller: emailController,
-                          title: 'Email',
-                          hintText: 'Enter your email',
+                          title: 'email'.tr,
+                          hintText: 'email_field'.tr,
                           isLastField: false,
                           icon: Padding(
-                            padding: EdgeInsets.only(right: 10.w),
+                            padding: EdgeInsets.only(right: 10.w,left: 10.w),
                             child: Image.asset(
                               'assets/icons/mail.png',
                               height: 25.h,
@@ -192,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         AppTexts.body(
-                          text: 'Password',
+                          text: 'password'.tr,
                           fontSize: 15.sp,
                           fontColor: AppColors.primaryDark,
                           fontWeight: FontWeight.w500,
@@ -207,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         state.loadingStatus == LoadingStatus.loading
                             ? const MainLoading()
                             : AuthButton(
-                                label: 'SignUp',
+                                label: 'sign_up'.tr,
                                 onTap: () async {
                                   if (emailController.text.isEmpty ||
                                       passwordController.text.isEmpty ||

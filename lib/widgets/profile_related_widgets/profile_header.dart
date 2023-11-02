@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/user_data_model.dart';
 import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 
@@ -74,7 +75,7 @@ class ProfileHeader extends StatelessWidget {
                   child: Column(
                     children: [
                       AppTexts.body(
-                        text: 'Posts',
+                        text: 'posts'.tr,
                         fontSize: 15.sp,
                         fontColor: AppColors.primaryDark,
                         fontWeight: FontWeight.w600,
@@ -103,7 +104,7 @@ class ProfileHeader extends StatelessWidget {
             children: [
               Expanded(
                 child: MainAppButton(
-                  label: 'Profile Settings',
+                  label: 'profile_settings'.tr,
                   height: 40.h,
                   width: double.maxFinite,
                   onTap: () {

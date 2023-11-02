@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
@@ -41,7 +42,7 @@ class ProfileSettingsScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: MainAppBar(
-            title: 'Settings',
+            title: 'settings'.tr,
             backIcon: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -74,7 +75,7 @@ class ProfileSettingsScreen extends StatelessWidget {
                 height: 10.h,
               ),
               MainAppButton(
-                label: 'Edit Picture',
+                label: 'edit_picture'.tr,
                 height: 30.h,
                 width: 100.w,
                 onTap: () {},
@@ -92,7 +93,7 @@ class ProfileSettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppTexts.body(
-                      text: 'Name',
+                      text: 'name'.tr,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),

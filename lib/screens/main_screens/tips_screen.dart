@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/widgets/tips_screen_related_widgets/vip_tips_list.dart';
 
 import '../../utils/theme/app_colors.dart';
@@ -37,7 +38,7 @@ class TipsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: AppTexts.title2(
-                text: 'Vip Tips',
+                text: 'vip_tips'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),
@@ -52,7 +53,7 @@ class TipsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: AppTexts.title2(
-                text: 'Daily Tips',
+                text: 'daily_tips'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),

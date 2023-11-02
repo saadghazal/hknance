@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/new_data_model.dart';
 import 'package:hknance/utils/confirm_dialoge.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
@@ -88,7 +89,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: MainAppBar(
-            title: 'Add New',
+            title: 'add_news'.tr,
             backIcon: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -112,7 +113,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 );
                             Navigator.of(context).pop();
                           },
-                          title: 'Delete New',
+                          title: 'delete_news'.tr,
                         );
                       },
                     ),
@@ -129,7 +130,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'New Title',
+                    text: 'new_title'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -140,14 +141,14 @@ class _AddNewScreenState extends State<AddNewScreen> {
                   MainTextField(
                     controller: titleController,
                     hintText: widget.newModel == null
-                        ? 'Enter the new title'
+                        ? 'new_title_field'.tr
                         : widget.newModel!.newTitle,
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'New Cover',
+                    text: 'new_cover'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -169,7 +170,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'New Body',
+                    text: 'new_desc'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -180,7 +181,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                   MainTextField(
                     controller: bodyController,
                     hintText: widget.newModel == null
-                        ? 'Enter the new content'
+                        ? 'new_desc_field'.tr
                         : widget.newModel!.newDescription,
                     textInputAction: TextInputAction.newline,
                     isMultiline: true,
@@ -247,7 +248,7 @@ void updateOrAddNew({
     } else {
       showErrorSnackBar(
         context: context,
-        errorMessage: 'Please fill the missing fields',
+        errorMessage: 'fill_fields'.tr,
       );
     }
   } else {
@@ -267,7 +268,7 @@ void updateOrAddNew({
     } else {
       showErrorSnackBar(
         context: context,
-        errorMessage: 'Please fill the missing fields',
+        errorMessage: 'fill_fields'.tr,
       );
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
 
@@ -41,7 +42,7 @@ void showConfirmDialog({
               height: 10.h,
             ),
             AppTexts.body(
-              text: 'Are you sure?',
+              text: 'are_u_sure'.tr,
               fontSize: 16.sp,
               textAlign: TextAlign.center,
             ),
@@ -49,7 +50,7 @@ void showConfirmDialog({
               height: 20.h,
             ),
             MainAppButton(
-              label: 'Delete',
+              label: 'delete'.tr,
               height: 35.h,
               width: double.maxFinite,
               fontSize: ScreenUtil().deviceType() == DeviceType.tablet
@@ -64,7 +65,7 @@ void showConfirmDialog({
               height: 5.h,
             ),
             MainAppButton(
-              label: 'Cancel',
+              label: 'cancel'.tr,
               height: 35.h,
               width: double.maxFinite,
               fontSize: ScreenUtil().deviceType() == DeviceType.tablet

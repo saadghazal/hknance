@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
 
 import '../repositories/auth_repository.dart';
 import '../screens/authentication_related_screens/login_screen.dart';
@@ -18,7 +19,7 @@ class OnBoardingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainAppButton(
-      label: isAdmin ? 'Admin' : 'User',
+      label: isAdmin ? 'admin'.tr : 'user'.tr,
       height: 50.h,
       width: ScreenUtil().deviceType() == DeviceType.tablet
           ? 300.w

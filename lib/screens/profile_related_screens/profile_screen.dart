@@ -53,21 +53,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
             body: Column(
               children: [
-                ProfileHeader(userModel: state.userModel,postsNumber: userPostsState.userPosts.length,),
+                ProfileHeader(
+                  userModel: state.userModel,
+                  postsNumber: userPostsState.userPosts.length,
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
-                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
-                        userPostsState.userPosts.isEmpty
-                    ? Spacer()
-                    : SizedBox(),
-                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
-                        userPostsState.userPosts.isEmpty
-                    ? AppTexts.title2(
-                        text: 'No Posts',
-                        fontWeight: FontWeight.w500,
-                      )
-                    : Expanded(
+               Expanded(
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -120,12 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   .length,
                         ),
                       ),
-                userPostsState.getUserPostsLoading == LoadingStatus.loaded &&
-                        userPostsState.userPosts.isEmpty
-                    ? Spacer(
-                        flex: 2,
-                      )
-                    : SizedBox(),
+
               ],
             ),
           ),

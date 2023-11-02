@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
 import 'package:hknance/utils/confirm_dialoge.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
@@ -58,7 +59,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
     return Scaffold(
       appBar: MainAppBar(
-        title: 'Add Tip',
+        title: 'add_tip'.tr,
         backIcon: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -82,7 +83,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
                             );
                         Navigator.pop(context);
                       },
-                      title: 'Delete Tip',
+                      title: 'delete_tip'.tr,
                     );
                   },
                 ),
@@ -99,7 +100,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
                 height: 20.h,
               ),
               AppTexts.body(
-                text: 'Tip Title',
+                text: 'tip_title'.tr,
                 fontSize: 15.sp,
                 fontColor: AppColors.primaryDark,
                 fontWeight: FontWeight.w500,
@@ -109,13 +110,13 @@ class _AddTipScreenState extends State<AddTipScreen> {
               ),
               MainTextField(
                 controller: titleController,
-                hintText: 'Enter tip title',
+                hintText: 'tip_title_field'.tr,
               ),
               SizedBox(
                 height: 20.h,
               ),
               AppTexts.body(
-                text: 'Tip Cover',
+                text: 'tip_cover'.tr,
                 fontSize: 15.sp,
                 fontColor: AppColors.primaryDark,
                 fontWeight: FontWeight.w500,
@@ -145,7 +146,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
                 height: 20.h,
               ),
               AppTexts.body(
-                text: 'Tip Type',
+                text: 'tip_type'.tr,
                 fontSize: 15.sp,
                 fontColor: AppColors.primaryDark,
                 fontWeight: FontWeight.w500,
@@ -155,7 +156,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
               ),
               TipTypeSelectionWidget(
                 icon: 'assets/icons/24-hours.png',
-                label: 'Daily Tip',
+                label: 'daily_tips'.tr,
                 onTap: widget.tipModel != null
                     ? null
                     : () {
@@ -171,7 +172,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
               ),
               TipTypeSelectionWidget(
                 icon: 'assets/icons/premium.png',
-                label: 'VIP Tip',
+                label: 'vip_tips'.tr,
                 onTap: widget.tipModel != null
                     ? null
                     : () {
@@ -186,7 +187,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
                 height: 20.h,
               ),
               AppTexts.body(
-                text: 'Tip Body',
+                text: 'tip_desc'.tr,
                 fontSize: 15.sp,
                 fontColor: AppColors.primaryDark,
                 fontWeight: FontWeight.w500,
@@ -196,7 +197,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
               ),
               MainTextField(
                 controller: bodyController,
-                hintText: 'Enter tip body',
+                hintText: 'tip_desc_field'.tr,
                 textInputAction: TextInputAction.newline,
                 isMultiline: true,
               ),

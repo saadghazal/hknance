@@ -20,10 +20,10 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List screens = [
-    HomeScreen(),
-    TipsScreen(),
-    CommunityScreen(),
-    ProfileScreen(),
+    const HomeScreen(),
+    const TipsScreen(),
+    const CommunityScreen(),
+    const ProfileScreen(),
   ];
   int currentIndex = 0;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/screens/admin_related_screens/add_tip_screen.dart';
 import 'package:hknance/widgets/admin_related_widgets/floating_add_button.dart';
 import 'package:hknance/widgets/admin_related_widgets/tips_list_widget.dart';
@@ -28,7 +29,7 @@ class AdminTipsScreen extends StatelessWidget {
                 height: 20.h,
               ),
               AppTexts.title3(
-                text: 'Tips',
+                text: 'tips'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),

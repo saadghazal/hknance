@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
 import 'package:hknance/screens/admin_related_screens/admin_main_screen.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
@@ -70,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: MainAppBar(
-            title: 'Login',
+            title: 'login'.tr,
             backIcon: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 20.h,
                   ),
                   AppTexts.title2(
-                    text: 'Welcome Back!',
+                    text: 'welcome_back'.tr,
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(
@@ -102,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppTexts.body(
                     text: !widget.isAdmin
-                        ? 'Please enter your info to get the latest\ntips and news about trading!'
-                        : 'Please login to provide users\nwith the latest trading news and tips',
+                        ? 'welcome_desc_user'.tr
+                        : 'welcome_desc_admin'.tr,
                     fontSize: 14.sp,
                   ),
                   SizedBox(
@@ -111,11 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFieldSection(
                     controller: emailController,
-                    title: 'Email',
-                    hintText: 'Enter your email',
+                    title: 'email'.tr,
+                    hintText: 'email_field'.tr,
                     isLastField: false,
                     icon: Padding(
-                      padding: EdgeInsets.only(right: 10.w),
+                      padding: EdgeInsets.only(right: 10.w,left: 10.w),
                       child: Image.asset(
                         'assets/icons/mail.png',
                         height: 25.h,
@@ -124,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   AppTexts.body(
-                    text: 'Password',
+                    text: 'password'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -139,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   state.loadingStatus == LoadingStatus.loading
                       ? MainLoading()
                       : AuthButton(
-                          label: 'Login',
+                          label: 'login'.tr,
                           onTap: () async {
                             if (emailController.text.isEmpty ||
                                 passwordController.text.isEmpty) {

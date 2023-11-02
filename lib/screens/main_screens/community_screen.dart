@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/post_data_model.dart';
 import 'package:hknance/utils/routing_animation.dart';
 import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
@@ -36,7 +37,7 @@ class CommunityScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppTexts.title1(
-                    text: 'Community',
+                    text: 'community'.tr,
                     fontWeight: FontWeight.w600,
                   ),
                   InkWell(
@@ -106,7 +107,8 @@ class CommunityScreen extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           final post = PostModel.fromJson(
-                              snapshot.data!.docs[index].data());
+                            snapshot.data!.docs[index].data(),
+                          );
                           return PostWidget(
                             postModel: post,
                             onTap: () {

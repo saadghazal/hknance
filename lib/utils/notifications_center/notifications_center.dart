@@ -15,6 +15,7 @@ class NotificationsCenter{
   initPushNotifications();
 }
 
+
  void handleMessage(RemoteMessage? message){
    if(message == null) {
      return;
@@ -24,7 +25,6 @@ class NotificationsCenter{
  }
  Future initPushNotifications()async{
    _firebaseMessaging.getInitialMessage().then(handleMessage);
-
    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
 
  }

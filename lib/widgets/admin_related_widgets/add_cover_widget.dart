@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
 
 import '../../utils/theme/app_colors.dart';
@@ -58,7 +59,7 @@ class AddCoverWidget extends StatelessWidget {
                     height: 10.h,
                   ),
                   AppTexts.body(
-                    text: 'Add Cover',
+                    text: 'add_cover'.tr,
                     fontSize: 14.sp,
                     isHeadline: true,
                     fontColor: AppColors.primaryDarkGrey.withOpacity(0.6),

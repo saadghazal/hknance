@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
 import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
@@ -75,7 +76,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       flex: 3,
                     ),
                     AppTexts.body(
-                      text: 'Create Post',
+                      text: 'create_post'.tr,
                       fontSize: 17.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -88,11 +89,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             width: 60.w,
                           )
                         : MainAppButton(
-                            label: 'Post',
+                            label: 'post'.tr,
                             height: 25.h,
                             width: 60.w,
                             onTap: () async {
-                              if (postTextController.text.isNotEmpty) {
+                              if (postTextController.text.trim().isNotEmpty) {
                                 await context.read<CommunityCubit>().addPost(
                                       userId: userModel.id,
                                       username: userModel.name,
@@ -130,10 +131,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             backgroundColor: AppColors.primaryDark,
                             backgroundImage: userModel.profilePicture.isNotEmpty
                                 ? NetworkImage(
-                              userModel.profilePicture,
-                            )
-                                :  AssetImage('assets/icons/profile-icon-9.png')
-                            as ImageProvider,
+                                    userModel.profilePicture,
+                                  )
+                                : AssetImage('assets/icons/profile-icon-9.png')
+                                    as ImageProvider,
                           ),
                           SizedBox(
                             width: 7.w,
@@ -187,7 +188,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                         maxLength: 300,
                         decoration: InputDecoration(
-                          hintText: 'What\'s on your mind?',
+                          hintText: 'whats_on_mind'.tr,
                           counterText: '',
                           border: InputBorder.none,
                           hintStyle: TextStyle(

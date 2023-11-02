@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hknance/data_models/post_data_model.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
@@ -83,29 +84,32 @@ class PostWidget extends StatelessWidget {
               height: 5.h,
             ),
             const Divider(),
-            InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(15.r),
-              child: SizedBox(
-                height: 30.h,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/icons/chat.png',
-                      color: AppColors.primaryDark,
-                      height: 18.h,
-                      // width: 20.w,
-                    ),
-                    SizedBox(
-                      width: 3.w,
-                    ),
-                    AppTexts.body(
-                      text: 'Comments',
-                      fontSize: 12.sp,
-                      isHeadline: true,
-                    ),
-                  ],
+            Directionality(
+              textDirection: TextDirection.ltr ,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(15.r),
+                child: SizedBox(
+                  height: 30.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icons/chat.png',
+                        color: AppColors.primaryDark,
+                        height: 18.h,
+                        // width: 20.w,
+                      ),
+                      SizedBox(
+                        width: 3.w,
+                      ),
+                      AppTexts.body(
+                        text: 'comments'.tr,
+                        fontSize: 12.sp,
+                        isHeadline: true,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
