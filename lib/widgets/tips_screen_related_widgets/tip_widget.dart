@@ -10,8 +10,10 @@ class TipWidget extends StatelessWidget {
   const TipWidget({
     super.key,
     required this.tipModel,
+    required this.onTap,
   });
   final TipModel tipModel;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,7 @@ class TipWidget extends StatelessWidget {
           Center(
             child: Material(
               child: InkWell(
-                onTap: () {},
+                onTap: onTap,
                 borderRadius: BorderRadius.circular(12.r),
                 child: Ink(
                   height: 30.h,

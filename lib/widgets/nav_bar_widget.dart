@@ -124,8 +124,15 @@ Widget navBarItem({
   required String icon,
   required String label,
 }) {
-  return GestureDetector(
-    onTap: onTap,
+  return ElevatedButton(
+    onPressed: onTap,
+    style: ElevatedButton.styleFrom(
+      foregroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      padding: EdgeInsets.zero,
+      shadowColor: Colors.transparent,
+    ),
     child: AnimatedSize(
       duration: Duration(milliseconds: 200),
       reverseDuration: Duration(milliseconds: 200),

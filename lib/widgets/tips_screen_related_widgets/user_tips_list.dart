@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
 import 'package:hknance/widgets/tips_screen_related_widgets/tip_widget.dart';
 
+import '../../screens/tips_screen.dart';
+import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 import '../main_loading.dart';
@@ -57,6 +59,15 @@ class _UserTipsListState extends State<UserTipsList> {
                 );
                 return TipWidget(
                   tipModel: newModel,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      RoutingAnimation.downToUp(
+                        screen: TipScreen(
+                          tipModel: newModel,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
               separatorBuilder: (context, index) {

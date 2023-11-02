@@ -41,11 +41,8 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     final keyboardPadding = MediaQuery.of(context).viewInsets.bottom;
     final bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
+    return
+       Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           leadingWidth: double.maxFinite,
@@ -99,7 +96,11 @@ class _PostScreenState extends State<PostScreen> {
         body: SizedBox(
           height: double.maxFinite,
           width: double.maxFinite,
-          child: SingleChildScrollView(
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child:SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -162,12 +163,12 @@ class _PostScreenState extends State<PostScreen> {
               ],
             ),
           ),
-        ),
+        ),),
         bottomSheet: CommentTextField(
           postModel: widget.postModel,
           userModel: context.read<UserBloc>().state.userModel,
         ),
-      ),
+
     );
   }
 }

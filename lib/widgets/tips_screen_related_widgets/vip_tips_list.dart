@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
+import 'package:hknance/screens/main_screens/tips_screen.dart';
 import 'package:hknance/widgets/tips_screen_related_widgets/vip_tip_widget.dart';
 
+import '../../screens/tips_screen.dart';
+import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
 import '../main_loading.dart';
@@ -18,7 +21,7 @@ class VipTipList extends StatefulWidget {
 
 class _VipTipListState extends State<VipTipList> {
   PageController pageController = PageController(viewportFraction: 0.85);
-  late Stream<QuerySnapshot<Map<String,dynamic>>> stream;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> stream;
   var currentPageValue = 0.0;
   double _scaleFactor = 0.8;
   @override
@@ -38,23 +41,16 @@ class _VipTipListState extends State<VipTipList> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
             final allTips = snapshot.data!.docs.reversed.toList();
-            final vipTips = allTips.where((element) => element.data()['is_VIP'] == true).toList();
-            // if (snapshot.data!.docs.isEmpty) {
-            //   return Center(
-            //     child: AppTexts.title3(
-            //       text: 'No tips added yet.',
-            //       fontColor: AppColors.primaryDark,
-            //       fontWeight: FontWeight.w500,
-            //     ),
-            //   );
-            // }
+            final vipTips = allTips
+                .where((element) => element.data()['is_VIP'] == true)
+                .toList();
+
             return PageView.builder(
               clipBehavior: Clip.none,
               controller: pageController,
@@ -64,6 +60,15 @@ class _VipTipListState extends State<VipTipList> {
                 return buildPageViewChild(
                   index: index,
                   tipModel: vipTip,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      RoutingAnimation.downToUp(
+                        screen: TipScreen(
+                          tipModel: vipTip,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
               itemCount: vipTips.length,
@@ -92,7 +97,11 @@ class _VipTipListState extends State<VipTipList> {
     );
   }
 
-  Widget buildPageViewChild({required int index, required TipModel tipModel}) {
+  Widget buildPageViewChild({
+    required int index,
+    required TipModel tipModel,
+    required VoidCallback onTap,
+  }) {
     Matrix4 matrix = Matrix4.identity();
     if (index == currentPageValue.floor()) {
       var currentScale = 1 - (currentPageValue - index) * (1 - _scaleFactor);
@@ -117,7 +126,10 @@ class _VipTipListState extends State<VipTipList> {
     }
     return Transform(
       transform: matrix,
-      child: VipTipWidget(tipModel: tipModel),
+      child: GestureDetector(
+        onTap: onTap,
+        child: VipTipWidget(tipModel: tipModel),
+      ),
     );
   }
 }

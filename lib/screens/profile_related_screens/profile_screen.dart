@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,8 @@ import 'package:hknance/widgets/post_related_widgets/post_place_holder.dart';
 
 import 'package:hknance/widgets/profile_related_widgets/profile_header.dart';
 
+import '../../data_models/post_data_model.dart';
+import '../../widgets/main_loading.dart';
 import '../../widgets/post_related_widgets/post_widget.dart';
 import '../post_related_screens/post_screen.dart';
 
@@ -60,60 +64,75 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-               Expanded(
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(
-                            top: 20.h,
-                            bottom: 20.h,
-                          ),
-                          separatorBuilder: (context, index) => SizedBox(
-                            height: 10.h,
-                          ),
-                          itemBuilder: (context, index) {
-                            if (userPostsState.getUserPostsLoading ==
-                                LoadingStatus.loading) {
-                              return PostPlaceHolder();
-                            }
-                            final post = context
-                                .watch<CommunityCubit>()
-                                .state
-                                .userPosts[index];
-                            return PostWidget(
-                              postModel: post,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider.value(
-                                          value: context.read<CommunityCubit>(),
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('community')
+                        .orderBy('createdAt', descending: false)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.data!.docs.isEmpty) {
+                          return Center(
+                            child: AppTexts.title2(
+                              text: 'No Posts',
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        } else {
+                          final userPosts = snapshot.data!.docs
+                              .where((element) =>
+                                  element.data()['user_id'] ==
+                                  state.userModel.id)
+                              .toList();
+                          return Expanded(
+                            child: ListView.separated(
+                              padding: EdgeInsets.only(top: 20.h),
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: 10.h,
+                              ),
+                              itemBuilder: (context, index) {
+                                final post = PostModel.fromJson(
+                                  userPosts[index].data(),
+                                );
+                                return PostWidget(
+                                  postModel: post,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => MultiBlocProvider(
+                                          providers: [
+                                            BlocProvider.value(
+                                              value: context
+                                                  .read<CommunityCubit>(),
+                                            ),
+                                            BlocProvider.value(
+                                              value: context.read<UserBloc>(),
+                                            ),
+                                          ],
+                                          child: PostScreen(
+                                            postModel: post,
+                                          ),
                                         ),
-                                        BlocProvider.value(
-                                          value: context.read<UserBloc>(),
-                                        ),
-                                      ],
-                                      child: PostScreen(
-                                        postModel: post,
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
-                          itemCount: userPostsState.getUserPostsLoading ==
-                                  LoadingStatus.loading
-                              ? 3
-                              : context
-                                  .watch<CommunityCubit>()
-                                  .state
-                                  .userPosts
-                                  .length,
-                        ),
-                      ),
-
+                              itemCount: userPosts.length,
+                            ),
+                          );
+                        }
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: MainLoading(),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    }),
               ],
             ),
           ),

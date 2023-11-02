@@ -6,6 +6,7 @@ import 'package:hknance/data_models/user_data_model.dart';
 import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
 import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 
+import '../../utils/is_arabic.dart';
 import '../../utils/theme/app_colors.dart';
 
 class CommentTextField extends StatefulWidget {
@@ -153,11 +154,18 @@ class _CommentTextFieldState extends State<CommentTextField> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 focusColor: Colors.transparent,
-                child: Image.asset(
-                  'assets/icons/send.png',
-                  height: 40.h,
-                  width: 20.w,
-                  color: AppColors.lightGrey,
+                child: RotatedBox(
+                  
+                  quarterTurns: isArabic()? 2 : 0,
+                  child: SizedBox(
+                    height: 20.h,
+                    width: 20.w,
+                    child: Image.asset(
+                      'assets/icons/send.png',
+                      fit: BoxFit.cover,
+                      color: AppColors.lightGrey,
+                    ),
+                  ),
                 ),
               ),
             )
