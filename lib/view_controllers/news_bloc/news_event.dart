@@ -8,14 +8,16 @@ abstract class NewsEvent extends Equatable {
 class AddNewEvent extends NewsEvent {
   final NewModel newModel;
   final File newCover;
+  final bool isAnalysis;
 
   const AddNewEvent({
     required this.newModel,
     required this.newCover,
+    required this.isAnalysis
   });
 
   @override
-  List<Object> get props => [newModel, newCover];
+  List<Object> get props => [newModel, newCover,isAnalysis,];
 }
 
 class UpdateNewEvent extends NewsEvent {

@@ -18,6 +18,7 @@ import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/utils/translations/languages.dart';
 import 'package:hknance/view_controllers/auth_bloc/auth_bloc.dart';
 import 'package:hknance/view_controllers/news_bloc/news_bloc.dart';
+import 'package:hknance/view_controllers/notifications_cubit/notifications_cubit.dart';
 import 'package:hknance/view_controllers/tips_bloc/tips_bloc.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,9 +32,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationsCenter.initialize();
   await StorageService.init();
   await StorageService.getLanguage();
-  await NotificationsCenter().initNotifications();
   runApp(const MyApp());
 }
 
@@ -91,6 +92,12 @@ class MyApp extends StatelessWidget {
             create: (context) => TipsBloc(
               tipsRepository: context.read<TipsRepository>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => NotificationsCubit(
+
+            ),
+            lazy: false,
           ),
         ],
         child: Sizer(

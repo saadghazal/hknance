@@ -1,31 +1,57 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:hknance/main.dart';
-import 'package:hknance/screens/main_screens/main_screen.dart';
-import 'package:hknance/utils/routing_animation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+class NotificationsCenter {
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  static Future<void> initialize() async {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    AndroidInitializationSettings androidInitializationSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosInitializationSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: (
+        id,
+        title,
+        body,
+        payload,
+      ) async {},
+    );
+    var initializeSettings = InitializationSettings(
+      android: androidInitializationSettings,
+      iOS: iosInitializationSettings,
+    );
+    await flutterLocalNotificationsPlugin.initialize(
+      initializeSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {},
+    );
 
+  }
 
-class NotificationsCenter{
+  static NotificationDetails notificationDetails() {
+    return const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'channelId',
+        'channelName',
+        importance: Importance.max,
+        priority: Priority.max,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
+  }
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
- Future<void> initNotifications()async{
-  await _firebaseMessaging.requestPermission();
-  final fcmToken = await _firebaseMessaging.getToken();
-  print(fcmToken);
-  initPushNotifications();
-}
-
-
- void handleMessage(RemoteMessage? message){
-   if(message == null) {
-     return;
-   } else{
-     navigator.currentState!.pushAndRemoveUntil(RoutingAnimation.downToUp(screen: MainScreen()), (route) => false);
-   }
- }
- Future initPushNotifications()async{
-   _firebaseMessaging.getInitialMessage().then(handleMessage);
-   FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-
- }
+  static Future showNotification()  {
+    return flutterLocalNotificationsPlugin.show(
+      500,
+      'new News',
+      'hi',
+      notificationDetails(),
+    );
+  }
 }

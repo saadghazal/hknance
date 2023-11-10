@@ -63,6 +63,15 @@ class Languages extends Translations {
           'delete': 'حذف',
           'cancel': 'إلغاء',
           'fill_fields': 'رجاءًا قم بتعبئة الحقول الفارغة',
+          'home': 'الرئيسية',
+          'analysis':'التحليلات',
+          'analysis_title':'عنوان التحليل',
+          'analysis_cover': 'غلاف التحليل',
+          'analysis_desc': 'وصف التحليل',
+          'add_analysis': 'اضف تحليل',
+          'analysis_title_field': 'ادخل عنوان التحليل',
+          'analysis_desc_field': 'ادخل وصف التحليل',
+          'vip_tip': 'هل النصيحة مميزة؟',
 
         },
         'en': {
@@ -124,7 +133,15 @@ class Languages extends Translations {
           'delete': 'Delete',
           'cancel': 'Cancel',
           'fill_fields':'Please fill the missing fields',
-
+          'home': 'Home',
+          'analysis': 'Analytics',
+          'analysis_title':'Analysis Title',
+          'analysis_cover': 'Analysis Cover',
+          'analysis_desc': 'Analysis Description',
+          'add_analysis': 'Add Analysis',
+          'analysis_title_field': 'Enter analysis title',
+          'analysis_desc_field': 'Enter analysis description',
+          'vip_tip': 'Is the tip special?'
         }
       };
 }

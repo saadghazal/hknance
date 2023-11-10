@@ -16,6 +16,7 @@ class NewsRepository {
         _firebaseStorage = firebaseStorage;
   Future<void> addNew({
     required NewModel newModel,
+    required bool isAnalysis,
     required File coverFile,
   }) async {
     try {
@@ -32,6 +33,7 @@ class NewsRepository {
         'new_description': newModel.newDescription,
         'new_cover': coverLink,
         'new_title': newModel.newTitle,
+        'is_analysis': isAnalysis,
         'createdAt': Timestamp.now(),
       });
     } on FirebaseException catch (e) {

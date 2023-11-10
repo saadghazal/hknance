@@ -9,6 +9,7 @@ class NewModel extends Equatable {
   final String newTitle;
   final String newCover;
   final String newDescription;
+  final bool isAnalysis;
   final DateTime createdAt;
 
   NewModel({
@@ -16,6 +17,7 @@ class NewModel extends Equatable {
     required this.newTitle,
     required this.newCover,
     required this.newDescription,
+    required this.isAnalysis,
     required this.createdAt,
   }) : newId = id ?? uuid.v1();
 
@@ -25,6 +27,7 @@ class NewModel extends Equatable {
         newTitle,
         newCover,
         newDescription,
+    isAnalysis,
       ];
 
   Map<String, dynamic> toJson() {
@@ -33,6 +36,7 @@ class NewModel extends Equatable {
       'new_title': newTitle,
       'new_cover': newCover,
       'new_description': newDescription,
+      'is_analysis': isAnalysis,
       'createdAt': createdAt,
     };
   }
@@ -40,6 +44,7 @@ class NewModel extends Equatable {
   factory NewModel.fromJson(Map<String, dynamic> json) {
     return NewModel(
       id: json['new_id'] as String,
+      isAnalysis: json['is_analysis'],
       newTitle: json['new_title'] as String,
       newCover: json['new_cover'] as String,
       newDescription: json['new_description'] as String,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hknance/screens/admin_related_screens/add_tip_screen.dart';
+import 'package:hknance/view_controllers/tip_type_cubit/tip_type_cubit.dart';
 import 'package:hknance/widgets/admin_related_widgets/floating_add_button.dart';
 import 'package:hknance/widgets/admin_related_widgets/tips_list_widget.dart';
 
@@ -51,8 +52,15 @@ class AdminTipsScreen extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               RoutingAnimation.downToUp(
-                screen: BlocProvider<ImagePickerCubit>(
-                  create: (context) => ImagePickerCubit(),
+                screen: MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ImagePickerCubit>(
+                      create: (context) => ImagePickerCubit(),
+                    ),
+                    BlocProvider<TipTypeCubit>(
+                      create: (context) => TipTypeCubit(),
+                    ),
+                  ],
                   child: AddTipScreen(),
                 ),
               ),

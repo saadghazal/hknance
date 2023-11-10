@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hknance/repositories/community_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
+import 'package:hknance/screens/main_screens/analysis_screen.dart';
 import 'package:hknance/screens/main_screens/community_screen.dart';
 import 'package:hknance/screens/profile_related_screens/profile_screen.dart';
 import 'package:hknance/screens/main_screens/tips_screen.dart';
@@ -21,6 +22,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List screens = [
     const HomeScreen(),
+    const AnalysisScreen(),
     const TipsScreen(),
     const CommunityScreen(),
     const ProfileScreen(),

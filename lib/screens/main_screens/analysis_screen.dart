@@ -1,22 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:hknance/widgets/home_related_widgets/latest_news_list.dart';
-
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
+import '../../widgets/home_related_widgets/latest_news_list.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class AnalysisScreen extends StatelessWidget {
+  const AnalysisScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         toolbarHeight:
-            ScreenUtil().deviceType() == DeviceType.tablet ? 70.h : 40.h,
+        ScreenUtil().deviceType() == DeviceType.tablet ? 70.h : 40.h,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
         ),
@@ -48,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: AppTexts.title2(
-                text: 'latest_news'.tr,
+                text: 'analysis'.tr,
                 fontWeight: FontWeight.w600,
                 fontColor: AppColors.primaryDark,
               ),
@@ -56,12 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 20.h,
             ),
-           LatestNewsList(isAnalysis: false,),
+            LatestNewsList(isAnalysis: true,),
           ],
         ),
       ),
     );
   }
-
-
 }

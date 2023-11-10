@@ -11,7 +11,8 @@ import '../../utils/theme/app_texts.dart';
 import '../main_loading.dart';
 
 class LatestNewsList extends StatelessWidget {
-  const LatestNewsList({super.key});
+  const LatestNewsList({required this.isAnalysis, super.key});
+  final bool isAnalysis;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +28,25 @@ class LatestNewsList extends StatelessWidget {
               if (snapshot.data!.docs.isEmpty) {
                 return AppTexts.title2(text: 'No News Added Yet.');
               }
+              final newsOrAnalyticsList = news
+                  .where((element) => element.data()['is_analysis'] == isAnalysis)
+                  .toList();
+              if(newsOrAnalyticsList.isEmpty) {
+                return Center(
+                  child: AppTexts.title2(
+                    text: 'No News Added Yet.',
+                    fontColor: AppColors.primaryDark,
+                    fontWeight: FontWeight.w500,
+                  ),
+                );
+              }
               return Expanded(
                 child: ListView.separated(
                   shrinkWrap: true,
                   padding: EdgeInsets.only(bottom: 20.h),
                   itemBuilder: (context, index) {
                     final NewModel newModel = NewModel.fromJson(
-                      news[index].data(),
+                      newsOrAnalyticsList[index].data(),
                     );
                     return LatestNewWidget(
                       newModel: newModel,
@@ -53,20 +66,22 @@ class LatestNewsList extends StatelessWidget {
                       height: 10.h,
                     );
                   },
-                  itemCount: snapshot.data!.docs.length,
+                  itemCount:newsOrAnalyticsList.length,
                 ),
               );
             } else {
-              return AppTexts.title2(
-                text: 'No News Added Yet.',
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
+              return Center(
+                child: AppTexts.title2(
+                  text: 'No News Added Yet.',
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
               );
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return MainLoading();
           } else {
-            return AppTexts.title2(text: 'No News Added Yet.');
+            return Center(child: AppTexts.title2(text: 'No News Added Yet.'));
           }
         });
   }

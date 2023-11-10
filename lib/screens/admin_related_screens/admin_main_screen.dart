@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/repositories/auth_repository.dart';
+import 'package:hknance/screens/admin_related_screens/admin_analysis_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_news_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_profile_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_tips_screen.dart';
@@ -20,6 +21,7 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
   int currentIndex = 0;
   List<Widget> adminScreens = [
     AdminNewsScreen(),
+    AdminAnalysisScreen(),
     AdminTipsScreen(),
     AdminProfileScreen(),
   ];

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,19 +52,25 @@ class NavBarWidget extends StatelessWidget {
                   navBarItem(
                     condition: currentIndex == 0,
                     onTap: () => onTap(0),
-                    icon: 'assets/icons/news.png',
-                    label: 'news'.tr,
+                    icon: 'assets/icons/home_icon.png',
+                    label: 'home'.tr,
                   ),
                   navBarItem(
                     condition: currentIndex == 1,
                     onTap: () => onTap(1),
+                    icon: 'assets/icons/stats.png',
+                    label: 'analysis'.tr,
+                  ),
+                  navBarItem(
+                    condition: currentIndex == 2,
+                    onTap: () => onTap(2),
                     icon: 'assets/icons/light-bulb.png',
                     label: 'tips'.tr,
                   ),
                   navBarItem(
-                    condition: currentIndex == 2,
+                    condition: currentIndex == 3,
                     onTap: () {
-                      onTap(2);
+                      onTap(3);
                     },
                     icon: 'assets/icons/user.png',
                     label: 'profile'.tr,
@@ -78,26 +83,20 @@ class NavBarWidget extends StatelessWidget {
                   navBarItem(
                     condition: currentIndex == 0,
                     onTap: () => onTap(0),
-                    icon: 'assets/icons/news.png',
-                    label: 'news'.tr,
+                    icon: 'assets/icons/home_icon.png',
+                    label: 'home'.tr,
                   ),
                   navBarItem(
                     condition: currentIndex == 1,
                     onTap: () => onTap(1),
-                    icon: 'assets/icons/light-bulb.png',
-                    label: 'tips'.tr,
+                    icon: 'assets/icons/stats.png',
+                    label: 'analysis'.tr,
                   ),
                   navBarItem(
                     condition: currentIndex == 2,
-                    onTap: () async {
-                      if (currentIndex == 2) {
-                        return;
-                      }
-                      onTap(2);
-                      await context.read<CommunityCubit>().getCommunityPosts();
-                    },
-                    icon: 'assets/icons/globe.png',
-                    label: 'community'.tr,
+                    onTap: () => onTap(2),
+                    icon: 'assets/icons/light-bulb.png',
+                    label: 'tips'.tr,
                   ),
                   navBarItem(
                     condition: currentIndex == 3,
@@ -106,6 +105,18 @@ class NavBarWidget extends StatelessWidget {
                         return;
                       }
                       onTap(3);
+                      await context.read<CommunityCubit>().getCommunityPosts();
+                    },
+                    icon: 'assets/icons/globe.png',
+                    label: 'community'.tr,
+                  ),
+                  navBarItem(
+                    condition: currentIndex == 4,
+                    onTap: () async {
+                      if (currentIndex == 4) {
+                        return;
+                      }
+                      onTap(4);
                       await context.read<CommunityCubit>().getUserPosts();
                     },
                     icon: 'assets/icons/user.png',
@@ -124,42 +135,37 @@ Widget navBarItem({
   required String icon,
   required String label,
 }) {
-  return ElevatedButton(
-    onPressed: onTap,
-    style: ElevatedButton.styleFrom(
-      foregroundColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      padding: EdgeInsets.zero,
-      shadowColor: Colors.transparent,
-    ),
-    child: AnimatedSize(
-      duration: Duration(milliseconds: 200),
-      reverseDuration: Duration(milliseconds: 200),
-      child: Visibility(
-        visible: condition,
-        replacement: Image.asset(
-          icon,
-          color: AppColors.lightGrey,
-          height: 20.h,
-          width: 20.w,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              icon,
-              color: AppColors.primaryYellow,
-              height: 24.h,
-              width: 24.w,
-            ),
-            AppTexts.body(
-              text: label,
-              fontSize: 12.sp,
-              fontColor: AppColors.primaryYellow,
-              isHeadline: true,
-            ),
-          ],
+  return InkWell(
+   onTap: onTap,
+    child: Ink(
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 200),
+        reverseDuration: const Duration(milliseconds: 200),
+        child: Visibility(
+          visible: condition,
+          replacement: Image.asset(
+            icon,
+            color: AppColors.lightGrey,
+            height: 20.h,
+            width: 20.w,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                icon,
+                color: AppColors.primaryYellow,
+                height: 24.h,
+                width: 24.w,
+              ),
+              AppTexts.body(
+                text: label,
+                fontSize: 12.sp,
+                fontColor: AppColors.primaryYellow,
+                isHeadline: true,
+              ),
+            ],
+          ),
         ),
       ),
     ),

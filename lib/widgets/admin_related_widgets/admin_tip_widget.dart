@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
 import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
+import 'package:hknance/view_controllers/tip_type_cubit/tip_type_cubit.dart';
 import 'package:intl/intl.dart';
 
 import '../../screens/admin_related_screens/add_tip_screen.dart';
@@ -42,7 +43,7 @@ class AdminTipWidget extends StatelessWidget {
             height: 45.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.r),
-              image:  DecorationImage(
+              image: DecorationImage(
                 image: NetworkImage(
                   tipModel.tipCover,
                 ),
@@ -81,8 +82,15 @@ class AdminTipWidget extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 RoutingAnimation.downToUp(
-                  screen: BlocProvider<ImagePickerCubit>(
-                    create: (context) => ImagePickerCubit(),
+                  screen: MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ImagePickerCubit>(
+                        create: (context) => ImagePickerCubit(),
+                      ),
+                      BlocProvider<TipTypeCubit>(
+                        create: (context) => TipTypeCubit(),
+                      ),
+                    ],
                     child: AddTipScreen(
                       tipModel: tipModel,
                     ),

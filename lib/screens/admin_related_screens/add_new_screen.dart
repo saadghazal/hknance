@@ -16,17 +16,18 @@ import 'package:hknance/widgets/admin_related_widgets/add_cover_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/delete_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_button.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
-import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/main_loading.dart';
 import 'package:hknance/widgets/main_text_field.dart';
 
 class AddNewScreen extends StatefulWidget {
   const AddNewScreen({
     this.newModel,
+    required this.isAnalysis,
     super.key,
   });
 
   final NewModel? newModel;
+  final bool isAnalysis;
 
   @override
   State<AddNewScreen> createState() => _AddNewScreenState();
@@ -46,6 +47,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
     }
   }
 
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -64,7 +66,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
       child: MultiBlocListener(
         listeners: [
           BlocListener<NewsBloc, NewsState>(
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state.loadingStatus == LoadingStatus.loaded) {
                 Navigator.pop(context);
               } else if (state.loadingStatus == LoadingStatus.error) {
@@ -89,7 +91,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: MainAppBar(
-            title: 'add_news'.tr,
+            title: widget.isAnalysis ? 'add_analysis'.tr : 'add_news'.tr,
             backIcon: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -130,7 +132,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'new_title'.tr,
+                    text: widget.isAnalysis ? 'analysis_title'.tr : 'new_title'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -141,14 +143,14 @@ class _AddNewScreenState extends State<AddNewScreen> {
                   MainTextField(
                     controller: titleController,
                     hintText: widget.newModel == null
-                        ? 'new_title_field'.tr
+                        ? widget.isAnalysis ? 'analysis_title_field'.tr : 'new_title_field'.tr
                         : widget.newModel!.newTitle,
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'new_cover'.tr,
+                    text: widget.isAnalysis ? 'analysis_cover'.tr : 'new_cover'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -170,7 +172,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                     height: 20.h,
                   ),
                   AppTexts.body(
-                    text: 'new_desc'.tr,
+                    text: widget.isAnalysis ? 'analysis_desc'.tr : 'new_desc'.tr,
                     fontSize: 15.sp,
                     fontColor: AppColors.primaryDark,
                     fontWeight: FontWeight.w500,
@@ -181,7 +183,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                   MainTextField(
                     controller: bodyController,
                     hintText: widget.newModel == null
-                        ? 'new_desc_field'.tr
+                        ? widget.isAnalysis ? 'analysis_desc_field'.tr : 'new_desc_field'.tr
                         : widget.newModel!.newDescription,
                     textInputAction: TextInputAction.newline,
                     isMultiline: true,
@@ -213,6 +215,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           body: bodyController.text,
                           imageFile: state.imageFile,
                           updatedNew: widget.newModel,
+                          isAnalysis: widget.isAnalysis
                         );
                       },
                     );
@@ -230,6 +233,7 @@ void updateOrAddNew({
   required String title,
   required String body,
   required File imageFile,
+  required bool isAnalysis,
 }) {
   if (updatedNew != null) {
     if (title.isNotEmpty && body.isNotEmpty) {
@@ -237,6 +241,7 @@ void updateOrAddNew({
         id: updatedNew.newId,
         newTitle: title,
         newCover: '',
+        isAnalysis:isAnalysis,
         newDescription: body,
         createdAt: DateTime.now(),
       );
@@ -256,6 +261,7 @@ void updateOrAddNew({
       final NewModel newModel = NewModel(
         newTitle: title,
         newCover: '',
+        isAnalysis: isAnalysis,
         newDescription: body,
         createdAt: DateTime.now(),
       );
@@ -263,6 +269,7 @@ void updateOrAddNew({
             AddNewEvent(
               newModel: newModel,
               newCover: imageFile,
+              isAnalysis: isAnalysis,
             ),
           );
     } else {

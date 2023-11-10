@@ -39,6 +39,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       await _newsRepository.addNew(
         newModel: event.newModel,
         coverFile: event.newCover,
+        isAnalysis: event.isAnalysis
       );
       emit(
         state.copyWith(
