@@ -35,6 +35,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
+  TextEditingController tipNumberController = TextEditingController();
 
   @override
   void initState() {
@@ -52,163 +53,207 @@ class _AddTipScreenState extends State<AddTipScreen> {
     super.dispose();
     titleController.dispose();
     bodyController.dispose();
+    tipNumberController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(
-        title: 'add_tip'.tr,
-        backIcon: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.close,
-            color: AppColors.primaryDark,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: MainAppBar(
+          title: 'add_tip'.tr,
+          backIcon: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.close,
+              color: AppColors.primaryDark,
+            ),
           ),
+          actions: widget.tipModel != null
+              ? [
+                  DeleteWidget(
+                    onTap: () {
+                      showConfirmDialog(
+                        context: context,
+                        onDelete: () async {
+                          context.read<TipsBloc>().add(
+                                DeleteTipEvent(
+                                  tipId: widget.tipModel!.tipId,
+                                ),
+                              );
+                          Navigator.pop(context);
+                        },
+                        title: 'delete_tip'.tr,
+                      );
+                    },
+                  ),
+                ]
+              : null,
         ),
-        actions: widget.tipModel != null
-            ? [
-                DeleteWidget(
-                  onTap: () {
-                    showConfirmDialog(
-                      context: context,
-                      onDelete: () async {
-                        context.read<TipsBloc>().add(
-                              DeleteTipEvent(
-                                tipId: widget.tipModel!.tipId,
-                              ),
-                            );
-                        Navigator.pop(context);
-                      },
-                      title: 'delete_tip'.tr,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_title'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                MainTextField(
+                  controller: titleController,
+                  hintText: 'tip_title_field'.tr,
+                  onChanged: (value) {
+                    setState(() {
+                      titleController.text = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_cover'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                BlocConsumer<ImagePickerCubit, ImagePickerState>(
+                  listener: (context, state) {
+                    if (state.imageStatus == ImageStatus.error) {
+                      showErrorSnackBar(
+                        context: context,
+                        errorMessage: 'Please allow access to your photos',
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return AddCoverWidget(
+                      cover: widget.tipModel == null
+                          ? state.imageFile.path
+                          : widget.tipModel!.tipCover,
+                      isNewCover: widget.tipModel != null,
                     );
                   },
                 ),
-              ]
-            : null,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20.h,
-              ),
-              AppTexts.body(
-                text: 'tip_title'.tr,
-                fontSize: 15.sp,
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              MainTextField(
-                controller: titleController,
-                hintText: 'tip_title_field'.tr,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              AppTexts.body(
-                text: 'tip_cover'.tr,
-                fontSize: 15.sp,
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              BlocConsumer<ImagePickerCubit, ImagePickerState>(
-                listener: (context, state) {
-                  if (state.imageStatus == ImageStatus.error) {
-                    showErrorSnackBar(
-                      context: context,
-                      errorMessage: 'Please allow access to your photos',
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return AddCoverWidget(
-                    cover: widget.tipModel == null
-                        ? state.imageFile.path
-                        : widget.tipModel!.tipCover,
-                    isNewCover: widget.tipModel != null,
-                  );
-                },
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              AppTexts.body(
-                text: 'vip_tip'.tr,
-                fontSize: 15.sp,
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              TipTypeSelectionWidget(
-                icon: 'assets/icons/premium.png',
-                label: 'vip_tips'.tr,
-                onTap: widget.tipModel != null
-                    ? null
-                    : () {
-                        setState(() {
-                          isVIP = !isVIP;
-                        });
-                      },
-                isSelected:
-                    widget.tipModel != null ? widget.tipModel!.isVIP : isVIP,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              AppTexts.body(
-                text: 'tip_type'.tr,
-                fontSize: 15.sp,
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              TipTypeWidget(),
-              SizedBox(
-                height: 20.h,
-              ),
-              AppTexts.body(
-                text: 'tip_desc'.tr,
-                fontSize: 15.sp,
-                fontColor: AppColors.primaryDark,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              MainTextField(
-                controller: bodyController,
-                hintText: 'tip_desc_field'.tr,
-                textInputAction: TextInputAction.newline,
-                isMultiline: true,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-            ],
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'vip_tip'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                TipTypeSelectionWidget(
+                  icon: 'assets/icons/premium.png',
+                  label: 'vip_tips'.tr,
+                  onTap: widget.tipModel != null
+                      ? null
+                      : () {
+                          setState(() {
+                            isVIP = !isVIP;
+                          });
+                        },
+                  isSelected:
+                      widget.tipModel != null ? widget.tipModel!.isVIP : isVIP,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_type'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                TipTypeWidget(
+                  tipType:
+                      widget.tipModel == null ? null : widget.tipModel!.tipType,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_num'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                MainTextField(
+                  controller: tipNumberController,
+                  hintText: 'tip_num_field'.tr,
+                  textInputAction: TextInputAction.next,
+                  textInputType: TextInputType.number,
+                  onChanged: (value) {
+                    setState(() {
+                      tipNumberController.text = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_desc'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                MainTextField(
+                  controller: bodyController,
+                  hintText: 'tip_desc_field'.tr,
+                  textInputAction: TextInputAction.newline,
+                  isMultiline: true,
+                  textInputType: TextInputType.multiline,
+                  onChanged: (value) {
+                    setState(() {
+                      bodyController.text = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: SaveTipWidget(
-        isVip: isVIP,
-        tipDescription: bodyController.text,
-        tipTitle: titleController.text,
-        tipModel: widget.tipModel,
+        bottomNavigationBar: SaveTipWidget(
+          isVip: isVIP,
+          tipNum: tipNumberController.text,
+          tipDescription: bodyController.text,
+          tipTitle: titleController.text,
+          tipModel: widget.tipModel,
+        ),
       ),
     );
   }

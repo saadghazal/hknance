@@ -8,7 +8,8 @@ import '../../utils/theme/app_texts.dart';
 import '../../view_controllers/tip_type_cubit/tip_type_cubit.dart';
 
 class TipTypeWidget extends StatelessWidget {
-  const TipTypeWidget({super.key});
+  const TipTypeWidget({this.tipType,super.key});
+  final TipType? tipType;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class TipTypeWidget extends StatelessWidget {
           children: [
             Expanded(
               child: InkWell(
-                onTap: () {
+                onTap: tipType != null ? null: () {
                   context
                       .read<TipTypeCubit>()
                       .toggleType(selectedType: TipType.tp);
@@ -34,7 +35,8 @@ class TipTypeWidget extends StatelessWidget {
                     border: Border.all(
                       color: AppColors.primaryDarkGrey.withOpacity(0.2),
                     ),
-                    color: typeState.tipType == TipType.tp
+                    color: tipType != null ? tipType == TipType.tp ?AppColors.primaryYellow
+                        : Colors.white : typeState.tipType == TipType.tp
                         ? AppColors.primaryYellow
                         : Colors.white,
                   ),
@@ -53,7 +55,7 @@ class TipTypeWidget extends StatelessWidget {
             ),
             Expanded(
               child: InkWell(
-                onTap: () {
+                onTap:tipType != null ? null: () {
                   context
                       .read<TipTypeCubit>()
                       .toggleType(selectedType: TipType.sl);
@@ -69,7 +71,8 @@ class TipTypeWidget extends StatelessWidget {
                     border: Border.all(
                       color: AppColors.primaryDarkGrey.withOpacity(0.2),
                     ),
-                    color: typeState.tipType == TipType.sl
+                    color:tipType != null ? tipType == TipType.sl ?AppColors.primaryYellow
+                        : Colors.white : typeState.tipType == TipType.sl
                         ? AppColors.primaryYellow
                         : Colors.white,
                   ),

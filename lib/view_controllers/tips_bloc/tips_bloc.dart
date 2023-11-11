@@ -7,6 +7,7 @@ import 'package:hknance/data_models/tip_data_model.dart';
 import 'package:hknance/repositories/tips_repository.dart';
 import 'package:hknance/utils/errors/error_handler.dart';
 import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
+import 'package:hknance/view_controllers/tip_type_cubit/tip_type_cubit.dart';
 
 part 'tips_event.dart';
 part 'tips_state.dart';
@@ -34,13 +35,16 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
     );
   }
   Future<void> addTip(AddTipEvent event, Emitter emit) async {
+    print(event.toString());
     if (event.title.isEmpty ||
         event.body.isEmpty ||
-        event.coverFile.path.isEmpty) {
+        event.coverFile.path.isEmpty ||
+        event.tipNum.isEmpty ||
+        event.tipType == TipType.unknown) {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
-          errorHandler:  ErrorHandler(
+          errorHandler: ErrorHandler(
             code: '',
             message: 'fill_fields'.tr,
             plugin: '',
@@ -53,6 +57,8 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       TipModel newTip = TipModel(
         tipTitle: event.title,
         tipCover: '',
+        tipNum: event.tipNum,
+        tipType: event.tipType,
         tipDescription: event.body,
         isVIP: event.isVIP,
         createdAt: DateTime.now(),
@@ -82,7 +88,7 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
-          errorHandler:  ErrorHandler(
+          errorHandler: ErrorHandler(
             code: '',
             message: 'fill_fields'.tr,
             plugin: '',

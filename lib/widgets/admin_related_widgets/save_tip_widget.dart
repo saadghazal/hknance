@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/view_controllers/tip_type_cubit/tip_type_cubit.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_button.dart';
 
 import '../../data_models/tip_data_model.dart';
@@ -16,11 +17,13 @@ class SaveTipWidget extends StatelessWidget {
     required this.tipDescription,
     required this.tipTitle,
     required this.tipModel,
+    required this.tipNum,
     super.key,
   });
   final TipModel? tipModel;
   final String tipTitle;
   final String tipDescription;
+  final String tipNum;
   final bool isVip;
 
   @override
@@ -50,32 +53,40 @@ class SaveTipWidget extends StatelessWidget {
               )
             : BlocBuilder<ImagePickerCubit, ImagePickerState>(
                 builder: (context, imageState) {
-                  return SaveButton(
-                    onTap: () async {
-                      if (tipModel != null) {
-                        final updatedTip = TipModel(
-                          id: tipModel!.tipId,
-                          tipTitle: tipTitle,
-                          tipCover: tipModel!.tipCover,
-                          tipDescription: tipDescription,
-                          isVIP: isVip,
-                          createdAt: tipModel!.createdAt,
-                        );
-                        context.read<TipsBloc>().add(
-                              UpdateTipEvent(
-                                updatedTip: updatedTip,
-                              ),
+                  return BlocBuilder<TipTypeCubit, TipTypeState>(
+                    builder: (context, tipTypeState) {
+                      return SaveButton(
+                        onTap: () async {
+                          if (tipModel != null) {
+                            final updatedTip = TipModel(
+                              id: tipModel!.tipId,
+                              tipType: tipTypeState.tipType,
+                              tipNum: tipNum,
+                              tipTitle: tipTitle,
+                              tipCover: tipModel!.tipCover,
+                              tipDescription: tipDescription,
+                              isVIP: tipModel!.isVIP,
+                              createdAt: tipModel!.createdAt,
                             );
-                      } else {
-                        context.read<TipsBloc>().add(
-                              AddTipEvent(
-                                title: tipTitle,
-                                body: tipDescription,
-                                isVIP: isVip,
-                                coverFile: imageState.imageFile,
-                              ),
-                            );
-                      }
+                            context.read<TipsBloc>().add(
+                                  UpdateTipEvent(
+                                    updatedTip: updatedTip,
+                                  ),
+                                );
+                          } else {
+                            context.read<TipsBloc>().add(
+                                  AddTipEvent(
+                                    title: tipTitle,
+                                    body: tipDescription,
+                                    isVIP: isVip,
+                                    coverFile: imageState.imageFile,
+                                    tipType: tipTypeState.tipType,
+                                    tipNum: tipNum,
+                                  ),
+                                );
+                          }
+                        },
+                      );
                     },
                   );
                 },

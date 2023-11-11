@@ -72,6 +72,8 @@ class Languages extends Translations {
           'analysis_title_field': 'ادخل عنوان التحليل',
           'analysis_desc_field': 'ادخل وصف التحليل',
           'vip_tip': 'هل النصيحة مميزة؟',
+          'tip_num': 'رقم النصيحة',
+          'tip_num_field': 'ادخل رقم النصيحة',
 
         },
         'en': {
@@ -141,7 +143,9 @@ class Languages extends Translations {
           'add_analysis': 'Add Analysis',
           'analysis_title_field': 'Enter analysis title',
           'analysis_desc_field': 'Enter analysis description',
-          'vip_tip': 'Is the tip special?'
+          'vip_tip': 'Is the tip special?',
+          'tip_num':'Tip Number',
+          'tip_num_field': 'Enter tip number'
         }
       };
 }

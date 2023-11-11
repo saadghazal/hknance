@@ -12,15 +12,19 @@ class MainTextField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.isMultiline = false,
     this.isReadOnly = false,
+    this.textInputType = TextInputType.text,
+    this.onChanged,
     super.key,
   });
   final TextEditingController controller;
   final String hintText;
   final Widget? suffix;
   final bool isPassword;
+  final TextInputType textInputType;
   final TextInputAction textInputAction;
   final bool isMultiline;
   final bool isReadOnly;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +34,15 @@ class MainTextField extends StatelessWidget {
       obscureText: isPassword,
       textInputAction: textInputAction,
       maxLines: isMultiline ? null : 1,
+      keyboardType: textInputType,
       readOnly: isReadOnly,
+      onChanged: onChanged,
       style: const TextStyle(
         color: AppColors.primaryDark,
       ),
       decoration: InputDecoration(
         hintText: hintText,
+
         hintStyle: TextStyle(
           fontSize: 14.sp,
           color: AppColors.primaryDarkGrey.withOpacity(0.5),
