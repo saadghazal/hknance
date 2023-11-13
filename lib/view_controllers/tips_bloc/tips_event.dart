@@ -8,15 +8,11 @@ class AddTipEvent extends TipsEvent {
   final String title;
   final String body;
   final bool isVIP;
-  final TipType tipType;
-  final String tipNum;
   final File coverFile;
 
   const AddTipEvent({
     required this.title,
     required this.body,
-    required this.tipType,
-    required this.tipNum,
     required this.isVIP,
     required this.coverFile,
   });
@@ -27,13 +23,11 @@ class AddTipEvent extends TipsEvent {
         body,
         isVIP,
         coverFile,
-        tipType,
-        tipNum,
       ];
 
   @override
   String toString() {
-    return 'AddTipEvent{title: $title, body: $body, isVIP: $isVIP, tipType: $tipType, tipNum: $tipNum, coverFile: $coverFile}';
+    return 'AddTipEvent{title: $title, body: $body, isVIP: $isVIP,  coverFile: $coverFile}';
   }
 }
 

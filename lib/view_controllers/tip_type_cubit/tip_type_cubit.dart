@@ -6,7 +6,12 @@ part 'tip_type_state.dart';
 class TipTypeCubit extends Cubit<TipTypeState> {
   TipTypeCubit() : super(TipTypeState.initial());
 
-  void toggleType({required TipType selectedType}){
-    emit(state.copyWith(tipType: selectedType));
+  void toggleType({required TipType selectedType, required String text}) {
+    emit(
+      state.copyWith(
+        selectedType: selectedType,
+        selectedTipText: text,
+      ),
+    );
   }
 }

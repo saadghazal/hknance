@@ -11,6 +11,7 @@ import 'package:hknance/widgets/admin_related_widgets/delete_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_tip_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/tip_type_selection_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/tip_type_widget.dart';
+import 'package:hknance/widgets/main_app_button.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
@@ -35,7 +36,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
-  TextEditingController tipNumberController = TextEditingController();
+  TextEditingController tipTypeTextController = TextEditingController();
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
     super.dispose();
     titleController.dispose();
     bodyController.dispose();
-    tipNumberController.dispose();
+    tipTypeTextController.dispose();
   }
 
   @override
@@ -125,6 +126,92 @@ class _AddTipScreenState extends State<AddTipScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'vip_tip'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                TipTypeSelectionWidget(
+                  icon: 'assets/icons/premium.png',
+                  label: 'vip_tips'.tr,
+                  onTap: widget.tipModel != null
+                      ? null
+                      : () {
+                          setState(
+                            () {
+                              isVIP = !isVIP;
+                            },
+                          );
+                        },
+                  isSelected:
+                      widget.tipModel != null ? widget.tipModel!.isVIP : isVIP,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AppTexts.body(
+                  text: 'tip_type'.tr,
+                  fontSize: 15.sp,
+                  fontColor: AppColors.primaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SelectTipTypeWidget(
+                  controller: tipTypeTextController,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                MainAppButton(
+                  label: 'اضف تصنيف النصيحة',
+                  height: 45.h,
+                  width: double.maxFinite,
+                  onTap: () {
+                    showDialog(context: context, builder: (_)=>AlertDialog(
+                      contentPadding: EdgeInsets.zero,
+                      actionsPadding: EdgeInsets.zero,
+                      titlePadding: EdgeInsets.zero,
+                      iconPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      content: Container(
+                        width: double.maxFinite,
+                        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppTexts.title3(
+                              text:'اضف تصنيف',
+                              textAlign: TextAlign.center,
+                              fontColor: Colors.redAccent,
+                              fontWeight: FontWeight.w600,
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ));
+                  },
+                  borderRadius: 12.r,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
                 AppTexts.body(
                   text: 'tip_cover'.tr,
                   fontSize: 15.sp,
@@ -156,70 +243,6 @@ class _AddTipScreenState extends State<AddTipScreen> {
                   height: 20.h,
                 ),
                 AppTexts.body(
-                  text: 'vip_tip'.tr,
-                  fontSize: 15.sp,
-                  fontColor: AppColors.primaryDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                TipTypeSelectionWidget(
-                  icon: 'assets/icons/premium.png',
-                  label: 'vip_tips'.tr,
-                  onTap: widget.tipModel != null
-                      ? null
-                      : () {
-                          setState(() {
-                            isVIP = !isVIP;
-                          });
-                        },
-                  isSelected:
-                      widget.tipModel != null ? widget.tipModel!.isVIP : isVIP,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                AppTexts.body(
-                  text: 'tip_type'.tr,
-                  fontSize: 15.sp,
-                  fontColor: AppColors.primaryDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                TipTypeWidget(
-                  tipType:
-                      widget.tipModel == null ? null : widget.tipModel!.tipType,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                AppTexts.body(
-                  text: 'tip_num'.tr,
-                  fontSize: 15.sp,
-                  fontColor: AppColors.primaryDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                MainTextField(
-                  controller: tipNumberController,
-                  hintText: 'tip_num_field'.tr,
-                  textInputAction: TextInputAction.next,
-                  textInputType: TextInputType.number,
-                  onChanged: (value) {
-                    setState(() {
-                      tipNumberController.text = value;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                AppTexts.body(
                   text: 'tip_desc'.tr,
                   fontSize: 15.sp,
                   fontColor: AppColors.primaryDark,
@@ -235,9 +258,11 @@ class _AddTipScreenState extends State<AddTipScreen> {
                   isMultiline: true,
                   textInputType: TextInputType.multiline,
                   onChanged: (value) {
-                    setState(() {
-                      bodyController.text = value;
-                    });
+                    setState(
+                      () {
+                        bodyController.text = value;
+                      },
+                    );
                   },
                 ),
                 SizedBox(
@@ -249,7 +274,6 @@ class _AddTipScreenState extends State<AddTipScreen> {
         ),
         bottomNavigationBar: SaveTipWidget(
           isVip: isVIP,
-          tipNum: tipNumberController.text,
           tipDescription: bodyController.text,
           tipTitle: titleController.text,
           tipModel: widget.tipModel,

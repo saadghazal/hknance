@@ -17,13 +17,11 @@ class SaveTipWidget extends StatelessWidget {
     required this.tipDescription,
     required this.tipTitle,
     required this.tipModel,
-    required this.tipNum,
     super.key,
   });
   final TipModel? tipModel;
   final String tipTitle;
   final String tipDescription;
-  final String tipNum;
   final bool isVip;
 
   @override
@@ -47,6 +45,7 @@ class SaveTipWidget extends StatelessWidget {
                 padding: EdgeInsets.only(
                   left: 28.w,
                   right: 28.w,
+                  top: 10.h,
                   bottom: bottomPadding == 0 ? 20.h : bottomPadding.h,
                 ),
                 child: const MainLoading(),
@@ -60,8 +59,6 @@ class SaveTipWidget extends StatelessWidget {
                           if (tipModel != null) {
                             final updatedTip = TipModel(
                               id: tipModel!.tipId,
-                              tipType: tipTypeState.tipType,
-                              tipNum: tipNum,
                               tipTitle: tipTitle,
                               tipCover: tipModel!.tipCover,
                               tipDescription: tipDescription,
@@ -80,8 +77,6 @@ class SaveTipWidget extends StatelessWidget {
                                     body: tipDescription,
                                     isVIP: isVip,
                                     coverFile: imageState.imageFile,
-                                    tipType: tipTypeState.tipType,
-                                    tipNum: tipNum,
                                   ),
                                 );
                           }

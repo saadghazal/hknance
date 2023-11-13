@@ -34,8 +34,6 @@ class TipsRepository {
         'tip_cover': coverLink,
         'tip_title': tipModel.tipTitle,
         'is_VIP': tipModel.isVIP,
-        'tip_type': tipModel.tipType.name,
-        'tip_number':tipModel.tipNum,
         'createdAt': Timestamp.now(),
       });
     } on FirebaseException catch (e) {

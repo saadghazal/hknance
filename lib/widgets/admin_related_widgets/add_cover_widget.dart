@@ -25,7 +25,7 @@ class AddCoverWidget extends StatelessWidget {
             }
           : null,
       child: Container(
-        height: 200.h,
+        height: 150.h,
         width: double.maxFinite,
         decoration: BoxDecoration(
           border: Border.all(
@@ -50,8 +50,8 @@ class AddCoverWidget extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/icons/gallery.png',
-                    height: 50.h,
-                    width: 50.w,
+                    height: 40.h,
+                    width: 40.w,
                     fit: BoxFit.cover,
                     color: AppColors.primaryDarkGrey.withOpacity(0.6),
                   ),

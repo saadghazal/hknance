@@ -38,9 +38,7 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
     print(event.toString());
     if (event.title.isEmpty ||
         event.body.isEmpty ||
-        event.coverFile.path.isEmpty ||
-        event.tipNum.isEmpty ||
-        event.tipType == TipType.unknown) {
+        event.coverFile.path.isEmpty) {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
@@ -57,8 +55,6 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       TipModel newTip = TipModel(
         tipTitle: event.title,
         tipCover: '',
-        tipNum: event.tipNum,
-        tipType: event.tipType,
         tipDescription: event.body,
         isVIP: event.isVIP,
         createdAt: DateTime.now(),
