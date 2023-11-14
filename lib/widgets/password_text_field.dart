@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../utils/theme/app_colors.dart';
-import '../view_controllers/password_config_cubit/password_config_cubit.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
+
 import 'main_text_field.dart';
 
 class PasswordTextField extends StatelessWidget {

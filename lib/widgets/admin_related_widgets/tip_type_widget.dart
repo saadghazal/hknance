@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:hknance/view_controllers/contorllers_exports.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
-import '../../view_controllers/tip_type_cubit/tip_type_cubit.dart';
 import '../main_text_field.dart';
 
 class SelectTipTypeWidget extends StatefulWidget {
@@ -185,6 +183,7 @@ class _SelectTipTypeWidgetState extends State<SelectTipTypeWidget>   {
                   fontColor: tipType.selectedType != TipType.unknown
                       ? AppColors.primaryDark
                       : AppColors.primaryDarkGrey.withOpacity(0.5),
+                  fontWeight: FontWeight.w600,
                 ),
               ],
             ),

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/screens/on_boarding_screen.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
 import 'package:hknance/utils/routing_animation.dart';
 import 'package:hknance/utils/theme/app_colors.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
-import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 import 'package:hknance/widgets/main_logout_button.dart';
 
 import '../../utils/errors/error_snack_bar.dart';
-import '../../view_controllers/sign_up_cubit/sign_up_cubit.dart';
 import '../../widgets/main_loading.dart';
 
 class AdminProfileScreen extends StatefulWidget {

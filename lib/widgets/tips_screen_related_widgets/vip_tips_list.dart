@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/tip_data_model.dart';
-import 'package:hknance/screens/main_screens/tips_screen.dart';
+
 import 'package:hknance/widgets/tips_screen_related_widgets/vip_tip_widget.dart';
 
 import '../../screens/tips_screen.dart';

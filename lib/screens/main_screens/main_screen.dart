@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hknance/repositories/community_repository.dart';
-import 'package:hknance/repositories/user_repository.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
+import 'package:hknance/repositories/repositories_exports.dart';
+
 import 'package:hknance/screens/main_screens/analysis_screen.dart';
 import 'package:hknance/screens/main_screens/community_screen.dart';
 import 'package:hknance/screens/profile_related_screens/profile_screen.dart';
 import 'package:hknance/screens/main_screens/tips_screen.dart';
-import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
-import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
+
 import 'package:hknance/widgets/nav_bar_widget.dart';
 
 import 'home_screen.dart';

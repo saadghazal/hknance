@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../screens/post_related_screens/add_post_screen.dart';
 
 class RoutingAnimation {
   static Route downToUp({required Widget screen}) {

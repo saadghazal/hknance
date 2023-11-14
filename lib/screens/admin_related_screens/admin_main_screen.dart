@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hknance/repositories/auth_repository.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
+import 'package:hknance/repositories/repositories_exports.dart';
 import 'package:hknance/screens/admin_related_screens/admin_analysis_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_news_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_profile_screen.dart';
 import 'package:hknance/screens/admin_related_screens/admin_tips_screen.dart';
-import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
 import 'package:hknance/widgets/nav_bar_widget.dart';
 
 class AdminMainScreen extends StatefulWidget {

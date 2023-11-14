@@ -14,6 +14,7 @@ class MainTextField extends StatelessWidget {
     this.isReadOnly = false,
     this.textInputType = TextInputType.text,
     this.onChanged,
+    this.autoFocus = false,
     super.key,
   });
   final TextEditingController controller;
@@ -24,6 +25,7 @@ class MainTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final bool isMultiline;
   final bool isReadOnly;
+  final bool autoFocus;
   final Function(String)? onChanged;
 
   @override
@@ -37,6 +39,7 @@ class MainTextField extends StatelessWidget {
       keyboardType: textInputType,
       readOnly: isReadOnly,
       onChanged: onChanged,
+      autofocus: autoFocus,
       style: const TextStyle(
         color: AppColors.primaryDark,
       ),

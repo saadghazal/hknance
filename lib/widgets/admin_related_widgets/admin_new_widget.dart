@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/data_models/new_data_model.dart';
-import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../screens/admin_related_screens/add_new_screen.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
 import 'package:hknance/screens/admin_related_screens/admin_main_screen.dart';
 import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
-import 'package:hknance/view_controllers/sign_in_cubit/sign_in_cubit.dart';
-import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
+
 import 'package:hknance/widgets/auth_button.dart';
 import 'package:hknance/widgets/go_sign_up_text.dart';
 import 'package:hknance/widgets/main_app_bar.dart';

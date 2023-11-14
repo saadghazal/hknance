@@ -1,17 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hknance/utils/theme/app_texts.dart';
-import 'package:hknance/view_controllers/community_cubit/community_cubit.dart';
-import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
-
-import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
-import 'package:hknance/widgets/post_related_widgets/post_place_holder.dart';
-
+import 'package:hknance/view_controllers/contorllers_exports.dart';
 import 'package:hknance/widgets/profile_related_widgets/profile_header.dart';
-
 import '../../data_models/post_data_model.dart';
 import '../../widgets/main_loading.dart';
 import '../../widgets/post_related_widgets/post_widget.dart';

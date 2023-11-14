@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
+
 import 'package:hknance/data_models/tip_data_model.dart';
-import 'package:hknance/view_controllers/image_picker_cubit/image_picker_cubit.dart';
-import 'package:hknance/view_controllers/tip_type_cubit/tip_type_cubit.dart';
 import 'package:intl/intl.dart';
 
 import '../../screens/admin_related_screens/add_tip_screen.dart';

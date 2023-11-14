@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hknance/view_controllers/contorllers_exports.dart';
 import 'package:hknance/utils/errors/error_snack_bar.dart';
-import 'package:hknance/view_controllers/sign_out_cubit/sign_out_cubit.dart';
-import 'package:hknance/view_controllers/sign_up_cubit/sign_up_cubit.dart';
-import 'package:hknance/view_controllers/user_bloc/user_bloc.dart';
 import 'package:hknance/widgets/main_app_bar.dart';
 import 'package:hknance/widgets/main_app_button.dart';
 import 'package:hknance/widgets/main_loading.dart';
 import 'package:hknance/widgets/main_logout_button.dart';
-
 import '../../utils/routing_animation.dart';
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';

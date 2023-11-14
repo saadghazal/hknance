@@ -54,3 +54,22 @@ class TipModel extends Equatable {
     );
   }
 }
+
+class TipCategory{
+  final String type;
+  final String number;
+
+  const TipCategory({
+    required this.type,
+    required this.number,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type,
+      'number': number,
+    };
+  }
+
+
+}

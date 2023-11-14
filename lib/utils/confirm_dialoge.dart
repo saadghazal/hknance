@@ -16,14 +16,17 @@ void showConfirmDialog({
     context: context,
     builder: (context) => AlertDialog(
       contentPadding: EdgeInsets.zero,
-      actionsPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
-      iconPadding: EdgeInsets.zero,
-      backgroundColor: Colors.transparent,
+      actionsPadding: EdgeInsets.zero,
       elevation: 0,
+      backgroundColor: Colors.transparent,
+      buttonPadding: EdgeInsets.zero,
+      iconPadding: EdgeInsets.zero,
+      insetPadding: EdgeInsets.zero,
       content: Container(
         width: double.maxFinite,
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
           color: Colors.white,
