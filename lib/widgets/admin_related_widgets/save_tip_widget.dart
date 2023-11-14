@@ -7,7 +7,6 @@ import 'package:hknance/widgets/admin_related_widgets/save_button.dart';
 
 import '../../data_models/tip_data_model.dart';
 import '../../utils/errors/error_snack_bar.dart';
-import '../../view_controllers/tips_bloc/tips_bloc.dart';
 import '../main_loading.dart';
 
 class SaveTipWidget extends StatelessWidget {
@@ -16,11 +15,13 @@ class SaveTipWidget extends StatelessWidget {
     required this.tipDescription,
     required this.tipTitle,
     required this.tipModel,
+    required this.tipAdvice,
     super.key,
   });
   final TipModel? tipModel;
   final String tipTitle;
   final String tipDescription;
+  final String tipAdvice;
   final bool isVip;
 
   @override
@@ -51,7 +52,9 @@ class SaveTipWidget extends StatelessWidget {
               )
             : BlocBuilder<ImagePickerCubit, ImagePickerState>(
                 builder: (context, imageState) {
-                  return BlocBuilder<TipTypeCubit, TipTypeState>(
+                  return BlocBuilder<TipCategoriesCubit, TipCategoriesState>(
+  builder: (context, tipCategoriesState) {
+    return BlocBuilder<TipTypeCubit, TipTypeState>(
                     builder: (context, tipTypeState) {
                       return SaveButton(
                         onTap: () async {
@@ -62,6 +65,8 @@ class SaveTipWidget extends StatelessWidget {
                               tipCover: tipModel!.tipCover,
                               tipDescription: tipDescription,
                               isVIP: tipModel!.isVIP,
+                              tipTypeModel: TipTypeModel(type: tipTypeState.selectedTipText, adviceTitle: tipAdvice,),
+                              tipCategories: tipCategoriesState.tipCategories,
                               createdAt: tipModel!.createdAt,
                             );
                             context.read<TipsBloc>().add(
@@ -75,6 +80,9 @@ class SaveTipWidget extends StatelessWidget {
                                     title: tipTitle,
                                     body: tipDescription,
                                     isVIP: isVip,
+                                    tipType: tipTypeState.selectedTipText,
+                                    tipAdvice: tipAdvice,
+                                    categories: tipCategoriesState.tipCategories,
                                     coverFile: imageState.imageFile,
                                   ),
                                 );
@@ -83,6 +91,8 @@ class SaveTipWidget extends StatelessWidget {
                       );
                     },
                   );
+  },
+);
                 },
               );
       },

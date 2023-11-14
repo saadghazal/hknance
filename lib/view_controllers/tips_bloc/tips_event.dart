@@ -9,12 +9,18 @@ class AddTipEvent extends TipsEvent {
   final String body;
   final bool isVIP;
   final File coverFile;
+  final List<TipCategory> categories;
+  final String tipType;
+  final String tipAdvice;
 
   const AddTipEvent({
     required this.title,
     required this.body,
     required this.isVIP,
     required this.coverFile,
+    required this.tipType,
+    required this.categories,
+    required this.tipAdvice,
   });
 
   @override
@@ -23,6 +29,9 @@ class AddTipEvent extends TipsEvent {
         body,
         isVIP,
         coverFile,
+    tipType,
+
+    tipAdvice, categories,
       ];
 
   @override

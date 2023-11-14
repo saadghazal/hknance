@@ -36,9 +36,9 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
   }
   Future<void> addTip(AddTipEvent event, Emitter emit) async {
     print(event.toString());
-    if (event.title.isEmpty ||
-        event.body.isEmpty ||
-        event.coverFile.path.isEmpty) {
+    if (event.title.trim().isEmpty ||
+        event.body.trim().isEmpty ||
+        event.coverFile.path.isEmpty || event.tipAdvice.trim().isEmpty) {
       emit(
         state.copyWith(
           loadingStatus: LoadingStatus.error,
@@ -51,10 +51,38 @@ class TipsBloc extends Bloc<TipsEvent, TipsState> {
       );
       return;
     }
+    if(event.categories.isEmpty){
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
+          errorHandler: ErrorHandler(
+            code: '',
+            message: 'رجاءًا قم بإضافة تصنيف للنصيحة',
+            plugin: '',
+          ),
+        ),
+      );
+      return;
+    }
+    if(event.tipType.isEmpty){
+      emit(
+        state.copyWith(
+          loadingStatus: LoadingStatus.error,
+          errorHandler: ErrorHandler(
+            code: '',
+            message: 'رجاءًا قم بإختيار نوع النصيحة',
+            plugin: '',
+          ),
+        ),
+      );
+      return;
+    }
     try {
       TipModel newTip = TipModel(
         tipTitle: event.title,
         tipCover: '',
+        tipTypeModel: TipTypeModel(type: event.tipType, adviceTitle: event.tipAdvice),
+        tipCategories: event.categories,
         tipDescription: event.body,
         isVIP: event.isVIP,
         createdAt: DateTime.now(),

@@ -10,6 +10,8 @@ class TipModel extends Equatable {
   final String tipTitle;
   final String tipCover;
   final String tipDescription;
+  final List<TipCategory> tipCategories;
+  final TipTypeModel tipTypeModel;
   final bool isVIP;
   final DateTime createdAt;
 
@@ -20,15 +22,20 @@ class TipModel extends Equatable {
     required this.tipDescription,
     required this.isVIP,
     required this.createdAt,
+    required this.tipTypeModel,
+    required this.tipCategories,
   }) : tipId = id ?? uuid.v1();
 
   @override
-  List<Object> get props => [
+  List<Object> get props =>
+      [
         tipId,
         tipTitle,
         tipCover,
         tipDescription,
         isVIP,
+        tipCategories,
+        tipTypeModel,
         createdAt,
       ];
 
@@ -39,6 +46,9 @@ class TipModel extends Equatable {
       'tip_cover': tipCover,
       'tip_description': tipDescription,
       'is_VIP': isVIP,
+      'tip_type': tipTypeModel.toJSON(),
+      'tip_categories':
+      tipCategories.map((element) => element.toJSON()).toList(),
       'createdAt': createdAt,
     };
   }
@@ -48,6 +58,8 @@ class TipModel extends Equatable {
       id: json['tip_id'] as String,
       tipTitle: json['tip_title'] as String,
       tipCover: json['tip_cover'] as String,
+      tipTypeModel: TipTypeModel.fromJSON(json['tip_type']),
+      tipCategories: List<TipCategory>.from(json["tip_categories"].map((x) => TipCategory.fromJSON(x))),
       tipDescription: json['tip_description'] as String,
       isVIP: json['is_VIP'] as bool,
       createdAt: (json['createdAt'] as Timestamp).toDate(),
@@ -55,7 +67,7 @@ class TipModel extends Equatable {
   }
 }
 
-class TipCategory{
+class TipCategory extends Equatable {
   final String type;
   final String number;
 
@@ -64,12 +76,47 @@ class TipCategory{
     required this.number,
   });
 
-  Map<String, dynamic> toMap() {
+  @override
+  List<Object> get props => [type, number];
+
+  Map<String, dynamic> toJSON() {
     return {
-      'type': type,
-      'number': number,
+      'type': this.type,
+      'number': this.number,
     };
   }
 
+  factory TipCategory.fromJSON(Map<String, dynamic> json) {
+    return TipCategory(
+      type: json['type'] as String,
+      number: json['number'] as String,
+    );
+  }
+}
 
+class TipTypeModel extends Equatable {
+  final String type;
+  final String adviceTitle;
+
+  const TipTypeModel({
+    required this.type,
+    required this.adviceTitle,
+  });
+
+  @override
+  List<Object> get props => [type, adviceTitle];
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'type': this.type,
+      'adviceTitle': this.adviceTitle,
+    };
+  }
+
+  factory TipTypeModel.fromJSON(Map<String, dynamic> json) {
+    return TipTypeModel(
+      type: json['type'] as String,
+      adviceTitle: json['adviceTitle'] as String,
+    );
+  }
 }

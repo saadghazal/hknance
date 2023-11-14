@@ -11,13 +11,12 @@ import 'package:hknance/widgets/admin_related_widgets/delete_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/save_tip_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/tip_type_selection_widget.dart';
 import 'package:hknance/widgets/admin_related_widgets/tip_type_widget.dart';
-import 'package:hknance/widgets/main_app_button.dart';
 
 import '../../utils/theme/app_colors.dart';
 import '../../utils/theme/app_texts.dart';
-import '../../view_controllers/image_picker_cubit/image_picker_cubit.dart';
 import '../../widgets/main_app_bar.dart';
 import '../../widgets/main_text_field.dart';
+import '../../widgets/tips_screen_related_widgets/tip_categories_widget.dart';
 
 class AddTipScreen extends StatefulWidget {
   const AddTipScreen({
@@ -33,7 +32,6 @@ class AddTipScreen extends StatefulWidget {
 
 class _AddTipScreenState extends State<AddTipScreen> {
   bool isVIP = false;
-  bool? isSL;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
@@ -175,180 +173,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                MainAppButton(
-                  label: 'اضف تصنيف النصيحة',
-                  height: 45.h,
-                  width: double.maxFinite,
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) => AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        titlePadding: EdgeInsets.zero,
-                        actionsPadding: EdgeInsets.zero,
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        buttonPadding: EdgeInsets.zero,
-                        iconPadding: EdgeInsets.zero,
-                        insetPadding: EdgeInsets.zero,
-                        content: Container(
-                          width: double.maxFinite,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 15.w,
-                            vertical: 10.h,
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 16.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              AppTexts.body(
-                                text: 'اختر نوع التصنيف',
-                                fontSize: 18.sp,
-                                textAlign: TextAlign.center,
-                                fontColor: AppColors.primaryDark,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          isSL = false;
-                                        });
-                                      },
-                                      child: AnimatedContainer(
-                                        height: 40.h,
-                                        duration: Duration(milliseconds: 200),
-                                        decoration: BoxDecoration(
-                                          color: isSL == null
-                                              ? Colors.white
-                                              : !isSL!
-                                                  ? AppColors.primaryYellow
-                                                  : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12.r),
-                                          border: Border.all(
-                                            color: AppColors.primaryDarkGrey
-                                                .withOpacity(0.5),
-                                          ),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: AppTexts.body(
-                                          fontSize: 15.sp,
-                                          text: "TP",
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          isSL = true;
-                                        });
-                                      },
-                                      child: AnimatedContainer(
-                                        height: 40.h,
-                                        duration: Duration(milliseconds: 200),
-                                        decoration: BoxDecoration(
-                                          color: isSL == null
-                                              ? Colors.white
-                                              : isSL!
-                                                  ? AppColors.primaryYellow
-                                                  : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12.r),
-                                          border: Border.all(
-                                            color: AppColors.primaryDarkGrey
-                                                .withOpacity(0.5),
-                                          ),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: AppTexts.body(
-                                          fontSize: 15.sp,
-                                          text: "SL",
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              MainTextField(
-                                controller: tpSlController,
-                                autoFocus: true,
-                                hintText: 'ادخل رقم التصنيف',
-                                onChanged: (value) {
-                                  setState(() {
-                                    tpSlController.text = value;
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              MainAppButton(
-                                label: 'save'.tr,
-                                height: 35.h,
-                                width: double.maxFinite,
-                                fontSize: ScreenUtil().deviceType() ==
-                                        DeviceType.tablet
-                                    ? 18.sp
-                                    : 16.sp,
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  tpSlController.clear();
-                                },
-                                borderRadius: 12.r,
-                                backgroundColor: AppColors.primaryDark,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              MainAppButton(
-                                label: 'cancel'.tr,
-                                height: 35.h,
-                                width: double.maxFinite,
-                                fontSize: ScreenUtil().deviceType() ==
-                                        DeviceType.tablet
-                                    ? 18.sp
-                                    : 16.sp,
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                },
-                                borderRadius: 12.r,
-                                fontColor: AppColors.primaryDark,
-                                backgroundColor: AppColors.lightGrey,
-                                splashColor: AppColors.primaryDark,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  borderRadius: 12.r,
-                ),
+                TipCategoriesWidget(tpSlController: tpSlController),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -415,6 +240,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
         bottomNavigationBar: SaveTipWidget(
           isVip: isVIP,
           tipDescription: bodyController.text,
+          tipAdvice: tipTypeTextController.text,
           tipTitle: titleController.text,
           tipModel: widget.tipModel,
         ),

@@ -34,6 +34,8 @@ class TipsRepository {
         'tip_cover': coverLink,
         'tip_title': tipModel.tipTitle,
         'is_VIP': tipModel.isVIP,
+        'tip_type': tipModel.tipTypeModel.toJSON(),
+        'tip_categories': tipModel.tipCategories.map((e) => e.toJSON()).toList(),
         'createdAt': Timestamp.now(),
       });
     } on FirebaseException catch (e) {

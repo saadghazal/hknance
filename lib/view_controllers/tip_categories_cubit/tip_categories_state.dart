@@ -5,28 +5,46 @@ enum SLState {
   inserted,
 }
 
+enum SelectedCategoryStatus {
+  unknown,
+  tp,
+  sl,
+}
+
 class TipCategoriesState extends Equatable {
-  final List<TipCategory> tipCategories;
+  List<TipCategory> tipCategories;
+  final SelectedCategoryStatus selectedStatus;
   final SLState slState;
 
-  const TipCategoriesState({
+  TipCategoriesState({
     required this.tipCategories,
     required this.slState,
+    required this.selectedStatus,
   });
 
-  factory TipCategoriesState.initial(){
-    return const TipCategoriesState(tipCategories: [], slState: SLState.notInserted);
+  factory TipCategoriesState.initial() {
+    return TipCategoriesState(
+      tipCategories: [],
+      slState: SLState.notInserted,
+      selectedStatus: SelectedCategoryStatus.unknown,
+    );
   }
 
   @override
-  List<Object> get props => [tipCategories, slState];
+  List<Object> get props => [
+        tipCategories,
+        slState,
+        selectedStatus,
+      ];
 
   TipCategoriesState copyWith({
     List<TipCategory>? tipCategories,
+    SelectedCategoryStatus? selectedStatus,
     SLState? slState,
   }) {
     return TipCategoriesState(
       tipCategories: tipCategories ?? this.tipCategories,
+      selectedStatus: selectedStatus ?? this.selectedStatus,
       slState: slState ?? this.slState,
     );
   }
