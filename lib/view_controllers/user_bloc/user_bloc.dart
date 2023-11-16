@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hknance/data_models/user_data_model.dart';
 import 'package:hknance/repositories/auth_repository.dart';
 import 'package:hknance/repositories/user_repository.dart';
@@ -20,6 +21,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(loadingStatus: LoadingStatus.loading));
       try {
         final result = await _userRepository.getUserData();
+        if(result.isVipUser){
+          await FirebaseMessaging.instance.subscribeToTopic('vipTips');
+        }
+        await FirebaseMessaging.instance.subscribeToTopic('tips');
+
         emit(
           state.copyWith(
             userModel: result,

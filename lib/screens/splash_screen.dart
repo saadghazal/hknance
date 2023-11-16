@@ -7,6 +7,7 @@ import 'package:hknance/screens/main_screens/main_screen.dart';
 import 'package:hknance/screens/on_boarding_screen.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 
+import '../utils/notifications_center/notifications_center.dart';
 import '../utils/routing_animation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
+      listener: (context, state)async {
         if (state.authStatus == AuthStatus.authenticated) {
           if(isAdmin == null){
             Future.delayed(
@@ -67,7 +68,6 @@ class _SplashScreenState extends State<SplashScreen> {
               },
             );
           }
-
           return;
         } else {
           Future.delayed(
@@ -81,6 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
             },
           );
         }
+        await NotificationsCenter.initialize();
       },
       child: Scaffold(
         body: Center(

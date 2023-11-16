@@ -34,7 +34,6 @@ class NotificationsCenter {
       },
     );
     await FirebaseMessaging.instance.getAPNSToken();
-    await FirebaseMessaging.instance.subscribeToTopic('tips');
     await FirebaseMessaging.instance.getInitialMessage();
     FirebaseMessaging.onMessage.listen(showNotification);
     FirebaseMessaging.onBackgroundMessage(showNotification);

@@ -29,7 +29,7 @@ void main() async {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ),
-    NotificationsCenter.initialize(),
+
   ]);
   await StorageService.init();
   await StorageService.getLanguage();

@@ -49,6 +49,7 @@ class AuthRepository {
           'email': email,
           'profile_pic': downloadUrl,
           'name': name,
+          'is_vip_user': false,
         });
       } else {
         await _firebaseFirestore
@@ -59,6 +60,7 @@ class AuthRepository {
           'email': email,
           'profile_pic': '',
           'name': name,
+          'is_vip_user': false,
         });
       }
       await StorageService.setUserId(userId: userId);
