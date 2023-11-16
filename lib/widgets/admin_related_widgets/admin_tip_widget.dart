@@ -89,6 +89,9 @@ class AdminTipWidget extends StatelessWidget {
                       BlocProvider<TipTypeCubit>(
                         create: (context) => TipTypeCubit(),
                       ),
+                      BlocProvider<TipCategoriesCubit>(
+                        create: (context) => TipCategoriesCubit(),
+                      ),
                     ],
                     child: AddTipScreen(
                       tipModel: tipModel,

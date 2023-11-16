@@ -3,9 +3,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <application
-        android:label="hknance"
+        android:label="HKNANCE"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/app_logo">
 
         <activity
             android:name=".MainActivity"

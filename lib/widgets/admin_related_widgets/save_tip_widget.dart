@@ -53,46 +53,61 @@ class SaveTipWidget extends StatelessWidget {
             : BlocBuilder<ImagePickerCubit, ImagePickerState>(
                 builder: (context, imageState) {
                   return BlocBuilder<TipCategoriesCubit, TipCategoriesState>(
-  builder: (context, tipCategoriesState) {
-    return BlocBuilder<TipTypeCubit, TipTypeState>(
-                    builder: (context, tipTypeState) {
-                      return SaveButton(
-                        onTap: () async {
-                          if (tipModel != null) {
-                            final updatedTip = TipModel(
-                              id: tipModel!.tipId,
-                              tipTitle: tipTitle,
-                              tipCover: tipModel!.tipCover,
-                              tipDescription: tipDescription,
-                              isVIP: tipModel!.isVIP,
-                              tipTypeModel: TipTypeModel(type: tipTypeState.selectedTipText, adviceTitle: tipAdvice,),
-                              tipCategories: tipCategoriesState.tipCategories,
-                              createdAt: tipModel!.createdAt,
-                            );
-                            context.read<TipsBloc>().add(
-                                  UpdateTipEvent(
-                                    updatedTip: updatedTip,
+                    builder: (context, tipCategoriesState) {
+                      return BlocBuilder<TipTypeCubit, TipTypeState>(
+                        builder: (context, tipTypeState) {
+                          return SaveButton(
+                            onTap: () async {
+                              if (tipModel != null) {
+                                final updatedTip = TipModel(
+                                  id: tipModel!.tipId,
+                                  tipTitle: tipTitle,
+                                  tipCover: tipModel!.tipCover,
+                                  tipDescription: tipDescription,
+                                  isVIP: tipModel!.isVIP,
+                                  tipTypeModel: TipTypeModel(
+                                    type: tipTypeState.selectedTipText,
+                                    adviceTitle: tipAdvice,
                                   ),
+                                  tipCategories:
+                                      tipCategoriesState.tipCategories,
+                                  createdAt: tipModel!.createdAt,
                                 );
-                          } else {
-                            context.read<TipsBloc>().add(
-                                  AddTipEvent(
-                                    title: tipTitle,
-                                    body: tipDescription,
-                                    isVIP: isVip,
-                                    tipType: tipTypeState.selectedTipText,
-                                    tipAdvice: tipAdvice,
-                                    categories: tipCategoriesState.tipCategories,
-                                    coverFile: imageState.imageFile,
-                                  ),
-                                );
-                          }
+                                context.read<TipsBloc>().add(
+                                      UpdateTipEvent(
+                                        updatedTip: updatedTip,
+                                      ),
+                                    );
+
+                              } else {
+                                context.read<TipsBloc>().add(
+                                      AddTipEvent(
+                                        title: tipTitle,
+                                        body: tipDescription,
+                                        isVIP: isVip,
+                                        tipType: tipTypeState.selectedTipText,
+                                        tipAdvice: tipAdvice,
+                                        categories:
+                                            tipCategoriesState.tipCategories,
+                                        coverFile: imageState.imageFile,
+                                      ),
+                                    );
+                                await context
+                                    .read<NotificationsCubit>()
+                                    .sendNotification(
+                                      isVIP: isVip,
+                                      tipCategories:
+                                          tipCategoriesState.tipCategories,
+                                      tipType: tipTypeState.selectedTipText,
+                                      tipAdvice: tipAdvice,
+                                    );
+                              }
+                            },
+                          );
                         },
                       );
                     },
                   );
-  },
-);
                 },
               );
       },

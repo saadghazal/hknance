@@ -36,9 +36,9 @@ class AdminTipsScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              const TipsListWidget(),
-
-
+              const Expanded(
+                child: TipsListWidget(),
+              ),
             ],
           ),
         ),

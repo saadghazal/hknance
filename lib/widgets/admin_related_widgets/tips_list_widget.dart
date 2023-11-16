@@ -27,6 +27,7 @@ class TipsListWidget extends StatelessWidget {
             final tips = snapshot.data!.docs.reversed.toList();
             return ListView.separated(
               shrinkWrap: true,
+              padding: EdgeInsets.only(bottom: 100.h),
               itemBuilder: (context, index) {
                 final tip = TipModel.fromJson(
                   tips[index].data(),

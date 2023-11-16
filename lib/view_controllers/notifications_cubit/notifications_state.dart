@@ -1,22 +1,16 @@
 part of 'notifications_cubit.dart';
 
 class NotificationsState extends Equatable {
-  final int docSize;
-  const NotificationsState({required this.docSize});
+
+  const NotificationsState();
 
   factory NotificationsState.initial(){
-    return NotificationsState(docSize: 0);
+    return NotificationsState();
   }
 
   @override
-  List<Object> get props => [docSize];
+  List<Object> get props => [];
 
-  NotificationsState copyWith({
-    int? docSize,
-  }) {
-    return NotificationsState(
-      docSize: docSize ?? this.docSize,
-    );
-  }
+
 }
 

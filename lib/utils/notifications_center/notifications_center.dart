@@ -5,12 +5,12 @@ class NotificationsCenter {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static Future<void> initialize() async {
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+    final permission = await FirebaseMessaging.instance.requestPermission();
+    if (permission.alert == AppleNotificationSetting.enabled) {
+      print(true);
+    }
     AndroidInitializationSettings androidInitializationSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('mipmap/notification_icon_foreground');
     var iosInitializationSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -29,12 +29,22 @@ class NotificationsCenter {
     await flutterLocalNotificationsPlugin.initialize(
       initializeSettings,
       onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) {},
+          (NotificationResponse notificationResponse) {
+        print('Sent');
+      },
     );
-
+    await FirebaseMessaging.instance.getAPNSToken();
+    await FirebaseMessaging.instance.subscribeToTopic('tips');
+    await FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.onMessage.listen(showNotification);
+    FirebaseMessaging.onBackgroundMessage(showNotification);
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      showNotification(event);
+    });
   }
 
   static NotificationDetails notificationDetails() {
+    print('details');
     return const NotificationDetails(
       android: AndroidNotificationDetails(
         'channelId',
@@ -42,15 +52,21 @@ class NotificationsCenter {
         importance: Importance.max,
         priority: Priority.max,
       ),
-      iOS: DarwinNotificationDetails(),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        interruptionLevel: InterruptionLevel.active,
+      ),
     );
   }
 
-  static Future showNotification()  {
+  static Future showNotification(RemoteMessage message) {
+    print("show notification");
     return flutterLocalNotificationsPlugin.show(
       500,
-      'new News',
-      'hi',
+      message.notification!.title,
+      message.notification!.body,
       notificationDetails(),
     );
   }

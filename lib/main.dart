@@ -13,7 +13,6 @@ import 'package:hknance/screens/splash_screen.dart';
 import 'package:hknance/utils/notifications_center/notifications_center.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/utils/translations/languages.dart';
-import 'package:hknance/view_controllers/tips_bloc/tips_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import 'firebase_options.dart';
@@ -26,9 +25,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await NotificationsCenter.initialize();
+  await Future.wait([
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ),
+    NotificationsCenter.initialize(),
+  ]);
   await StorageService.init();
   await StorageService.getLanguage();
+
   runApp(const MyApp());
 }
 
@@ -87,11 +92,8 @@ class MyApp extends StatelessWidget {
               tipsRepository: context.read<TipsRepository>(),
             ),
           ),
-          BlocProvider(
-            create: (context) => NotificationsCubit(
-
-            ),
-            lazy: false,
+          BlocProvider<NotificationsCubit>(
+            create: (context) => NotificationsCubit(),
           ),
         ],
         child: Sizer(
@@ -106,8 +108,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   translations: Languages(),
                   locale: Get.locale,
-                  fallbackLocale:const Locale('ar'),
-
+                  fallbackLocale: const Locale('ar'),
                   navigatorKey: navigator,
                   theme: ThemeData(
                     scaffoldBackgroundColor: Colors.white,

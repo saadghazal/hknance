@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -55,7 +60,10 @@ class _AddTipScreenState extends State<AddTipScreen> {
     titleController.dispose();
     bodyController.dispose();
     tipTypeTextController.dispose();
+    tpSlController.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +247,7 @@ class _AddTipScreenState extends State<AddTipScreen> {
         ),
         bottomNavigationBar: SaveTipWidget(
           isVip: isVIP,
+
           tipDescription: bodyController.text,
           tipAdvice: tipTypeTextController.text,
           tipTitle: titleController.text,
