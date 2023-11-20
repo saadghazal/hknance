@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final height = MediaQuery.of(context).size.height;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state)async {
+        await NotificationsCenter.initialize();
         if (state.authStatus == AuthStatus.authenticated) {
           if(isAdmin == null){
             Future.delayed(
@@ -81,7 +82,6 @@ class _SplashScreenState extends State<SplashScreen> {
             },
           );
         }
-        await NotificationsCenter.initialize();
       },
       child: Scaffold(
         body: Center(

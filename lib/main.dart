@@ -4,13 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/utils.dart';
 import 'package:hknance/repositories/repositories_exports.dart';
 import 'package:hknance/view_controllers/contorllers_exports.dart';
 import 'package:hknance/screens/splash_screen.dart';
-import 'package:hknance/utils/notifications_center/notifications_center.dart';
 import 'package:hknance/utils/storage_service/storage_service.dart';
 import 'package:hknance/utils/translations/languages.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +22,7 @@ final navigator = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

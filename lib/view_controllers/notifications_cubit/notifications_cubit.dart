@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -42,7 +43,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         url,
         headers: {
           'Authorization':
-              'key=AAAACt88FA4:APA91bFLs2e2PsEb3Ul6jcs7scuaVaQciaB6Uk9kJ9ZBfKD3ScK_N0VjTZb7U7B1wx2M_d6qqokW9s-OqlIkPAZ4ycWoEQHj5KkYTxpiKof0bKXC3PAj4x6LqctukJqqHlMaQj9jQX4i',
+              'key=${dotenv.get('SERVER_KEY')}',
           'Content-Type': 'application/json'
         },
         body: jsonEncode(
